@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | MediCare</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    /* --- Modern Animated Enhancements --- */
+    body {
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.4s cubic-bezier(.77,0,.18,1), color 0.4s cubic-bezier(.77,0,.18,1);
+    }
+    .navbar {
+      background: rgba(255,255,255,0.85) !important;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 12px rgba(220,53,69,0.07);
+      transition: background 0.4s, box-shadow 0.4s;
+    }
+    .navbar.scrolled {
+      background: rgba(255,255,255,0.97) !important;
+      box-shadow: 0 4px 24px rgba(220,53,69,0.13);
+    }
+    .hero {
+      background: linear-gradient(120deg, #ffb3b3 0%, #dc3545 100%);
+      background-size: 200% 200%;
+      animation: gradientMove 8s ease-in-out infinite alternate;
+      position: relative;
+      overflow: hidden;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    .animated-heading {
+      opacity: 0;
+      animation: fadeInHeading 1.2s 0.2s forwards, underlineGrow 1.2s 0.2s forwards;
+      background: linear-gradient(90deg, #dc3545 60%, #ffb3b3 100%);
+      background-repeat: no-repeat;
+      background-size: 0 3px;
+      background-position: 0 100%;
+      padding-bottom: 4px;
+    }
+    @keyframes fadeInHeading {
+      to { opacity: 1; }
+    }
+    @keyframes underlineGrow {
+      to { background-size: 100% 3px; }
+    }
+    .floating-icon {
+      animation: floatY 4s ease-in-out infinite alternate;
+    }
+    @keyframes floatY {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-20px); }
+    }
+    .cta-btn, .btn, #back-to-top, #whatsapp-button {
+      position: relative;
+      overflow: hidden;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:active, .btn:active, #back-to-top:active, #whatsapp-button:active {
+      transform: scale(0.96);
+      box-shadow: 0 2px 8px rgba(220,53,69,0.15);
+    }
+    .cta-btn::after, .btn::after {
+      content: "";
+      position: absolute;
+      left: 50%; top: 50%;
+      width: 0; height: 0;
+      background: rgba(255,255,255,0.3);
+      border-radius: 100%;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s, height 0.4s;
+      pointer-events: none;
+    }
+    .cta-btn:active::after, .btn:active::after {
+      width: 200px; height: 200px;
+      transition: 0s;
+    }
+    .contact-card, .glass-card, .card {
+      transition: transform 0.3s cubic-bezier(.77,0,.18,1), box-shadow 0.3s cubic-bezier(.77,0,.18,1);
+      will-change: transform, box-shadow;
+    }
+    .contact-card:hover, .glass-card:hover, .card:hover {
+      transform: translateY(-8px) scale(1.04) rotateZ(-1deg);
+      box-shadow: 0 8px 32px rgba(220,53,69,0.18);
+    }
+    .form-floating .form-control:focus {
+      border-color: #dc3545;
+      box-shadow: 0 0 0 0.2rem rgba(220,53,69,.15);
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .form-floating label {
+      color: #888;
+      transition: color 0.2s, transform 0.3s cubic-bezier(.77,0,.18,1);
+    }
+    .form-floating .form-control:focus ~ label {
+      color: #dc3545;
+      transform: translateY(-8px) scale(0.95);
+    }
+    .social-icon {
+      transition: color 0.2s, transform 0.2s;
+    }
+    .social-icon:hover {
+      color: #dc3545 !important;
+      transform: scale(1.2) rotate(-8deg);
+    }
+    .footer a {
+      position: relative;
+      transition: color 0.2s;
+    }
+    .footer a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 0; height: 2px;
+      background: #dc3545;
+      transition: width 0.3s;
+    }
+    .footer a:hover::after {
+      width: 100%;
+    }
+    /* Section fade/slide-in animation */
+    .fade-section {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(.77,0,.18,1), transform 0.8s cubic-bezier(.77,0,.18,1);
+    }
+    .fade-section.visible {
+      opacity: 1;
+      transform: none;
+    }
+    /* Animated counter (for stats) */
+    .counter {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #dc3545;
+      transition: color 0.3s;
+    }
+    /* Smooth dark mode transition */
+    body.dark-mode, body.dark-mode * {
+      transition: background-color 0.4s cubic-bezier(.77,0,.18,1), color 0.4s cubic-bezier(.77,0,.18,1);
+    }
+    /* Keep existing custom styles below */
+    body {
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .hero {
+      background: linear-gradient(rgba(255,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1588776814546-ec7c0e70c4f4') center/cover no-repeat;
+      height: 60vh;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    body.dark-mode {
+      background-color: #181a1b !important;
+      color: #f1f1f1 !important;
+    }
+    body.dark-mode .navbar,
+    body.dark-mode .bg-white {
+      background-color: #23272b !important;
+      color: #f1f1f1 !important;
+    }
+    body.dark-mode .card,
+    body.dark-mode .bg-light {
+      background-color: #23272b !important;
+      color: #f1f1f1 !important;
+    }
+    body.dark-mode .section-title,
+    body.dark-mode .icon-box,
+    body.dark-mode .btn-danger {
+      color: #ff7675 !important;
+    }
+    body.dark-mode .btn-light {
+      background-color: #23272b !important;
+      color: #f1f1f1 !important;
+      border: 1px solid #f1f1f1;
+    }
+    body.dark-mode .bg-danger {
+      background-color: #b71c1c !important;
+    }
+    body.dark-mode .bg-dark {
+      background-color: #121212 !important;
+    }
+    body.dark-mode .text-white {
+      color: #f1f1f1 !important;
+    }
+    body.dark-mode .text-danger {
+      color: #ff7675 !important;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.3);
+      z-index: 1;
+    }
+    .hero .text-center {
+      position: relative;
+      z-index: 2;
+    }
+    .cta-btn {
+      margin-top: 20px;
+      background: #dc3545;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      padding: 10px 32px;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .cta-btn:hover {
+      background: #b52a37;
+      transform: scale(1.05);
+    }
+    #whatsapp-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      background-color: #25D366;
+      color: white;
+      border-radius: 50%;
+      padding: 15px;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: background 0.2s, transform 0.2s;
+    }
+    #whatsapp-button:hover {
+      background: #128c7e;
+      transform: scale(1.1);
+    }
+    #back-to-top {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      z-index: 9999;
+      background: #dc3545;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 22px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: background 0.2s, transform 0.2s;
+    }
+    #back-to-top:hover {
+      background: #b52a37;
+      transform: scale(1.1);
+    }
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: 0;
+      border-radius: 8px;
+    }
+    .contact-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .contact-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 24px rgba(220, 53, 69, 0.15);
+    }
+    .form-floating .form-control:focus {
+      border-color: #dc3545;
+      box-shadow: 0 0 0 0.2rem rgba(220,53,69,.15);
+    }
+    .form-floating label {
+      color: #888;
+      transition: color 0.2s;
+    }
+    .form-floating .form-control:focus ~ label {
+      color: #dc3545;
+    }
+    .form-section {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(220,53,69,0.08);
+      padding: 32px;
+      margin-top: 32px;
+      margin-bottom: 32px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .dark-mode .form-section {
+      background: #232323;
+      color: #f1f1f1;
+    }
+    .social-icon {
+      transition: color 0.2s, transform 0.2s;
+    }
+    .social-icon:hover {
+      color: #dc3545 !important;
+      transform: scale(1.2);
+    }
+    .accordion-button::after {
+      transition: transform 0.2s;
+    }
+    .accordion-button:not(.collapsed)::after {
+      transform: rotate(180deg);
+    }
+    .accordion-item {
+      border-radius: 8px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(220,53,69,0.05);
+      transition: box-shadow 0.2s;
+    }
+    .accordion-item.active {
+      box-shadow: 0 4px 16px rgba(220,53,69,0.12);
+      border-left: 4px solid #dc3545;
+    }
+    .testimonial-section {
+      background: linear-gradient(90deg, #fff 60%, #ffeaea 100%);
+      border-radius: 16px;
+      padding: 40px 0;
+      margin-bottom: 40px;
+    }
+    .testimonial {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(220,53,69,0.07);
+      padding: 24px;
+      margin: 0 12px;
+      text-align: center;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .testimonial:hover {
+      box-shadow: 0 8px 32px rgba(220,53,69,0.15);
+      transform: translateY(-6px) scale(1.03);
+    }
+    .testimonial-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 12px;
+      border: 3px solid #dc3545;
+    }
+    .testimonial-name {
+      font-weight: 600;
+      color: #dc3545;
+      margin-bottom: 4px;
+    }
+    .testimonial-quote {
+      font-style: italic;
+      color: #555;
+    }
+    .dark-mode .testimonial-section {
+      background: linear-gradient(90deg, #232323 60%, #2d1616 100%);
+    }
+    .dark-mode .testimonial {
+      background: #232323;
+      color: #f1f1f1;
+    }
+    .floating-icon {
+      position: absolute;
+      font-size: 2.5rem;
+      color: #dc3545a0;
+      opacity: 0.7;
+      pointer-events: none;
+      animation: floatY 4s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+    @keyframes floatY {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-20px); }
+    }
+    .animated-heading {
+      display: inline-block;
+      position: relative;
+      animation: heading-underline 1.2s cubic-bezier(.77,0,.18,1) 1;
+    }
+    @keyframes heading-underline {
+      0% { background-size: 0 3px; }
+      100% { background-size: 100% 3px; }
+    }
+    .animated-heading {
+      background: linear-gradient(90deg, #dc3545 60%, #ffb3b3 100%);
+      background-repeat: no-repeat;
+      background-size: 100% 3px;
+      background-position: 0 100%;
+      padding-bottom: 4px;
+    }
+    .glass-card {
+      background: rgba(255,255,255,0.7) !important;
+      box-shadow: 0 8px 32px 0 rgba(31,38,135,0.10);
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(120deg, #dc3545 40%, #ffb3b3 100%);
+      border-radius: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f8f9fa;
+    }
+    /* Microinteractions for buttons */
+    .cta-btn, #back-to-top, #whatsapp-button, .btn {
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:active, #back-to-top:active, #whatsapp-button:active, .btn:active {
+      transform: scale(0.96);
+      box-shadow: 0 2px 8px rgba(220,53,69,0.15);
+    }
+    /* Uniform card heights */
+    .contact-card {
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand text-danger fw-bold" href="index.html">MediCare</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
+          <li class="nav-item"><a class="nav-link" href="request.html">Request</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link active fw-bold text-danger" href="#">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+          <li class="nav-item">
+            <button onclick="toggleDarkMode()" class="btn btn-outline-danger btn-sm ms-3">Dark Mode</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero d-flex align-items-center justify-content-center text-white position-relative">
+    <div class="text-center" data-aos="fade-up">
+      <h1 class="display-5 fw-bold animated-heading">Contact Us</h1>
+      <p>We're here to assist you with any queries or support you need.</p>
+      <button class="cta-btn" onclick="document.getElementById('whatsapp-form-section').scrollIntoView({behavior: 'smooth'});">Send a Message</button>
+    </div>
+    <!-- Floating Decorative Medical Icons -->
+    <i class="bi bi-capsule-fill floating-icon" style="top:20%;left:5%;"></i>
+    <i class="bi bi-heart-pulse-fill floating-icon" style="top:60%;right:8%;"></i>
+    <i class="bi bi-bandaid-fill floating-icon" style="bottom:10%;left:15%;"></i>
+  </section>
+<section class="container py-5">
+  <div class="row">
+    <!-- Left Side: Contact Info and Description -->
+    <div class="col-md-6" data-aos="fade-right">
+      <h2 class="text-danger mb-4">Get in Touch With Us</h2>
+      <p>
+        At <strong>MediCare</strong>, we believe that every unused medicine has the potential to save a life. Our mission is to connect people who have surplus medicines with those who are in desperate need of them. We understand the importance of healthcare accessibility and the difference a single tablet can make in someone's life. 
+        <br><br>
+        Our platform is designed with simplicity and impact in mind. Whether you're a concerned citizen looking to donate unused medicine or someone in need of assistance, our team is here to support you every step of the way. With our streamlined process, transparent system, and dedicated volunteers, MediCare is proud to be a bridge between generosity and need.
+        <br><br>
+        Donors can feel assured that their contributions are handled with utmost care. Each donated medicine is checked for expiry and safety, and then redistributed to NGOs, charitable hospitals, and individuals who have requested them through our platform. We adhere to strict guidelines and collaborate with licensed medical professionals to ensure everything we handle is both legal and safe.
+        <br><br>
+        For those seeking help, our website offers a simple form where you can request medicine according to your need. All requests are verified and handled discreetly. We maintain the privacy of every individual and strive to fulfill requests based on urgency and availability.
+        <br><br>
+        We have impacted thousands of lives across cities and rural areas. The kindness of our donors has enabled students, elderly citizens, mothers, and children to access critical medicines in times of need. What started as a simple initiative has now become a growing movement of compassion and shared responsibility.
+        <br><br>
+        In addition to our online services, we also conduct offline awareness drives, free check-up camps, and collaboration programs with health-focused NGOs. We believe that creating awareness about responsible medicine donation is equally important to expanding our reach.
+        <br><br>
+        Our address and contact details are always open for public access. You can visit us, call us, or simply send a message through our website or WhatsApp for any questions, suggestions, or collaborations. Every interaction counts, and we deeply value your feedback.
+        <br><br>
+        If you're a school, college, corporate, or NGO looking to collaborate, we'd love to hear from you. Let's create a future where no medicine is wasted and no life is lost for lack of access. 
+        <br><br>
+        Thank you for believing in our mission. Let's make a change — one medicine at a time.
+      </p>
+      <ul class="list-unstyled">
+        <li><i class="bi bi-geo-alt-fill text-danger"></i> 123 Charity Lane, MediCity, HealthState, 110011</li>
+        <li><i class="bi bi-telephone-fill text-danger"></i> +91 8104073670</li>
+        <li><i class="bi bi-envelope-fill text-danger"></i> adarshgupta7374@gmail.com</li>
+      </ul>
+      <p>
+        At MediCare, we believe healthcare should be free from inequalities. Thank you for being a part of this mission.
+      </p>
+    </div>
+
+    <!-- Right Side: Contact Images + Contact Form -->
+    <div class="col-md-6" data-aos="fade-left">
+      <!-- WhatsApp Message Form -->
+      <div class="card glass-card shadow-lg mb-4 p-4" id="whatsapp-form-section" style="border-radius: 18px; z-index:2;">
+        <h4 class="mb-3 text-danger fw-bold"><i class="bi bi-whatsapp me-2"></i>Send Us a Message</h4>
+        <form id="whatsappContactForm" autocomplete="off">
+          <div class="mb-3">
+            <label for="waName" class="form-label">Your Name</label>
+            <input type="text" class="form-control" id="waName" placeholder="Enter your name" required />
+          </div>
+          <div class="mb-3">
+            <label for="waEmail" class="form-label">Your Email (optional)</label>
+            <input type="email" class="form-control" id="waEmail" placeholder="Enter your email" />
+          </div>
+          <div class="mb-3">
+            <label for="waMessage" class="form-label">Message</label>
+            <textarea class="form-control" id="waMessage" rows="4" placeholder="Type your message here..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-success w-100 d-flex align-items-center justify-content-center gap-2" style="border-radius: 12px; font-weight: 600; font-size: 1.1rem;">
+            <i class="bi bi-whatsapp"></i> Send via WhatsApp
+          </button>
+        </form>
+      </div>
+      <img src="https://img.freepik.com/free-photo/hot-line-contact-us-call-center-search-interface_53876-124009.jpg" class="img-fluid mb-4 rounded shadow" alt="Contact Image 1">
+      <img src="https://burst.shopifycdn.com/photos/contact-us-image.jpg?width=1000&format=pjpg&exif=0&iptc=0" class="img-fluid rounded shadow mb-4" alt="Contact Image 2">
+    </div>
+  </div>
+</section>
+
+<!-- Learn More About Medicine Donation Section -->
+<section class="container my-5" id="learn-more">
+  <h3 class="text-danger text-center mb-4">Learn More About Medicine Donation</h3>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="ratio ratio-16x9 rounded shadow">
+        <iframe src="https://www.youtube.com/embed/me2GGniN_Gw" title="Why Medicine Donation Matters" allowfullscreen></iframe>
+      </div>
+      <p class="mt-2 text-center fw-semibold">Why Medicine Donation Matters</p>
+    </div>
+    <div class="col-md-4">
+      <div class="ratio ratio-16x9 rounded shadow">
+        <iframe src="https://www.youtube.com/embed/iQozgr7XnoY" title="Medicine Safety" allowfullscreen></iframe>
+      </div>
+      <p class="mt-2 text-center fw-semibold">Medicine Safety</p>
+    </div>
+    <div class="col-md-4">
+      <div class="ratio ratio-16x9 rounded shadow">
+        <iframe src="https://www.youtube.com/embed/FCAU4D-uG8Q" title="Why Medicine is Important" allowfullscreen></iframe>
+      </div>
+      <p class="mt-2 text-center fw-semibold">Why Medicine is Important</p>
+    </div>
+  </div>
+</section>
+
+<!-- Useful Resources Section -->
+<section class="container my-5" id="resources">
+  <h4 class="text-danger mb-3">Useful Resources</h4>
+  <div class="resource-marquee-wrapper" style="overflow:hidden; position:relative;">
+    <div class="resource-marquee d-flex align-items-center" style="white-space:nowrap; animation: marquee-left-right 18s linear infinite;">
+      <a href="https://www.who.int/news-room/fact-sheets/detail/medicines-donation" target="_blank" class="fw-semibold text-decoration-underline mx-4 text-primary">WHO: Guidelines for Medicine Donation</a>
+      <a href="https://www.fda.gov/consumers/consumer-updates/where-and-how-dispose-unused-medicines" target="_blank" class="fw-semibold text-decoration-underline mx-4 text-primary">FDA: How to Dispose of Unused Medicines</a>
+      <a href="https://serudsindia.org/donate-medicines-india-poor/" target="_blank" class="fw-semibold text-decoration-underline mx-4 text-primary">SERUDS India: Donate Medicines</a>
+    </div>
+  </div>
+</section>
+<style>
+@keyframes marquee-left-right {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.resource-marquee a {
+  font-size: 1.1rem;
+  padding: 0.5rem 2.5rem;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.7);
+  margin: 0 1.5rem;
+  box-shadow: 0 2px 8px rgba(220,53,69,0.07);
+  transition: background 0.2s, color 0.2s;
+  display: inline-block;
+}
+.resource-marquee a:hover {
+  background: #ffeaea;
+  color: #dc3545;
+  text-decoration: underline;
+}
+@media (max-width: 768px) {
+  .resource-marquee a {
+    font-size: 0.98rem;
+    padding: 0.4rem 1.2rem;
+    margin: 0 0.7rem;
+  }
+}
+</style>
+
+<!-- Contact Info + Map -->
+<section class="container py-5">
+  <div class="row g-4 align-items-stretch">
+    <!-- Reach Out Card -->
+    <div class="col-md-6">
+      <div class="card glass-card shadow-lg h-100 p-4" data-aos="fade-right" style="border-radius: 18px;">
+        <h3 class="text-danger mb-4 d-flex align-items-center">
+          <i class="bi bi-chat-dots-fill me-2"></i> Reach Out
+        </h3>
+        <ul class="list-unstyled fs-5 mb-4">
+          <li class="mb-3 d-flex align-items-center">
+            <i class="bi bi-telephone-fill text-success me-3 fs-4"></i>
+            <span>8104073670</span>
+            <a href="https://wa.me/918104073670" target="_blank" class="btn btn-success btn-sm ms-3"><i class="bi bi-whatsapp"></i></a>
+          </li>
+          <li class="mb-3 d-flex align-items-center">
+            <i class="bi bi-envelope-fill text-primary me-3 fs-4"></i>
+            <span id="emailText">adarshgupta7374@gmail.com</span>
+            <button class="btn btn-outline-primary btn-sm ms-3" onclick="navigator.clipboard.writeText('adarshgupta7374@gmail.com')"><i class="bi bi-clipboard"></i></button>
+            <a href="mailto:adarshgupta7374@gmail.com" class="btn btn-primary btn-sm ms-2"><i class="bi bi-envelope-paper"></i> Send Email</a>
+          </li>
+          <li class="mb-3 d-flex align-items-center">
+            <i class="bi bi-geo-alt-fill text-danger me-3 fs-4"></i>
+            <span>Kandivali West, Mumbai, India</span>
+            <a href="https://www.google.com/maps?q=Kandivali+West,+Mumbai,+India" target="_blank" class="btn btn-outline-danger btn-sm ms-3"><i class="bi bi-geo"></i></a>
+          </li>
+        </ul>
+        <div class="text-muted small">We respond within 24 hours.</div>
+      </div>
+    </div>
+    <!-- Our Location Card -->
+    <div class="col-md-6">
+      <div class="card glass-card shadow-lg h-100 p-4" data-aos="fade-left" style="border-radius: 18px;">
+        <h3 class="text-danger mb-4 d-flex align-items-center">
+          <i class="bi bi-geo-alt-fill me-2"></i> Our Location
+        </h3>
+        <div class="ratio ratio-16x9 rounded shadow mb-3">
+          <iframe
+            src="https://www.google.com/maps?q=Kandivali%20West%2C%20Mumbai%2C%20India&output=embed"
+            allowfullscreen=""
+            loading="lazy"
+            style="border-radius: 12px;">
+          </iframe>
+        </div>
+        <a href="https://www.google.com/maps?q=Kandivali+West,+Mumbai,+India" target="_blank" class="btn btn-danger w-100"><i class="bi bi-geo"></i> Get Directions</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Frequently Asked Questions -->
+  <section class="container my-5">
+    <h2 class="text-danger mb-4 text-center">Frequently Asked Questions</h2>
+    <div class="accordion" id="faqAccordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="faq1">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+            How do I donate medicines?
+          </button>
+        </h2>
+        <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            Simply visit our Donate page, fill out the form, and our team will guide you through the process.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="faq2">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+            Is my information kept private?
+          </button>
+        </h2>
+        <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            Yes, we value your privacy and keep all your information confidential.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="faq3">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+            Who receives the donated medicines?
+          </button>
+        </h2>
+        <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            We distribute medicines to verified NGOs, hospitals, and individuals in need.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Info Cards -->
+  <section class="container my-5">
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-4">
+        <div class="card h-100 shadow contact-card glass-card text-center p-4" data-aos="zoom-in">
+          <i class="bi bi-geo-alt-fill display-4 text-danger mb-3"></i>
+          <h5 class="mb-2 animated-heading">Address</h5>
+          <p>123 Charity Lane, MediCity, HealthState, 110011</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 shadow contact-card glass-card text-center p-4" data-aos="zoom-in" data-aos-delay="100">
+          <i class="bi bi-telephone-fill display-4 text-danger mb-3"></i>
+          <h5 class="mb-2 animated-heading">Phone</h5>
+          <p>+91 8104073670</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 shadow contact-card glass-card text-center p-4" data-aos="zoom-in" data-aos-delay="200">
+          <i class="bi bi-envelope-fill display-4 text-danger mb-3"></i>
+          <h5 class="mb-2 animated-heading">Email</h5>
+          <p>adarshgupta7374@gmail.com</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white pt-4">
+    <div class="container">
+      <div class="row text-center text-md-start">
+        <div class="col-md-4 mb-4">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="index.html" class="text-white text-decoration-none">Home</a></li>
+            <li><a href="donate.html" class="text-white text-decoration-none">Donate</a></li>
+            <li><a href="request.html" class="text-white text-decoration-none">Request</a></li>
+            <li><a href="about.html" class="text-white text-decoration-none">About</a></li>
+            <li><a href="contact.html" class="text-white text-decoration-none">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Follow Us</h5>
+          <a href="#" class="btn btn-outline-light btn-sm me-2 social-icon"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="btn btn-outline-light btn-sm me-2 social-icon"><i class="bi bi-twitter"></i></a>
+          <a href="#" class="btn btn-outline-light btn-sm me-2 social-icon"><i class="bi bi-instagram"></i></a>
+          <a href="https://wa.me/918104073670" class="btn btn-outline-light btn-sm social-icon"><i class="bi bi-whatsapp"></i></a>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Contact</h5>
+          <p><i class="bi bi-telephone-fill me-2"></i> 8104073670</p>
+          <p><i class="bi bi-envelope-fill me-2"></i> adarshgupta7374@gmail.com</p>
+        </div>
+      </div>
+      <hr class="border-light" />
+      <p class="text-center mb-0 pb-3">&copy; 2025 MediCare. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Floating Button -->
+  <a id="whatsapp-button" href="https://wa.me/918104073670" target="_blank">
+    <i class="bi bi-whatsapp"></i>
+  </a>
+  <!-- Back to Top Button -->
+  <button id="back-to-top" title="Back to top"><i class="bi bi-arrow-up"></i></button>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+    // Back to Top Button
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 300) {
+        backToTop.style.display = 'block';
+      } else {
+        backToTop.style.display = 'none';
+      }
+    });
+    backToTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    // FAQ Accordion Animation
+    document.querySelectorAll('.accordion-item').forEach(item => {
+      item.addEventListener('show.bs.collapse', function () {
+        item.classList.add('active');
+      });
+      item.addEventListener('hide.bs.collapse', function () {
+        item.classList.remove('active');
+      });
+    });
+    // Optional: Show a success message after form submission (for Formspree redirect)
+    if(window.location.hash === '#form-success') {
+      var successDiv = document.getElementById('form-success');
+      if(successDiv) successDiv.style.display = 'block';
+    }
+    // WhatsApp Contact Form Submission
+    document.getElementById('whatsappContactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var name = document.getElementById('waName').value.trim();
+      var email = document.getElementById('waEmail').value.trim();
+      var message = document.getElementById('waMessage').value.trim();
+      if (!name || !message) return;
+      var waText = `Hello, my name is ${name}.%0A` + (email ? `Email: ${email}%0A` : '') + `Message: ${message}`;
+      var waUrl = `https://wa.me/918104073670?text=${encodeURIComponent(waText)}`;
+      window.open(waUrl, '_blank');
+    });
+  </script>
+</body>
+</html>

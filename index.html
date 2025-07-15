@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MediCare | Medicine Donation</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      background-color: #121212;
+      color: #f1f1f1;
+    }
+
+    .dark-mode .navbar,
+    .dark-mode footer,
+    .dark-mode .card,
+    .dark-mode .testimonial-card {
+      background-color: #1e1e1e !important;
+    }
+
+    .dark-mode a,
+    .dark-mode p,
+    .dark-mode h5 {
+      color: #f1f1f1 !important;
+    }
+
+    .hero {
+      height: 90vh;
+      background: linear-gradient(rgba(255, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('images/medicines-bg.jpg') center/cover no-repeat;
+    }
+
+    #whatsapp-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      background-color: #25D366;
+      color: white;
+      border-radius: 50%;
+      padding: 15px;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .testimonial-card {
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(5px);
+      padding: 1rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .btn-danger:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(255, 0, 0, 0.4);
+    }
+
+    #stats .counter {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: #dc3545;
+    }
+    .about-img {
+      display: block;
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      margin: 20px auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: 0;
+      border-radius: 8px;
+    }
+    .feature-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: none;
+    }
+    .feature-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 24px rgba(220, 53, 69, 0.15);
+      background: #fff0f3;
+    }
+    .animated-btn {
+      transition: background 0.3s, transform 0.2s;
+      background: linear-gradient(90deg, #dc3545 60%, #ff6f61 100%);
+      border: none;
+    }
+    .animated-btn:hover {
+      background: linear-gradient(90deg, #ff6f61 60%, #dc3545 100%);
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand text-danger fw-bold" href="#">MediCare</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
+          <li class="nav-item"><a class="nav-link" href="request.html">Request</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+          <li class="nav-item">
+            <button onclick="toggleDarkMode()" class="btn btn-outline-danger btn-sm ms-3">Dark Mode</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero text-white d-flex align-items-center justify-content-center position-relative">
+    <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(120deg, rgba(220,53,69,0.7) 0%, rgba(0,0,0,0.7) 100%); opacity: 0.7; z-index:1;"></div>
+    <div class="bg-transparent p-5 rounded text-center position-relative" style="z-index:2;" data-aos="zoom-in">
+      <h1 class="display-4 fw-bold mb-3">Donate Medicine, Brighten Lives</h1>
+      <h4 class="mb-3">Be the reason someone smiles today</h4>
+      <p class="lead mb-4">Your unused donations can make a difference. Join the movement for a healthier, happier world.</p>
+      <a href="donate.html" class="btn btn-danger btn-lg px-5 py-3 mt-2 animated-btn"><i class="bi bi-heart-fill me-2"></i>Donate Now</a>
+      <div class="mt-5">
+        <span class="scroll-indicator d-inline-block">
+          <i class="bi bi-chevron-double-down display-6 text-white animate__animated animate__bounce animate__infinite"></i>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Donor Registration Section -->
+<section id="register" class="container py-5">
+  <div class="row g-4 align-items-stretch">
+    <!-- Instructions Left -->
+    <div class="col-lg-5 d-flex align-items-center" data-aos="fade-right">
+      <div class="card border-0 shadow-lg h-100 p-4 bg-light">
+        <h3 class="text-danger mb-3"><i class="bi bi-info-circle-fill me-2"></i>How to Register as a Donor</h3>
+        <ol class="list-unstyled mb-0">
+          <li class="mb-4 d-flex align-items-start">
+            <span class="me-3 display-6 text-danger"><i class="bi bi-person-lines-fill"></i></span>
+            <div>
+              <strong>Enter Your Full Name</strong><br>
+              Use your legal name for verification.
+            </div>
+          </li>
+          <li class="mb-4 d-flex align-items-start">
+            <span class="me-3 display-6 text-danger"><i class="bi bi-envelope-at"></i></span>
+            <div>
+              <strong>Email Address</strong><br>
+              Provide a valid email to receive updates.
+            </div>
+          </li>
+          <li class="mb-4 d-flex align-items-start">
+            <span class="me-3 display-6 text-danger"><i class="bi bi-telephone"></i></span>
+            <div>
+              <strong>Mobile Number</strong><br>
+              Enter a 10-digit phone number for contact.
+            </div>
+          </li>
+          <li class="mb-4 d-flex align-items-start">
+            <span class="me-3 display-6 text-danger"><i class="bi bi-geo-alt"></i></span>
+            <div>
+              <strong>Address</strong><br>
+              Fill in your complete address for pickup/delivery.
+            </div>
+          </li>
+          <li class="mb-2 d-flex align-items-start">
+            <span class="me-3 display-6 text-danger"><i class="bi bi-lock"></i></span>
+            <div>
+              <strong>Password (Optional)</strong><br>
+              Create a password to manage your donations.
+            </div>
+          </li>
+        </ol>
+        <div class="alert alert-success mt-4 mb-0"><i class="bi bi-check-circle-fill me-2"></i>All your information is kept confidential and secure.</div>
+      </div>
+    </div>
+    <!-- Registration Form Right -->
+    <div class="col-lg-7" data-aos="fade-left">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body p-4">
+          <h3 class="text-danger text-center mb-4">Donor Registration</h3>
+          <form>
+            <div class="mb-3">
+              <label class="form-label">Full Name *</label>
+              <input type="text" class="form-control" placeholder="Enter your full name" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email Address *</label>
+              <input type="email" class="form-control" placeholder="Enter your email" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Mobile Number *</label>
+              <input type="tel" class="form-control" placeholder="10-digit phone number" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Address *</label>
+              <textarea class="form-control" rows="2" placeholder="Your full address" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password (Optional)</label>
+              <input type="password" class="form-control" placeholder="Create a password" />
+            </div>
+            <button type="submit" class="btn btn-danger w-100">Register as Donor</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  <section class="container py-5">
+    <div class="row text-center">
+      <div class="col-md-6" data-aos="fade-up">
+        <h3 class="text-danger mb-3">About Us</h3>
+        <p>MediCare is a platform to donate unused but valid medicines to people who can't afford them. Our mission is to reduce waste and save lives.</p>
+      </div>
+      <div class="col-md-6" data-aos="fade-up">
+        <h3 class="text-danger mb-3">Contact Info</h3>
+        <p><i class="bi bi-telephone-fill me-2"></i> 8104073670</p>
+        <p><i class="bi bi-envelope-fill me-2"></i> adarshgupta7374@gmail.com</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container py-5" id="stats" data-aos="fade-up">
+    <h3 class="text-center text-danger mb-4">Our Impact</h3>
+    <div class="row text-center">
+      <div class="col-md-4">
+        <div class="counter" data-target="0">0</div>
+        <p>Medicines Donated</p>
+      </div>
+      <div class="col-md-4">
+        <div class="counter" data-target="0">0</div>
+        <p>Patients Helped</p>
+      </div>
+      <div class="col-md-4">
+        <div class="counter" data-target="0">0</div>
+        <p>Active Donors</p>
+      </div>
+    </div>
+  </section>
+
+<section class="container py-5">
+  <div class="row mb-5">
+    <div class="col-12 text-center" data-aos="fade-down">
+      <h2 class="display-5 fw-bold text-danger mb-2">The Power of Your Donation</h2>
+      <p class="lead text-secondary mb-3">How a simple act of kindness can change lives and communities</p>
+      <hr class="mx-auto" style="width: 80px; height: 4px; background: linear-gradient(90deg, #dc3545 60%, #ff6f61 100%); border: none; border-radius: 2px;">
+    </div>
+  </div>
+    <!-- Alternating image/paragraph rows -->
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6" data-aos="fade-right">
+        <img src="https://images.squarespace-cdn.com/content/v1/61d9bd448e4e00423cf1be6c/1642840323428-IK2N3GFFK3EEJSEE25I4/Medicines+for+donation.jpg" alt="Medicines Need" class="about-img mb-4">
+      </div>
+      <div class="col-md-6" data-aos="fade-left">
+        <h2 class="text-danger mb-4">Why Medicine Donation Matters</h2>
+        <p>In a world where healthcare remains a luxury for millions, the simple act of donating unused yet safe medicines can become a powerful remedy to suffering. Across urban slums, rural villages, and marginalized communities, many patients go untreated—not due to a lack of doctors or technology, but due to the unavailability of basic medicines. Meanwhile, countless strips of tablets and unopened bottles lie forgotten in middle-class homes and clinics, ultimately getting discarded as waste.</p>
+      </div>
+    </div>
+    <div class="row align-items-center mb-5 flex-row-reverse">
+      <div class="col-md-6" data-aos="fade-left">
+        <img src="https://www.1training.org/wp-content/uploads/2020/11/Introduction-to-the-Safe-Handling-of-Medicines.jpg" alt="Safe Handling" class="about-img mb-4">
+      </div>
+      <div class="col-md-6" data-aos="fade-right">
+        <h2 class="text-danger mb-4">Abundance & Deprivation</h2>
+        <p>This imbalance represents one of the starkest ironies of modern society: abundance and deprivation coexisting side by side. Through MediCare, we are rewriting this narrative. Our platform connects donors and beneficiaries in a seamless, transparent, and dignified process. You can now take the extra medicines sitting on your shelf and place them in the hands of someone who needs them to survive, heal, and live with dignity.</p>
+      </div>
+    </div>
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6" data-aos="fade-right">
+        <img src="https://www.fda.gov/files/drugs-img-regulatory-science-research-impact-story-prescribing-psychoactive-drugs-1600x900.png" alt="MediCare Mission" class="about-img mb-4">
+      </div>
+      <div class="col-md-6" data-aos="fade-left">
+        <h2 class="text-danger mb-4">The Impact of a Donation</h2>
+        <p>Why does this matter so much? Because when you donate a simple strip of antibiotics or painkillers, you're not just offering a product — you're extending relief. That one donation might mean a mother's fever subsiding, a diabetic patient controlling their sugar level, or an elderly man finally sleeping without pain. These are real, measurable impacts that ripple through families and communities.</p>
+      </div>
+    </div>
+    <div class="row align-items-center mb-5 flex-row-reverse">
+      <div class="col-md-6" data-aos="fade-left">
+        <img src="https://img.freepik.com/free-photo/high-angle-charity-box-being-prepared-with-food-donation_23-2148613127.jpg" alt="Save Lives" class="about-img mb-4">
+      </div>
+      <div class="col-md-6" data-aos="fade-right">
+        <h2 class="text-danger mb-4">Eco-Conscious Action</h2>
+        <p>Medicine donation is also an eco-conscious act. When discarded improperly, expired or unused medicines pollute soil and water systems. They contribute to environmental toxicity and drug resistance. By giving them a second life through donation, you help ensure their intended use — healing, not harming.</p>
+      </div>
+    </div>
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6" data-aos="fade-right">
+        <img src="https://cdn.aarp.net/content/dam/aarp/health/drugs_supplements/2022/11/1140-how-to-donate-drugs.jpg" alt="Join the Movement" class="about-img mb-4">
+      </div>
+      <div class="col-md-6" data-aos="fade-left">
+        <h2 class="text-danger mb-4">Join the Movement</h2>
+        <p>Join MediCare, not just as a donor, but as a healer. Together, we can build a world where medicine is not a privilege, but a shared resource. Let us be the bridge between abundance and access, between silence and healing. The world needs your medicine. Let's deliver hope.</p>
+      </div>
+    </div>
+  </section>
+
+<section class="container py-5">
+    <div class="row g-4">
+      <div class="col-md-6" data-aos="fade-right">
+        <h3 class="text-danger">Reach Out</h3>
+        <p><i class="bi bi-telephone-fill me-2"></i> 8104073670</p>
+        <p><i class="bi bi-envelope-fill me-2"></i> adarshgupta7374@gmail.com</p>
+        <p><i class="bi bi-geo-alt-fill me-2"></i> Kandivali West, Mumbai, India</p>
+      </div>
+      <div class="col-md-6" data-aos="fade-left">
+        <h3 class="text-danger mb-3">Our Location</h3>
+        <iframe
+          src="https://www.google.com/maps?q=Kandivali%20West%2C%20Mumbai%2C%20India&output=embed"
+          allowfullscreen=""
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+<section class="container my-5">
+  <h2 class="text-center mb-4 text-danger">Our Features</h2>
+  <div class="row g-4">
+    <div class="col-md-3">
+      <a href="donate.html" class="text-decoration-none">
+        <div class="card feature-card text-center p-4 shadow h-100">
+          <i class="bi bi-heart-pulse display-4 text-danger mb-3"></i>
+          <h5 class="text-dark">Donate</h5>
+          <p class="text-dark">Give unused medicines to those in need.</p>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-3">
+      <a href="request.html" class="text-decoration-none">
+        <div class="card feature-card text-center p-4 shadow h-100">
+          <i class="bi bi-capsule-pill display-4 text-danger mb-3"></i>
+          <h5 class="text-dark">Request</h5>
+          <p class="text-dark">Request medicines for yourself or others.</p>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-3">
+      <a href="about.html" class="text-decoration-none">
+        <div class="card feature-card text-center p-4 shadow h-100">
+          <i class="bi bi-people-fill display-4 text-danger mb-3"></i>
+          <h5 class="text-dark">About</h5>
+          <p class="text-dark">Learn more about our mission and team.</p>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-3">
+      <a href="contact.html" class="text-decoration-none">
+        <div class="card feature-card text-center p-4 shadow h-100">
+          <i class="bi bi-envelope-open-fill display-4 text-danger mb-3"></i>
+          <h5 class="text-dark">Contact</h5>
+          <p class="text-dark">Get in touch with us for any queries.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+  <footer class="bg-dark text-white pt-4">
+    <div class="container">
+      <div class="row text-center text-md-start">
+        <div class="col-md-4 mb-4">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="index.html" class="text-white text-decoration-none">Home</a></li>
+            <li><a href="donate.html" class="text-white text-decoration-none">Donate</a></li>
+            <li><a href="request.html" class="text-white text-decoration-none">Request</a></li>
+            <li><a href="about.html" class="text-white text-decoration-none">About</a></li>
+            <li><a href="contact.html" class="text-white text-decoration-none">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Follow Us</h5>
+          <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-twitter"></i></a>
+          <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-instagram"></i></a>
+          <a href="https://wa.me/918104073670" class="btn btn-outline-light btn-sm"><i class="bi bi-whatsapp"></i></a>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Contact</h5>
+          <p><i class="bi bi-telephone-fill me-2"></i> 8104073670</p>
+          <p><i class="bi bi-envelope-fill me-2"></i> adarshgupta7374@gmail.com</p>
+        </div>
+      </div>
+      <hr class="border-light" />
+      <p class="text-center mb-0 pb-3">&copy; 2025 MediCare. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <a id="whatsapp-button" href="https://wa.me/918104073670" target="_blank">
+    <i class="bi bi-whatsapp"></i>
+  </a>
+  <div class="modal fade" id="donatePopup" tabindex="-1" aria-labelledby="donatePopupLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="donatePopupLabel">Support the Cause</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p>Your unused medicines can save lives. Would you like to donate now?</p>
+        <a href="donate.html" class="btn btn-danger px-4">Donate Now</a>
+      </div>
+    </div>
+  </div>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+  AOS.init();
+  function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+  }
+
+  // Show popup only once per session
+  window.addEventListener("load", function () {
+    if (!sessionStorage.getItem("popupShown")) {
+      var donatePopup = new bootstrap.Modal(document.getElementById('donatePopup'));
+      donatePopup.show();
+      sessionStorage.setItem("popupShown", "true");
+    }
+  });
+
+  // Counter logic
+  const counters = document.querySelectorAll('.counter');
+  counters.forEach(counter => {
+    counter.innerText = '0';
+    const updateCounter = () => {
+      const target = +counter.getAttribute('data-target');
+      const count = +counter.innerText;
+      const increment = target / 200;
+      if (count < target) {
+        counter.innerText = Math.ceil(count + increment);
+        setTimeout(updateCounter, 10);
+      } else {
+        counter.innerText = target;
+      }
+    };
+    updateCounter();
+  });
+</script>
+</body>
+</html>

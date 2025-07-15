@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Donate your unused medicines securely through MediCare. Help someone in need today.">
+  <title>Donate Medicine | MediCare</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark-mode {
+      background-color: #121212;
+      color: #f1f1f1;
+    }
+    .dark-mode .navbar, .dark-mode footer {
+      background-color: #1e1e1e !important;
+    }
+    .form-section {
+      background: #f9f9f9;
+      padding: 50px 20px;
+      border-radius: 10px;
+    }
+    .dark-mode .form-section {
+      background-color: #2c2c2c;
+    }
+     #whatsapp-button {
+     position: fixed;
+     bottom: 20px;
+     right: 20px;
+     z-index: 999;
+     background-color: #25D366;
+     color: white;
+     width: 60px;         /* Fixed width */
+     height: 60px;        /* Fixed height */
+     border-radius: 50%;  /* Makes it a circle */
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-size: 28px;     /* Icon size */
+     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+     transition: transform 0.3s;
+    }
+    #whatsapp-button:hover {
+     transform: scale(1.1);
+    }
+    .accordion-button:not(.collapsed) {
+      color: #dc3545;
+      background-color: #f8d7da;
+    }
+    .blog-card {
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .counter-box {
+      text-align: center;
+    }
+    .counter-number {
+      font-size: 2.5rem;
+      color: #dc3545;
+      font-weight: bold;
+    }
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+    /* Decorative background shapes for form section */
+    .form-bg-decor {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 180px;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .form-bg-decor.left {
+      left: -100px;
+      background: radial-gradient(circle at 70% 40%, #ff6f61 0%, #dc3545 60%, transparent 100%);
+      opacity: 0.13;
+      filter: blur(2px);
+      animation: decor-float-left 8s ease-in-out infinite alternate;
+    }
+    .form-bg-decor.right {
+      right: -100px;
+      background: radial-gradient(circle at 30% 60%, #dc3545 0%, #ff6f61 60%, transparent 100%);
+      opacity: 0.13;
+      filter: blur(2px);
+      animation: decor-float-right 10s ease-in-out infinite alternate;
+    }
+    @keyframes decor-float-left {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(24px) scale(1.08); }
+    }
+    @keyframes decor-float-right {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-24px) scale(1.08); }
+    }
+    .form-bg-icon {
+      position: absolute;
+      opacity: 0.10;
+      font-size: 5rem;
+      z-index: 0;
+      pointer-events: none;
+      color: #dc3545;
+      filter: blur(0.5px);
+      animation: icon-float 7s ease-in-out infinite alternate;
+    }
+    .form-bg-icon.left {
+      left: 10px;
+      top: 30%;
+      animation-delay: 0s;
+    }
+    .form-bg-icon.right {
+      right: 10px;
+      bottom: 20%;
+      animation-delay: 2s;
+    }
+    @keyframes icon-float {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(18px); }
+    }
+    @media (max-width: 991px) {
+      .form-bg-decor, .form-bg-icon { display: none; }
+    }
+    .step-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 8px rgba(220,53,69,0.10);
+    }
+    .step-line {
+      width: 32px;
+      height: 4px;
+      background: linear-gradient(90deg, #dc3545 60%, #ff6f61 100%);
+      border-radius: 2px;
+      margin: 0 4px;
+    }
+    .btn-gradient {
+      background: linear-gradient(90deg, #dc3545 60%, #ff6f61 100%);
+      color: #fff;
+      border: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-gradient:hover {
+      background: linear-gradient(90deg, #ff6f61 60%, #dc3545 100%);
+      transform: scale(1.04);
+    }
+    /* Enhanced Blog Card Styles */
+    .blog-card {
+      border: none;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(220,53,69,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+      overflow: hidden;
+      position: relative;
+      background: #fff;
+      border-top: 4px solid #ff6f61;
+    }
+    .blog-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(220,53,69,0.15);
+      border-top: 4px solid #dc3545;
+    }
+    .blog-card .card-img-top {
+      border-radius: 18px 18px 0 0;
+      object-fit: cover;
+      height: 180px;
+      transition: filter 0.2s;
+    }
+    .blog-card:hover .card-img-top {
+      filter: brightness(0.95) saturate(1.1);
+    }
+    .blog-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: linear-gradient(90deg, #dc3545 60%, #ff6f61 100%);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 4px 16px;
+      border-radius: 12px;
+      z-index: 2;
+      box-shadow: 0 2px 8px rgba(220,53,69,0.10);
+      letter-spacing: 0.5px;
+    }
+    /* Enhanced FAQ Styles */
+    .faq-section {
+      background: linear-gradient(135deg, #fff 80%, #ffeaea 100%);
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(220,53,69,0.08);
+      padding: 40px 24px;
+      margin-bottom: 48px;
+    }
+    .accordion-item {
+      border-radius: 12px !important;
+      margin-bottom: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(220,53,69,0.05);
+      border: none;
+      transition: box-shadow 0.2s;
+    }
+    .accordion-item.active, .accordion-item:has(.show) {
+      box-shadow: 0 4px 16px rgba(220,53,69,0.12);
+      border-left: 4px solid #dc3545;
+      background: #fff0f3;
+    }
+    .accordion-button {
+      font-weight: 600;
+      font-size: 1.1rem;
+      background: #fff;
+      color: #dc3545;
+      border: none;
+      outline: none;
+      box-shadow: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .accordion-button.collapsed {
+      color: #333;
+      background: #fff;
+    }
+    .accordion-button::after {
+      transition: transform 0.2s;
+      color: #dc3545;
+    }
+    .accordion-button:not(.collapsed)::after {
+      transform: rotate(180deg);
+    }
+    .accordion-body {
+      background: #fff;
+      color: #444;
+      border-radius: 0 0 12px 12px;
+      font-size: 1rem;
+      padding: 1.25rem;
+    }
+    .faq-icon {
+      margin-right: 12px;
+      color: #dc3545;
+      font-size: 1.3rem;
+      vertical-align: middle;
+    }
+    /* Uniform Blog Card Height */
+    .blog-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+    }
+    .blog-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 410px;
+      max-height: 410px;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(220,53,69,0.07);
+      border: 1.5px solid #ff6f61;
+      background: #fff;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .blog-card:hover {
+      box-shadow: 0 8px 32px rgba(220,53,69,0.13);
+      border-color: #dc3545;
+    }
+    .blog-card .card-img-top {
+      height: 160px;
+      object-fit: cover;
+      border-radius: 16px 16px 0 0;
+    }
+    .blog-card .card-body {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 1.5rem;
+    }
+    .blog-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: #ff6f61;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 4px 16px;
+      border-radius: 12px;
+      z-index: 2;
+      box-shadow: 0 2px 8px rgba(220,53,69,0.10);
+      letter-spacing: 0.5px;
+    }
+    .blog-card .btn {
+      margin-top: 1rem;
+      border-radius: 8px;
+      padding: 0.4rem 1.5rem;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+    @media (max-width: 991px) {
+      .blog-row { flex-direction: column; }
+      .blog-card { min-height: unset; max-height: unset; }
+    }
+    /* --- Modern Glassmorphism Blog Card Styles --- */
+    .blog-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px 0;
+      justify-content: center;
+    }
+    .blog-card {
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: blur(12px) saturate(1.2);
+      border-radius: 22px;
+      box-shadow: 0 8px 32px 0 rgba(31,38,135,0.10), 0 1.5px 12px 0 rgba(220,53,69,0.08);
+      border: 1.5px solid rgba(255,255,255,0.25);
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.3s, transform 0.25s, border 0.3s;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      z-index: 1;
+    }
+    .blog-card::before {
+      content: '';
+      position: absolute;
+      top: -40px; left: -40px;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle, #ffb3b3 0%, #dc3545 80%, transparent 100%);
+      opacity: 0.13;
+      filter: blur(8px);
+      z-index: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .blog-card::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 100px; height: 100px;
+      background: radial-gradient(circle, #ff6f61 0%, #fff 80%, transparent 100%);
+      opacity: 0.10;
+      filter: blur(10px);
+      z-index: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .blog-card:hover {
+      box-shadow: 0 12px 48px 0 rgba(220,53,69,0.18), 0 2px 16px 0 rgba(31,38,135,0.10);
+      transform: translateY(-10px) scale(1.025);
+      border: 1.5px solid #ff6f61;
+    }
+    .blog-card .card-img-top {
+      border-radius: 22px 22px 0 0;
+      object-fit: cover;
+      height: 180px;
+      width: 100%;
+      z-index: 2;
+      transition: transform 0.35s cubic-bezier(.77,0,.18,1), filter 0.2s;
+      position: relative;
+    }
+    .blog-card:hover .card-img-top {
+      transform: scale(1.06) translateY(-4px);
+      filter: brightness(0.98) saturate(1.12);
+    }
+    .blog-badge {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.7);
+      color: #dc3545;
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 6px 18px 6px 12px;
+      border-radius: 18px;
+      box-shadow: 0 2px 8px rgba(220,53,69,0.10);
+      letter-spacing: 0.5px;
+      z-index: 3;
+      backdrop-filter: blur(4px);
+      border: 1.5px solid #ffb3b3;
+      transition: background 0.2s, color 0.2s;
+    }
+    .blog-badge i {
+      font-size: 1.1em;
+      color: #ff6f61;
+      margin-right: 2px;
+    }
+    .blog-card .card-body {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem 1.2rem 1.7rem 1.2rem;
+      z-index: 2;
+      position: relative;
+    }
+    .blog-card .card-title {
+      font-weight: 700;
+      color: #dc3545;
+      margin-bottom: 0.5rem;
+      font-size: 1.18rem;
+      letter-spacing: 0.01em;
+    }
+    .blog-card .card-text {
+      color: #444;
+      font-size: 1.01rem;
+      margin-bottom: 0.7rem;
+      opacity: 0.92;
+    }
+    .blog-card .btn-modern {
+      margin-top: 1rem;
+      border-radius: 12px;
+      padding: 0.5rem 2.1rem;
+      font-weight: 600;
+      font-size: 1.07rem;
+      background: linear-gradient(90deg, #dc3545 60%, #ff6f61 100%);
+      color: #fff;
+      border: none;
+      box-shadow: 0 2px 8px rgba(220,53,69,0.10);
+      transition: background 0.2s, transform 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .blog-card .btn-modern:hover {
+      background: linear-gradient(90deg, #ff6f61 60%, #dc3545 100%);
+      transform: scale(1.04);
+      color: #fff;
+    }
+    /* Floating SVG/Icons in Card BG */
+    .blog-card .floating-bg-icon {
+      position: absolute;
+      bottom: 18px;
+      right: 18px;
+      font-size: 2.2rem;
+      color: #ffb3b3;
+      opacity: 0.18;
+      z-index: 1;
+      pointer-events: none;
+      filter: blur(0.5px);
+      transition: opacity 0.2s;
+    }
+    .dark-mode .blog-card {
+      background: rgba(34,34,34,0.72);
+      border: 1.5px solid rgba(255,255,255,0.10);
+    }
+    .dark-mode .blog-card .card-title,
+    .dark-mode .blog-badge {
+      color: #ffb3b3;
+    }
+    .dark-mode .blog-card .card-text {
+      color: #e0e0e0;
+    }
+    .dark-mode .blog-card .btn-modern {
+      background: linear-gradient(90deg, #ff6f61 60%, #dc3545 100%);
+      color: #fff;
+    }
+    .dark-mode .blog-card .btn-modern:hover {
+      background: linear-gradient(90deg, #dc3545 60%, #ff6f61 100%);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero Section for Donate Page -->
+  <section class="donate-hero text-white d-flex align-items-center justify-content-center position-relative" style="min-height: 90vh; background: linear-gradient(rgba(255, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('images/medicines-bg.jpg') center/cover no-repeat;">
+    <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(120deg, rgba(220,53,69,0.7) 0%, rgba(0,0,0,0.7) 100%); opacity: 0.7; z-index:1;"></div>
+    <div class="bg-transparent p-5 rounded text-center position-relative" style="z-index:2;">
+      <h1 class="display-4 fw-bold mb-3">Share Hope, Share Health</h1>
+      <h4 class="mb-3">Your medicine donation can be a lifeline</h4>
+      <p class="lead mb-4">Every unopened strip or bottle you give can help someone recover, smile, and live better. Join us in making healthcare accessible for all.</p>
+      <a href="#donate-form-section" class="btn btn-danger btn-lg px-5 py-3 mt-2 animated-btn"><i class="bi bi-capsule me-2"></i>Start Donating</a>
+      <div class="mt-5">
+        <span class="scroll-indicator d-inline-block">
+          <i class="bi bi-chevron-double-down display-6 text-white animate__animated animate__bounce animate__infinite"></i>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+    <div class="container">
+      <a class="navbar-brand text-danger fw-bold" href="index.html">MediCare</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active text-danger fw-bold" href="donate.html">Donate</a></li>
+          <li class="nav-item"><a class="nav-link" href="request.html">Request</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+          <li class="nav-item">
+            <button onclick="toggleDarkMode()" class="btn btn-outline-danger btn-sm ms-3">Dark Mode</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Form Section -->
+  <section class="container my-5 pt-5" id="donate-form-section">
+    <div class="position-relative">
+      <div class="form-bg-decor left"></div>
+      <div class="form-bg-decor right"></div>
+      <i class="bi bi-capsule form-bg-icon left"></i>
+      <i class="bi bi-heart-pulse form-bg-icon right"></i>
+      <div class="row g-4 align-items-stretch">
+        <!-- Instructions Left -->
+        <div class="col-lg-5 d-flex align-items-center" data-aos="fade-right">
+          <div class="card border-0 shadow-lg h-100 p-4 bg-light">
+            <h3 class="text-danger mb-3"><i class="bi bi-info-circle-fill me-2"></i>How to Fill the Donation Form</h3>
+            <ol class="list-unstyled mb-0">
+              <li class="mb-4 d-flex align-items-start">
+                <span class="me-3 display-6 text-danger"><i class="bi bi-person-lines-fill"></i></span>
+                <div>
+                  <strong>Enter Your Full Name</strong><br>
+                  Use your legal name for verification.
+                </div>
+              </li>
+              <li class="mb-4 d-flex align-items-start">
+                <span class="me-3 display-6 text-danger"><i class="bi bi-telephone"></i></span>
+                <div>
+                  <strong>Phone Number</strong><br>
+                  Enter a 10-digit phone number for contact.
+                </div>
+              </li>
+              <li class="mb-4 d-flex align-items-start">
+                <span class="me-3 display-6 text-danger"><i class="bi bi-envelope-at"></i></span>
+                <div>
+                  <strong>Email Address</strong><br>
+                  Provide a valid email to receive updates.
+                </div>
+              </li>
+              <li class="mb-4 d-flex align-items-start">
+                <span class="me-3 display-6 text-danger"><i class="bi bi-capsule"></i></span>
+                <div>
+                  <strong>Medicine Name</strong><br>
+                  Specify the exact medicine you wish to donate.
+                </div>
+              </li>
+              <li class="mb-4 d-flex align-items-start">
+                <span class="me-3 display-6 text-danger"><i class="bi bi-geo-alt"></i></span>
+                <div>
+                  <strong>Address</strong><br>
+                  Fill in your complete address for pickup/delivery.
+                </div>
+              </li>
+              <li class="mb-4 d-flex align-items-start">
+                <span class="me-3 display-6 text-danger"><i class="bi bi-calendar-event"></i></span>
+                <div>
+                  <strong>Expiry Date</strong><br>
+                  Ensure the medicine is not expired.
+                </div>
+              </li>
+              <li class="mb-2 d-flex align-items-start">
+                <span class="me-3 display-6 text-danger"><i class="bi bi-file-earmark-arrow-up"></i></span>
+                <div>
+                  <strong>Upload Prescription (Optional)</strong><br>
+                  Attach a prescription if required for the medicine.
+                </div>
+              </li>
+            </ol>
+            <div class="alert alert-success mt-4 mb-0"><i class="bi bi-check-circle-fill me-2"></i>All your information is kept confidential and secure.</div>
+          </div>
+        </div>
+        <!-- Donation Form Right -->
+        <div class="col-lg-7" data-aos="fade-left">
+          <div class="form-section p-0" style="background: linear-gradient(135deg, #fff 80%, #ffeaea 100%); border-radius: 18px; box-shadow: 0 8px 32px rgba(220,53,69,0.10);">
+            <div class="p-4 p-md-5">
+              <h2 class="text-danger text-center mb-2">Donate Your Medicines</h2>
+              <p class="text-center text-secondary mb-4">Fill out the form below to help someone in need. Every donation counts!</p>
+              <!-- Step Indicator -->
+              <div class="d-flex justify-content-center align-items-center mb-4">
+                <div class="step-circle bg-danger text-white me-2">1</div>
+                <span class="fw-semibold me-3">Your Info</span>
+                <div class="step-line"></div>
+                <div class="step-circle bg-danger text-white mx-2">2</div>
+                <span class="fw-semibold me-3">Medicine Details</span>
+                <div class="step-line"></div>
+                <div class="step-circle bg-danger text-white mx-2">3</div>
+                <span class="fw-semibold">Submit</span>
+              </div>
+              <form id="donateForm">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="donorName" placeholder="Your name" required />
+                      <label for="donorName">Full Name</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="tel" class="form-control" id="donorPhone" placeholder="10-digit phone number" required />
+                      <label for="donorPhone">Phone Number</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="email" class="form-control" id="donorEmail" placeholder="example@mail.com" />
+                      <label for="donorEmail">Email Address</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="medicineName" placeholder="e.g. Paracetamol" required />
+                      <label for="medicineName">Medicine Name</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="address1" placeholder="House no, Street name" required />
+                      <label for="address1">Address Line 1</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="address2" placeholder="Area, City, State" />
+                      <label for="address2">Address Line 2</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="date" class="form-control" id="expiryDate" required />
+                      <label for="expiryDate">Expiry Date</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="number" class="form-control" id="quantity" min="1" max="50" required />
+                      <label for="quantity">Quantity</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="file" class="form-control" id="prescription" accept="image/*,application/pdf" />
+                      <label for="prescription">Upload Prescription (optional)</label>
+                    </div>
+                  </div>
+                  <div class="col-12 text-center mt-3">
+                    <button class="btn btn-gradient px-5" id="submitBtn">Submit</button>
+                    <div id="successAlert" class="alert alert-success d-none mt-3" role="alert">
+                      🎉 Thank you! Your donation form has been submitted.
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Counter -->
+  <section class="container py-5 text-center">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="counter-box">
+          <h4>Total Donations Received</h4>
+          <div class="counter-number" id="donationCounter">0</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="container py-5">
+    <h3 class="text-danger text-center mb-4">Latest Blog Updates</h3>
+    <div class="row blog-row">
+    <!-- Blog Card 1 -->
+    <div class="col-md-4 mb-4">
+      <div class="blog-card" data-aos="fade-up">
+        <span class="blog-badge"><i class="bi bi-lightbulb"></i>Awareness</span>
+        <img src="https://images.squarespace-cdn.com/content/v1/61d9bd448e4e00423cf1be6c/1642840323428-IK2N3GFFK3EEJSEE25I4/Medicines+for+donation.jpg" class="card-img-top" alt="Medicine Donation">
+        <div class="card-body">
+          <h5 class="card-title">Why Medicine Donation Matters</h5>
+          <p class="card-text">Learn how your unused medicines can save lives and support underserved communities.</p>
+          <a href="https://serudsindia.org/donate-medicines-india-poor/" class="btn btn-modern" target="_blank"><i class="bi bi-arrow-right-circle"></i>Read More</a>
+        </div>
+        <i class="bi bi-capsule floating-bg-icon"></i>
+      </div>
+    </div>
+    <!-- Blog Card 2 -->
+    <div class="col-md-4 mb-4">
+      <div class="blog-card" data-aos="fade-up" data-aos-delay="100">
+        <span class="blog-badge"><i class="bi bi-shield-check"></i>Safety</span>
+        <img src="https://www.1training.org/wp-content/uploads/2020/11/Introduction-to-the-Safe-Handling-of-Medicines.jpg" class="card-img-top" alt="Safe Handling Tips">
+        <div class="card-body">
+          <h5 class="card-title">Safe Medicine Handling Tips</h5>
+          <p class="card-text">Ensure proper packaging, labeling, and storage when donating unused medicines.</p>
+          <a href="https://www.baptisthealth.com/blog/family-health/medication-safety-tips" class="btn btn-modern" target="_blank"><i class="bi bi-arrow-right-circle"></i>Read More</a>
+        </div>
+        <i class="bi bi-heart-pulse floating-bg-icon"></i>
+      </div>
+    </div>
+    <!-- Blog Card 3 -->
+    <div class="col-md-4 mb-4">
+      <div class="blog-card" data-aos="fade-up" data-aos-delay="200">
+        <span class="blog-badge"><i class="bi bi-people"></i>Community</span>
+        <img src="https://cdn.aarp.net/content/dam/aarp/health/drugs_supplements/2022/11/1140-how-to-donate-drugs.jpg" class="card-img-top" alt="Join the Movement">
+        <div class="card-body">
+          <h5 class="card-title">Join the Movement</h5>
+          <p class="card-text">Discover how you can be part of a growing community making a difference through medicine donation.</p>
+          <a href="https://www.aarp.org/health/drugs-supplements/info-2022/how-to-donate-unused-medicine.html" class="btn btn-modern" target="_blank"><i class="bi bi-arrow-right-circle"></i>Read More</a>
+        </div>
+        <i class="bi bi-globe2 floating-bg-icon"></i>
+      </div>
+    </div>
+</section>
+
+<!-- Enhanced FAQ Section -->
+<section class="container faq-section" data-aos="fade-up">
+  <h3 class="text-danger text-center mb-4">Frequently Asked Questions</h3>
+  <div class="accordion" id="faqAccordion">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq1">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+          <i class="bi bi-question-circle-fill faq-icon"></i>How do I donate medicines?
+        </button>
+      </h2>
+      <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Simply fill out the donation form above, and our team will contact you for pickup or drop-off instructions.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq2">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+          <i class="bi bi-shield-lock-fill faq-icon"></i>Is my information kept private?
+        </button>
+      </h2>
+      <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Yes, all your information is confidential and used only for donation coordination.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq3">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+          <i class="bi bi-capsule-pill faq-icon"></i>What medicines can I donate?
+        </button>
+      </h2>
+      <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          You can donate unopened, unexpired medicines in original packaging. Please avoid donating controlled substances or expired items.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq4">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4">
+          <i class="bi bi-truck faq-icon"></i>How is the medicine collected?
+        </button>
+      </h2>
+      <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Our team will arrange a safe pickup or guide you to the nearest drop-off location.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq5">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5">
+          <i class="bi bi-calendar-x-fill faq-icon"></i>Can I donate expired medicines?
+        </button>
+      </h2>
+      <div id="collapse5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          No, we do not accept expired medicines. Please check the expiry date before donating.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq6">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6">
+          <i class="bi bi-box-seam faq-icon"></i>How should I pack the medicines?
+        </button>
+      </h2>
+      <div id="collapse6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Please keep medicines in their original packaging and ensure they are sealed and undamaged.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq7">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7">
+          <i class="bi bi-file-earmark-medical-fill faq-icon"></i>Do I need a prescription to donate?
+        </button>
+      </h2>
+      <div id="collapse7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          A prescription is not required for most over-the-counter medicines, but is needed for certain prescription drugs.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq8">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8">
+          <i class="bi bi-clock-history faq-icon"></i>How long does the donation process take?
+        </button>
+      </h2>
+      <div id="collapse8" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Once your donation is verified, we aim to arrange pickup or drop-off within 2-3 days.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq9">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse9">
+          <i class="bi bi-people-fill faq-icon"></i>Who receives the donated medicines?
+        </button>
+      </h2>
+      <div id="collapse9" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          We distribute medicines to verified NGOs, hospitals, and individuals in need.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq10">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse10">
+          <i class="bi bi-chat-dots-fill faq-icon"></i>How can I contact support for more help?
+        </button>
+      </h2>
+      <div id="collapse10" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          You can reach our support team via the contact page or WhatsApp for any further questions.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Learn More About Medicine Donation Section -->
+  <section class="container my-5" id="learn-more">
+    <h3 class="text-danger text-center mb-4">Learn More About Medicine Donation</h3>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="ratio ratio-16x9 rounded shadow">
+          <iframe src="https://www.youtube.com/embed/me2GGniN_Gw" title="Why Medicine Donation Matters" allowfullscreen></iframe>
+        </div>
+        <p class="mt-2 text-center fw-semibold">Why Medicine Donation Matters</p>
+      </div>
+      <div class="col-md-4">
+        <div class="ratio ratio-16x9 rounded shadow">
+          <iframe src="https://www.youtube.com/embed/iQozgr7XnoY" title="Medicine Safety" allowfullscreen></iframe>
+        </div>
+        <p class="mt-2 text-center fw-semibold">Medicine Safety</p>
+      </div>
+      <div class="col-md-4">
+        <div class="ratio ratio-16x9 rounded shadow">
+          <iframe src="https://www.youtube.com/embed/FCAU4D-uG8Q" title="Why Medicine is Important" allowfullscreen></iframe>
+        </div>
+        <p class="mt-2 text-center fw-semibold">Why Medicine is Important</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white pt-4">
+    <div class="container-fluid px-5">
+      <div class="row text-center text-md-start">
+        <div class="col-md-4 mb-4">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="index.html" class="text-white text-decoration-none">Home</a></li>
+            <li><a href="donate.html" class="text-white text-decoration-none">Donate</a></li>
+            <li><a href="request.html" class="text-white text-decoration-none">Request</a></li>
+            <li><a href="about.html" class="text-white text-decoration-none">About</a></li>
+            <li><a href="contact.html" class="text-white text-decoration-none">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Follow Us</h5>
+          <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-twitter"></i></a>
+          <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-instagram"></i></a>
+          <a href="https://wa.me/918104073670" class="btn btn-outline-light btn-sm"><i class="bi bi-whatsapp"></i></a>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Contact</h5>
+          <p><i class="bi bi-telephone-fill me-2"></i> 8104073670</p>
+          <p><i class="bi bi-envelope-fill me-2"></i> adarshgupta7374@gmail.com</p>
+        </div>
+      </div>
+      <hr class="border-light" />
+      <p class="text-center mb-0 pb-3">&copy; 2025 MediCare. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+    // Show Thank You Modal on form submission
+    document.getElementById('donateForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var thankYouModal = new bootstrap.Modal(document.getElementById('thankYouModal'));
+      thankYouModal.show();
+      this.reset();
+    });
+
+    // Back to Top Button
+    window.addEventListener("scroll", function () {
+      const backBtn = document.getElementById("backToTop");
+      backBtn.style.display = window.scrollY > 300 ? "block" : "none";
+    });
+
+    // FAQ Search
+    document.getElementById('faqSearch').addEventListener('input', function () {
+      const value = this.value.toLowerCase();
+      document.querySelectorAll('#faqAccordion .accordion-item').forEach(item => {
+        item.style.display = item.textContent.toLowerCase().includes(value) ? '' : 'none';
+      });
+    });
+
+    // Live Donation Counter
+    let counter = 0;
+    setInterval(() => {
+      if (counter < 1250) {
+       counter += Math.floor(Math.random() * 5 + 1);
+       document.getElementById("donationCounter").textContent = counter;
+       // Live Donation Counter (disabled for fresh launch)
+       document.getElementById("donationCounter").textContent = "0";
+      }
+    }, 100);
+
+    // FAQ Accordion Animation
+    document.querySelectorAll('.accordion-item').forEach(item => {
+      item.addEventListener('show.bs.collapse', function () {
+        item.classList.add('active');
+      });
+      item.addEventListener('hide.bs.collapse', function () {
+        item.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Request | MediCare</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark-mode {
+      background-color: #181a1b !important;
+      color: #f1f1f1 !important;
+    }
+    body.dark-mode .navbar,
+    body.dark-mode .bg-white {
+      background-color: #23272b !important;
+      color: #f1f1f1 !important;
+    }
+    body.dark-mode .card,
+    body.dark-mode .bg-light {
+      background-color: #23272b !important;
+      color: #f1f1f1 !important;
+    }
+    body.dark-mode .section-title,
+    body.dark-mode .icon-box,
+    body.dark-mode .btn-danger {
+      color: #ff7675 !important;
+    }
+    body.dark-mode .btn-light {
+      background-color: #23272b !important;
+      color: #f1f1f1 !important;
+      border: 1px solid #f1f1f1;
+    }
+    body.dark-mode .bg-danger {
+      background-color: #b71c1c !important;
+    }
+    body.dark-mode .bg-dark {
+      background-color: #121212 !important;
+    }
+    body.dark-mode .text-white {
+      color: #f1f1f1 !important;
+    }
+    body.dark-mode .text-danger {
+      color: #ff7675 !important;
+    }
+    .hero {
+      background: linear-gradient(rgba(255,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1588776814546-ec7c0e70c4f4') center/cover no-repeat;
+      height: 60vh;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.3);
+      z-index: 1;
+    }
+    .hero .text-center {
+      position: relative;
+      z-index: 2;
+    }
+    .cta-btn {
+      margin-top: 20px;
+      background: #dc3545;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      padding: 10px 32px;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .cta-btn:hover {
+      background: #b52a37;
+      transform: scale(1.05);
+    }
+    #whatsapp-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      background-color: #25D366;
+      color: white;
+      border-radius: 50%;
+      padding: 15px;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: background 0.2s, transform 0.2s;
+    }
+    #whatsapp-button:hover {
+      background: #128c7e;
+      transform: scale(1.1);
+    }
+    #back-to-top {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      z-index: 9999;
+      background: #dc3545;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 22px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: background 0.2s, transform 0.2s;
+    }
+    #back-to-top:hover {
+      background: #b52a37;
+      transform: scale(1.1);
+    }
+    .form-section {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(220,53,69,0.08);
+      padding: 32px;
+      margin-top: 32px;
+      margin-bottom: 32px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .form-floating .form-control:focus {
+      border-color: #dc3545;
+      box-shadow: 0 0 0 0.2rem rgba(220,53,69,.15);
+    }
+    .form-floating label {
+      color: #888;
+      transition: color 0.2s;
+      padding-left: 0.75rem;
+    }
+    .form-floating .form-control:focus ~ label {
+      color: #dc3545;
+    }
+    .form-floating .form-control ~ label {
+      padding-left: 1.8rem;
+    }
+    .progress {
+      height: 6px;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .progress-bar {
+      background-color: #dc3545;
+    }
+    .success-message, .error-message {
+      display: none;
+      margin-top: 16px;
+      text-align: center;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 12px 0;
+    }
+    .success-message {
+      color: #155724;
+      background: #d4edda;
+    }
+    .error-message {
+      color: #721c24;
+      background: #f8d7da;
+    }
+    .btn-danger:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(255, 0, 0, 0.4);
+    }
+    .social-icon {
+      transition: color 0.2s, transform 0.2s;
+    }
+    .social-icon:hover {
+      color: #dc3545 !important;
+      transform: scale(1.2);
+    }
+    .step-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 8px rgba(220,53,69,0.10);
+    }
+    .step-line {
+      width: 32px;
+      height: 4px;
+      background: linear-gradient(90deg, #dc3545 60%, #ff6f61 100%);
+      border-radius: 2px;
+      margin: 0 4px;
+    }
+    .btn-gradient {
+      background: linear-gradient(90deg, #dc3545 60%, #ff6f61 100%);
+      color: #fff;
+      border: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-gradient:hover {
+      background: linear-gradient(90deg, #ff6f61 60%, #dc3545 100%);
+      transform: scale(1.04);
+    }
+    /* Decorative background shapes for form section */
+    .form-bg-decor {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 180px;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .form-bg-decor.left {
+      left: -100px;
+      background: radial-gradient(circle at 70% 40%, #ff6f61 0%, #dc3545 60%, transparent 100%);
+      opacity: 0.13;
+      filter: blur(2px);
+      animation: decor-float-left 8s ease-in-out infinite alternate;
+    }
+    .form-bg-decor.right {
+      right: -100px;
+      background: radial-gradient(circle at 30% 60%, #dc3545 0%, #ff6f61 60%, transparent 100%);
+      opacity: 0.13;
+      filter: blur(2px);
+      animation: decor-float-right 10s ease-in-out infinite alternate;
+    }
+    @keyframes decor-float-left {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(24px) scale(1.08); }
+    }
+    @keyframes decor-float-right {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-24px) scale(1.08); }
+    }
+    .form-bg-icon {
+      position: absolute;
+      opacity: 0.10;
+      font-size: 5rem;
+      z-index: 0;
+      pointer-events: none;
+      color: #dc3545;
+      filter: blur(0.5px);
+      animation: icon-float 7s ease-in-out infinite alternate;
+    }
+    .form-bg-icon.left {
+      left: 10px;
+      top: 30%;
+      animation-delay: 0s;
+    }
+    .form-bg-icon.right {
+      right: 10px;
+      bottom: 20%;
+      animation-delay: 2s;
+    }
+    @keyframes icon-float {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(18px); }
+    }
+    @media (max-width: 991px) {
+      .form-bg-decor, .form-bg-icon { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand text-danger fw-bold" href="index.html">MediCare</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
+          <li class="nav-item"><a class="nav-link active fw-bold text-danger" href="#">Request</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+          <li class="nav-item">
+            <button onclick="toggleDarkMode()" class="btn btn-outline-danger btn-sm ms-3">Dark Mode</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero d-flex align-items-center justify-content-center text-white position-relative">
+    <div class="text-center" data-aos="fade-up">
+      <h1 class="display-5 fw-bold">Request Medicines</h1>
+      <p>Need help with medicines? Fill out the form and we’ll get in touch with you.</p>
+      <button class="cta-btn" onclick="document.getElementById('request-form-section').scrollIntoView({behavior: 'smooth'});">Request Now</button>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="container py-5">
+    <h2 class="text-danger text-center mb-4" data-aos="fade-up">How It Works</h2>
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+        <div class="card h-100 shadow text-center p-3 border-0">
+          <div class="display-4 text-danger mb-2"><i class="bi bi-pencil-square"></i></div>
+          <h5 class="mb-2">1. Fill Request Form</h5>
+          <p class="mb-0">Provide your details and the medicine you need.</p>
+        </div>
+      </div>
+      <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+        <div class="card h-100 shadow text-center p-3 border-0">
+          <div class="display-4 text-danger mb-2"><i class="bi bi-shield-check"></i></div>
+          <h5 class="mb-2">2. Verification</h5>
+          <p class="mb-0">Our team reviews your request for authenticity and urgency.</p>
+        </div>
+      </div>
+      <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+        <div class="card h-100 shadow text-center p-3 border-0">
+          <div class="display-4 text-danger mb-2"><i class="bi bi-capsule"></i></div>
+          <h5 class="mb-2">3. Medicine Provided</h5>
+          <p class="mb-0">We arrange safe delivery or pickup of the required medicine.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Example Request Section -->
+  <section class="container py-4">
+    <div class="row justify-content-center">
+      <div class="col-md-8" data-aos="fade-up">
+        <div class="alert alert-info shadow-sm mb-0">
+          <h5 class="mb-2"><i class="bi bi-info-circle text-danger"></i> Example Request</h5>
+          <p class="mb-1"><strong>Name:</strong> Priya Sharma</p>
+          <p class="mb-1"><strong>Email:</strong> priyasharma@email.com</p>
+          <p class="mb-1"><strong>Required Medicine:</strong> Paracetamol 500mg</p>
+          <p class="mb-1"><strong>Quantity Needed:</strong> 20 tablets</p>
+          <p class="mb-1"><strong>Why Needed:</strong> For my mother’s fever and doctor’s prescription.</p>
+          <p class="mb-0 text-success"><i class="bi bi-check-circle"></i> We provided the medicine within 24 hours!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Request from Us Section -->
+  <section class="container py-5">
+    <h2 class="text-danger text-center mb-4" data-aos="fade-up">Why Request from Us?</h2>
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+        <div class="card h-100 border-0 shadow text-center p-3">
+          <div class="display-5 text-danger mb-2"><i class="bi bi-patch-check"></i></div>
+          <h6>Verified Medicines</h6>
+          <p class="mb-0">All medicines are checked for safety and expiry.</p>
+        </div>
+      </div>
+      <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+        <div class="card h-100 border-0 shadow text-center p-3">
+          <div class="display-5 text-danger mb-2"><i class="bi bi-shield-lock"></i></div>
+          <h6>Privacy Assured</h6>
+          <p class="mb-0">Your information is kept confidential and secure.</p>
+        </div>
+      </div>
+      <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+        <div class="card h-100 border-0 shadow text-center p-3">
+          <div class="display-5 text-danger mb-2"><i class="bi bi-lightning-charge"></i></div>
+          <h6>Quick Response</h6>
+          <p class="mb-0">We prioritize urgent requests and respond fast.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frequently Requested Medicines Section -->
+  <section class="container py-4">
+    <h2 class="text-danger text-center mb-4" data-aos="fade-up">Frequently Requested Medicines</h2>
+    <div class="row g-3 justify-content-center">
+      <div class="col-6 col-md-2" data-aos="zoom-in" data-aos-delay="100">
+        <div class="card border-0 shadow-sm text-center p-2">
+          <div class="display-6 text-danger"><i class="bi bi-capsule"></i></div>
+          <div>Paracetamol</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-2" data-aos="zoom-in" data-aos-delay="200">
+        <div class="card border-0 shadow-sm text-center p-2">
+          <div class="display-6 text-danger"><i class="bi bi-droplet-half"></i></div>
+          <div>Insulin</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-2" data-aos="zoom-in" data-aos-delay="300">
+        <div class="card border-0 shadow-sm text-center p-2">
+          <div class="display-6 text-danger"><i class="bi bi-heart-pulse"></i></div>
+          <div>BP Tablets</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-2" data-aos="zoom-in" data-aos-delay="400">
+        <div class="card border-0 shadow-sm text-center p-2">
+          <div class="display-6 text-danger"><i class="bi bi-lungs"></i></div>
+          <div>Asthma Inhaler</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-2" data-aos="zoom-in" data-aos-delay="500">
+        <div class="card border-0 shadow-sm text-center p-2">
+          <div class="display-6 text-danger"><i class="bi bi-tablet"></i></div>
+          <div>Antibiotics</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What Happens Next Section -->
+  <section class="container py-5">
+    <h2 class="text-danger text-center mb-4" data-aos="fade-up">What Happens Next?</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div class="timeline" data-aos="fade-up">
+          <div class="row g-0 align-items-center mb-4">
+            <div class="col-auto pe-3"><span class="badge bg-danger">1</span></div>
+            <div class="col"><strong>We review your request</strong> and may contact you for more details.</div>
+          </div>
+          <div class="row g-0 align-items-center mb-4">
+            <div class="col-auto pe-3"><span class="badge bg-danger">2</span></div>
+            <div class="col"><strong>We match your need</strong> with available medicines and donors.</div>
+          </div>
+          <div class="row g-0 align-items-center mb-4">
+            <div class="col-auto pe-3"><span class="badge bg-danger">3</span></div>
+            <div class="col"><strong>We arrange delivery or pickup</strong> and keep you updated.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Request Form -->
+  <section class="container py-5" id="request-form-section">
+    <div class="position-relative">
+      <div class="form-bg-decor left"></div>
+      <div class="form-bg-decor right"></div>
+      <i class="bi bi-capsule form-bg-icon left"></i>
+      <i class="bi bi-heart-pulse form-bg-icon right"></i>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="form-section p-0" data-aos="zoom-in" style="background: linear-gradient(135deg, #fff 80%, #ffeaea 100%); border-radius: 18px; box-shadow: 0 8px 32px rgba(220,53,69,0.10);">
+            <div class="p-4 p-md-5">
+              <h2 class="text-danger text-center mb-2">Request Medicines</h2>
+              <p class="text-center text-secondary mb-4">Fill out the form below and our team will reach out to help you as soon as possible.</p>
+              <!-- Step Indicator -->
+              <div class="d-flex justify-content-center align-items-center mb-4">
+                <div class="step-circle bg-danger text-white me-2">1</div>
+                <span class="fw-semibold me-3">Your Info</span>
+                <div class="step-line"></div>
+                <div class="step-circle bg-danger text-white mx-2">2</div>
+                <span class="fw-semibold me-3">Medicine Details</span>
+                <div class="step-line"></div>
+                <div class="step-circle bg-danger text-white mx-2">3</div>
+                <span class="fw-semibold">Submit</span>
+              </div>
+              <div class="progress" id="form-progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
+              </div>
+              <form id="requestForm" autocomplete="off">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                  <label for="name">Your Name</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                  <label for="email">Email address</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="medicine" placeholder="Required Medicine" required>
+                  <label for="medicine">Required Medicine</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="number" class="form-control" id="quantity" placeholder="Quantity Needed" required>
+                  <label for="quantity">Quantity Needed</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <textarea class="form-control" placeholder="Why You Need This Medicine" id="message" style="height: 100px"></textarea>
+                  <label for="message">Why You Need This Medicine</label>
+                </div>
+                <button type="submit" class="btn btn-gradient w-100 py-2">Submit Request</button>
+              </form>
+              <div class="success-message animate__animated animate__fadeIn" id="form-success">Your request has been submitted! We'll contact you soon.</div>
+              <div class="error-message animate__animated animate__fadeIn" id="form-error">There was an error submitting your request. Please try again.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Learn More About Medicine Donation Section -->
+  <section class="container my-5" id="learn-more">
+    <h3 class="text-danger text-center mb-4">Learn More About Medicine Donation</h3>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="ratio ratio-16x9 rounded shadow">
+          <iframe src="https://www.youtube.com/embed/me2GGniN_Gw" title="Why Medicine Donation Matters" allowfullscreen></iframe>
+        </div>
+        <p class="mt-2 text-center fw-semibold">Why Medicine Donation Matters</p>
+      </div>
+      <div class="col-md-4">
+        <div class="ratio ratio-16x9 rounded shadow">
+          <iframe src="https://www.youtube.com/embed/iQozgr7XnoY" title="Medicine Safety" allowfullscreen></iframe>
+        </div>
+        <p class="mt-2 text-center fw-semibold">Medicine Safety</p>
+      </div>
+      <div class="col-md-4">
+        <div class="ratio ratio-16x9 rounded shadow">
+          <iframe src="https://www.youtube.com/embed/FCAU4D-uG8Q" title="Why Medicine is Important" allowfullscreen></iframe>
+        </div>
+        <p class="mt-2 text-center fw-semibold">Why Medicine is Important</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white pt-4">
+    <div class="container">
+      <div class="row text-center text-md-start">
+        <div class="col-md-4 mb-4">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="index.html" class="text-white text-decoration-none">Home</a></li>
+            <li><a href="donate.html" class="text-white text-decoration-none">Donate</a></li>
+            <li><a href="request.html" class="text-white text-decoration-none">Request</a></li>
+            <li><a href="about.html" class="text-white text-decoration-none">About</a></li>
+            <li><a href="contact.html" class="text-white text-decoration-none">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Follow Us</h5>
+          <a href="#" class="btn btn-outline-light btn-sm me-2 social-icon"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="btn btn-outline-light btn-sm me-2 social-icon"><i class="bi bi-twitter"></i></a>
+          <a href="#" class="btn btn-outline-light btn-sm me-2 social-icon"><i class="bi bi-instagram"></i></a>
+          <a href="https://wa.me/918104073670" class="btn btn-outline-light btn-sm social-icon"><i class="bi bi-whatsapp"></i></a>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Contact</h5>
+          <p><i class="bi bi-telephone-fill me-2"></i> 8104073670</p>
+          <p><i class="bi bi-envelope-fill me-2"></i> adarshgupta7374@gmail.com</p>
+        </div>
+      </div>
+      <hr class="border-light" />
+      <p class="text-center mb-0 pb-3">&copy; 2025 MediCare. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Floating Button -->
+  <a id="whatsapp-button" href="https://wa.me/918104073670" target="_blank">
+    <i class="bi bi-whatsapp"></i>
+  </a>
+  <!-- Back to Top Button -->
+  <button id="back-to-top" title="Back to top"><i class="bi bi-arrow-up"></i></button>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+    // Back to Top Button
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 300) {
+        backToTop.style.display = 'block';
+      } else {
+        backToTop.style.display = 'none';
+      }
+    });
+    backToTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    // Request Form UI Only (no backend)
+    const form = document.getElementById('requestForm');
+    const progress = document.getElementById('form-progress');
+    const successMsg = document.getElementById('form-success');
+    const errorMsg = document.getElementById('form-error');
+    if(form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        progress.style.display = 'block';
+        successMsg.style.display = 'none';
+        errorMsg.style.display = 'none';
+        setTimeout(() => {
+          progress.style.display = 'none';
+          successMsg.style.display = 'block';
+          form.reset();
+        }, 1500);
+      });
+    }
+  </script>
+</body>
+</html>

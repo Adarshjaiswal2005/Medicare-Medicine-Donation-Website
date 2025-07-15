@@ -1,0 +1,76 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f9fa;
+}
+.hero h1 {
+  font-weight: bold;
+}
+form label {
+  font-weight: 500;
+}
+footer .social-icons a {
+  font-size: 1.2rem;
+}
+/* Glassmorphism for cards */
+.glass-card {
+  background: rgba(255,255,255,0.7) !important;
+  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.10);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(120deg, #dc3545 40%, #ffb3b3 100%);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f8f9fa;
+}
+/* Animated Headings */
+.animated-heading {
+  display: inline-block;
+  position: relative;
+  animation: heading-underline 1.2s cubic-bezier(.77,0,.18,1) 1;
+  background: linear-gradient(90deg, #dc3545 60%, #ffb3b3 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 3px;
+  background-position: 0 100%;
+  padding-bottom: 4px;
+}
+@keyframes heading-underline {
+  0% { background-size: 0 3px; }
+  100% { background-size: 100% 3px; }
+}
+/* Floating Decorative Medical Icons */
+.floating-icon {
+  position: absolute;
+  font-size: 2.5rem;
+  color: #dc3545a0;
+  opacity: 0.7;
+  pointer-events: none;
+  animation: floatY 4s ease-in-out infinite alternate;
+  z-index: 1;
+}
+@keyframes floatY {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-20px); }
+}
+/* Microinteractions for buttons */
+.cta-btn, #back-to-top, #whatsapp-button, .btn {
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.cta-btn:active, #back-to-top:active, #whatsapp-button:active, .btn:active {
+  transform: scale(0.96);
+  box-shadow: 0 2px 8px rgba(220,53,69,0.15);
+}
+/* Uniform card heights */
+.contact-card {
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

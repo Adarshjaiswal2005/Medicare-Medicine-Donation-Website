@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | MediCare</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      background-color: #121212;
+      color: #f1f1f1;
+    }
+
+    body.dark-mode .navbar,
+    body.dark-mode footer,
+    body.dark-mode .card,
+    body.dark-mode .form-control,
+    body.dark-mode .form-label {
+      background-color: #1e1e1e !important;
+      color: #f1f1f1 !important;
+    }
+
+    body.dark-mode input,
+    body.dark-mode textarea,
+    body.dark-mode select {
+      background-color: #2c2c2c;
+      color: white;
+    }
+
+    .hero {
+      background: linear-gradient(rgba(255,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1588776814546-ec7c0e70c4f4') center/cover no-repeat;
+      height: 60vh;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .btn-danger:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(255, 0, 0, 0.4);
+    }
+
+    .spinner-border {
+      display: none; /* Hide spinner initially */
+    }
+
+    .glass-card {
+      background: rgba(255,255,255,0.7);
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+    .counter {
+      font-size: 2.2rem;
+      font-weight: 700;
+      transition: color 0.3s;
+    }
+    .form-floating > .form-control:focus ~ label {
+      color: #dc3545;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand text-danger fw-bold" href="index.html">MediCare</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
+          <li class="nav-item"><a class="nav-link" href="request.html">Request</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link active fw-bold text-danger" href="#">Login</a></li>
+          <li class="nav-item">
+            <button onclick="toggleDarkMode()" class="btn btn-outline-danger btn-sm ms-3">Dark Mode</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Login Form and About Section (Advanced Enhancement) -->
+  <section class="container-fluid min-vh-100 d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #ffb6b9 0%, #fae3d9 100%);">
+    <div class="row w-100" style="max-width: 1100px;">
+      <!-- Left: About & Animation -->
+      <div class="col-lg-6 d-flex flex-column justify-content-center align-items-center text-center p-5">
+        <div style="max-width: 350px; margin: 0 auto;">
+          <!-- Lottie Animation -->
+          <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_ktwnwv5m.json" background="transparent" speed="1" style="width: 100%; height: 220px;" loop autoplay></lottie-player>
+        </div>
+        <h2 class="text-danger mt-4 mb-3">Why Medicine Donation?</h2>
+        <p>
+          <strong>MediCare</strong> connects donors and those in need, ensuring no medicine goes to waste. By logging in, you can donate, request, and track your impact.
+        </p>
+        <div class="d-flex justify-content-center gap-4 mt-4">
+          <div>
+            <h3 class="text-danger mb-0 counter" data-target="0">0</h3>
+            <small>Medicines Donated</small>
+          </div>
+          <div>
+            <h3 class="text-danger mb-0 counter" data-target="0">0</h3>
+            <small>People Helped</small>
+          </div>
+        </div>
+      </div>
+      <!-- Right: Login Card -->
+      <div class="col-lg-6 d-flex align-items-center justify-content-center p-5">
+        <div class="glass-card p-4 w-100" style="max-width: 400px;">
+          <h2 class="text-danger text-center mb-4">Login to MediCare</h2>
+          <form id="loginForm">
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+              <label for="email"><i class="bi bi-envelope me-2"></i>Email address</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="password" placeholder="Password" required>
+              <label for="password"><i class="bi bi-lock me-2"></i>Password</label>
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="rememberMe">
+              <label class="form-check-label" for="rememberMe">Remember Me</label>
+            </div>
+            <button type="submit" class="btn btn-danger w-100 mb-2">Login</button>
+            <div class="text-center mb-2">
+              <a href="forgot-password.html" class="small">Forgot Password?</a>
+            </div>
+            <div class="text-center mb-2">
+              <span>Or log in with:</span>
+              <div class="d-flex justify-content-center gap-2 mt-2">
+                <a href="https://accounts.google.com/" target="_blank" class="btn btn-outline-danger btn-sm"><i class="bi bi-google"></i></a>
+                <a href="https://www.facebook.com/" target="_blank" class="btn btn-outline-danger btn-sm"><i class="bi bi-facebook"></i></a>
+              </div>
+            </div>
+            <div class="text-center mt-2">
+              <span>Don't have an account? <a href="index.html#register">Register here</a></span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white pt-4">
+    <div class="container">
+      <div class="row text-center text-md-start">
+        <div class="col-md-4 mb-4">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="index.html" class="text-white text-decoration-none">Home</a></li>
+            <li><a href="donate.html" class="text-white text-decoration-none">Donate</a></li>
+            <li><a href="request.html" class="text-white text-decoration-none">Request</a></li>
+            <li><a href="about.html" class="text-white text-decoration-none">About</a></li>
+            <li><a href="contact.html" class="text-white text-decoration-none">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Follow Us</h5>
+          <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-twitter"></i></a>
+          <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-instagram"></i></a>
+          <a href="https://wa.me/918104073670" class="btn btn-outline-light btn-sm"><i class="bi bi-whatsapp"></i></a>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Contact</h5>
+          <p><i class="bi bi-telephone-fill me-2"></i> 8104073670</p>
+          <p><i class="bi bi-envelope-fill me-2"></i> adarshgupta7374@gmail.com</p>
+        </div>
+      </div>
+      <hr class="border-light" />
+      <p class="text-center mb-0 pb-3">&copy; 2025 MediCare. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <script>
+    AOS.init();
+
+    // Animated counters
+    document.querySelectorAll('.counter').forEach(counter => {
+      counter.innerText = '0';
+      const updateCounter = () => {
+        const target = +counter.getAttribute('data-target');
+        const count = +counter.innerText;
+        const increment = target / 100;
+        if (count < target) {
+          counter.innerText = Math.ceil(count + increment);
+          setTimeout(updateCounter, 10);
+        } else {
+          counter.innerText = target;
+        }
+      };
+      updateCounter();
+    });
+
+    // Toggle password visibility
+    document.addEventListener('DOMContentLoaded', function () {
+      const passwordInput = document.getElementById('password');
+      const label = passwordInput.nextElementSibling;
+      label.innerHTML += ' <button type="button" id="togglePassword" class="btn btn-sm btn-link p-0 ms-2" tabindex="-1"><i class="bi bi-eye"></i></button>';
+      document.getElementById('togglePassword').addEventListener('click', function () {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.innerHTML = type === 'password' ? '<i class="bi bi-eye"></i>' : '<i class="bi bi-eye-slash"></i>';
+      });
+    });
+
+    // Handle form submission
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent default form submission
+      document.getElementById('loadingSpinner').style.display = 'inline-block'; // Show loading spinner
+
+      // Simulate a login process
+      setTimeout(() => {
+        document.getElementById('loadingSpinner').style.display = 'none'; // Hide loading spinner
+        alert('Login successful!'); // Replace with actual login logic
+      }, 2000);
+    });
+  </script>
+
+</body>
+</html>

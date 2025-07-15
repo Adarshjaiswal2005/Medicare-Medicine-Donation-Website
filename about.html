@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us | MediCare</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    .hero {
+      background: linear-gradient(rgba(255,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1588776814546-ec7c0e70c4f4') center/cover no-repeat;
+      height: 60vh;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .section-title {
+      font-weight: bold;
+      color: #dc3545;
+    }
+    .icon-box {
+      font-size: 2.5rem;
+      color: #dc3545;
+    }
+    .team-img {
+      width: 100%;
+      height: 220px;
+      object-fit: contain;
+      background: #f8f9fa;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .btn-danger:hover {
+      transform: scale(1.05);
+    }
+    body.dark-mode {
+      background-color: #181a1b !important;
+      color: #f1f1f1 !important;
+    }
+    body.dark-mode .navbar,
+    body.dark-mode .bg-white {
+      background-color: #23272b !important;
+      color: #f1f1f1 !important;
+    }
+    body.dark-mode .card,
+    body.dark-mode .bg-light {
+      background-color: #23272b !important;
+      color: #f1f1f1 !important;
+    }
+    body.dark-mode .section-title,
+    body.dark-mode .icon-box,
+    body.dark-mode .btn-danger {
+      color: #ff7675 !important;
+    }
+    body.dark-mode .btn-light {
+      background-color: #23272b !important;
+      color: #f1f1f1 !important;
+      border: 1.5px solid #f1f1f1;
+    }
+    body.dark-mode .bg-danger {
+      background-color: #b71c1c !important;
+    }
+    body.dark-mode .bg-dark {
+      background-color: #121212 !important;
+    }
+    body.dark-mode .text-white {
+      color: #f1f1f1 !important;
+    }
+    body.dark-mode .text-danger {
+      color: #ff7675 !important;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+  <div class="container">
+    <a class="navbar-brand text-danger fw-bold" href="index.html">MediCare</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
+        <li class="nav-item"><a class="nav-link" href="request.html">Request</a></li>
+        <li class="nav-item"><a class="nav-link active text-danger" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+        <li class="nav-item">
+          <button id="darkModeToggle" class="btn btn-outline-danger btn-sm ms-3" type="button">Dark Mode</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero position-relative">
+  <div data-aos="zoom-in">
+    <h1 class="display-4 fw-bold animated-heading">About MediCare</h1>
+    <p class="lead">Together, let's bridge the gap between surplus and need.</p>
+  </div>
+  <!-- Floating Decorative Medical Icons -->
+  <i class="bi bi-capsule-fill floating-icon" style="top:18%;left:6%;"></i>
+  <i class="bi bi-heart-pulse-fill floating-icon" style="top:60%;right:8%;"></i>
+  <i class="bi bi-bandaid-fill floating-icon" style="bottom:10%;left:15%;"></i>
+</section>
+<!-- Animated SVG Divider -->
+<svg class="section-divider" viewBox="0 0 1440 100" style="display:block;width:100%;margin-bottom:-2px;" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" fill-opacity="1" d="M0,64L48,58.7C96,53,192,43,288,58.7C384,75,480,117,576,117.3C672,117,768,75,864,74.7C960,75,1056,117,1152,128C1248,139,1344,117,1392,106.7L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>
+
+<!-- Mission Section -->
+<section class="container py-5">
+  <div class="row align-items-center">
+    <div class="col-md-6" data-aos="fade-right">
+      <img src="https://cdn.aarp.net/content/dam/aarp/health/drugs_supplements/2022/11/1140-how-to-donate-drugs.jpg" alt="Donate" class="img-fluid rounded shadow" />
+    </div>
+    <div class="col-md-6" data-aos="fade-left">
+      <h2 class="section-title mb-3">Our Mission</h2>
+      <p>
+        At MediCare, our mission is simple — to make life-saving medicines accessible to those who can't afford them. Every year, lakhs of unused medicines go to waste, while thousands of lives are lost due to the unavailability of those same drugs. We aim to collect, verify, and redistribute unused, unexpired medicines to the underprivileged across India.
+      </p>
+      <p>
+        We believe access to basic healthcare is a right, not a luxury. Through community participation and a secure digital platform, we're creating a network of care — one donation at a time.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="bg-light py-5">
+  <div class="container">
+    <h2 class="section-title text-center mb-5" data-aos="fade-up">How It Works</h2>
+    <div class="row text-center g-4">
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="icon-box mb-3"><i class="bi bi-box-seam"></i></div>
+        <h5>Step 1: Donate</h5>
+        <p>Fill the donation form and submit your unused, valid medicines securely.</p>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="icon-box mb-3"><i class="bi bi-shield-check"></i></div>
+        <h5>Step 2: Verification</h5>
+        <p>Our team verifies expiry dates and packaging to ensure safety and compliance.</p>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="icon-box mb-3"><i class="bi bi-heart-pulse"></i></div>
+        <h5>Step 3: Distribution</h5>
+        <p>Medicines are delivered to verified NGOs, clinics, and individuals in need.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="container py-5">
+  <div class="text-center mb-5" data-aos="fade-up">
+    <h2 class="section-title">Why Choose MediCare?</h2>
+    <p class="text-muted">We make donation safe, impactful, and easy.</p>
+  </div>
+  <div class="row g-4 text-center">
+    <div class="col-md-4" data-aos="zoom-in">
+      <div class="icon-box"><i class="bi bi-check-circle-fill"></i></div>
+      <h5>Safe Handling</h5>
+      <p>All donations are reviewed and handled following safety protocols.</p>
+    </div>
+    <div class="col-md-4" data-aos="zoom-in" data-aos-delay="150">
+      <div class="icon-box"><i class="bi bi-globe2"></i></div>
+      <h5>Community Driven</h5>
+      <p>Thousands of people from across India donate and benefit through us.</p>
+    </div>
+    <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
+      <div class="icon-box"><i class="bi bi-graph-up-arrow"></i></div>
+      <h5>Real Impact</h5>
+      <p>We track and display live stats of donations and lives touched.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Meet the Team -->
+<section class="container py-5">
+  <div class="text-center mb-5" data-aos="fade-up">
+    <h2 class="section-title animated-heading">Meet the Team</h2>
+    <p class="text-muted">The founders behind MediCare</p>
+  </div>
+  <div class="row g-4 justify-content-center">
+    <div class="col-md-4" data-aos="fade-up">
+      <div class="card h-100 border-0 shadow text-center p-3 glass-card">
+        <img src="your-image.jpg" class="team-img mb-3" alt="Adarsh Gupta">
+        <h5 class="fw-bold mb-1">Adarsh Gupta</h5>
+        <p class="mb-2">Founder</p>
+        <div>
+          <a href="#" class="me-2 text-danger social-icon"><i class="bi bi-linkedin"></i></a>
+          <a href="#" class="text-danger social-icon"><i class="bi bi-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+      <div class="card h-100 border-0 shadow text-center p-3 glass-card">
+        <img src="ajay-yadav.jpg" class="team-img mb-3" alt="Ajay Yadav">
+        <h5 class="fw-bold mb-1">Ajay Yadav</h5>
+        <p class="mb-2">Founder</p>
+        <div>
+          <a href="#" class="me-2 text-danger social-icon"><i class="bi bi-linkedin"></i></a>
+          <a href="#" class="text-danger social-icon"><i class="bi bi-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- FAQ Accordion -->
+<section class="container my-5">
+  <h2 class="section-title mb-4 text-center animated-heading">Frequently Asked Questions</h2>
+  <div class="accordion" id="faqAccordion">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq1">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+          What medicines can I donate?
+        </button>
+      </h2>
+      <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Only unused, unexpired medicines in sealed packaging are accepted.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq2">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+          How do you ensure safety?
+        </button>
+      </h2>
+      <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          All donations are checked by licensed pharmacists before redistribution.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq3">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+          Can I request medicines for someone else?
+        </button>
+      </h2>
+      <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Yes, you can request on behalf of a family member or friend in need.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Learn More About Medicine Donation Section -->
+<section class="container my-5" id="learn-more">
+  <h3 class="text-danger text-center mb-4">Learn More About Medicine Donation</h3>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="ratio ratio-16x9 rounded shadow">
+        <iframe src="https://www.youtube.com/embed/me2GGniN_Gw" title="Why Medicine Donation Matters" allowfullscreen></iframe>
+      </div>
+      <p class="mt-2 text-center fw-semibold">Why Medicine Donation Matters</p>
+    </div>
+    <div class="col-md-4">
+      <div class="ratio ratio-16x9 rounded shadow">
+        <iframe src="https://www.youtube.com/embed/iQozgr7XnoY" title="Medicine Safety" allowfullscreen></iframe>
+      </div>
+      <p class="mt-2 text-center fw-semibold">Medicine Safety</p>
+    </div>
+    <div class="col-md-4">
+      <div class="ratio ratio-16x9 rounded shadow">
+        <iframe src="https://www.youtube.com/embed/FCAU4D-uG8Q" title="Why Medicine is Important" allowfullscreen></iframe>
+      </div>
+      <p class="mt-2 text-center fw-semibold">Why Medicine is Important</p>
+    </div>
+  </div>
+</section>
+<!-- Call to Action -->
+<section class="bg-danger text-white text-center py-5" data-aos="fade-up">
+  <div class="container">
+    <h2 class="mb-3">Ready to Make a Difference?</h2>
+    <p class="mb-4">Your unused medicines can bring hope to someone in need.</p>
+    <a href="donate.html" class="btn btn-light btn-lg">Donate Now</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white pt-4">
+  <div class="container">
+    <div class="row text-center text-md-start">
+      <div class="col-md-4 mb-4">
+        <h5>Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="index.html" class="text-white text-decoration-none">Home</a></li>
+          <li><a href="donate.html" class="text-white text-decoration-none">Donate</a></li>
+          <li><a href="request.html" class="text-white text-decoration-none">Request</a></li>
+          <li><a href="contact.html" class="text-white text-decoration-none">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 mb-4">
+        <h5>Follow Us</h5>
+        <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-twitter"></i></a>
+        <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-instagram"></i></a>
+        <a href="https://wa.me/918104073670" class="btn btn-outline-light btn-sm"><i class="bi bi-whatsapp"></i></a>
+      </div>
+      <div class="col-md-4 mb-4">
+        <h5>Contact</h5>
+        <p><i class="bi bi-telephone-fill me-2"></i> 8104073670</p>
+        <p><i class="bi bi-envelope-fill me-2"></i> adarshgupta7374@gmail.com</p>
+      </div>
+    </div>
+    <hr class="border-light" />
+    <p class="text-center mb-0 pb-3">&copy; 2025 MediCare. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
+<script>
+  const toggle = document.getElementById('darkModeToggle');
+  const body = document.body;
+
+  // Load saved mode
+  if (localStorage.getItem('darkMode') === 'enabled') {
+    body.classList.add('dark-mode');
+  }
+
+  toggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    if (body.classList.contains('dark-mode')) {
+      localStorage.setItem('darkMode', 'enabled');
+    } else {
+      localStorage.setItem('darkMode', 'disabled');
+    }
+  });
+</script>
+<script>
+  // FAQ Accordion Animation
+  document.querySelectorAll('.accordion-item').forEach(item => {
+    item.addEventListener('show.bs.collapse', function () {
+      item.classList.add('active');
+    });
+    item.addEventListener('hide.bs.collapse', function () {
+      item.classList.remove('active');
+    });
+  });
+</script>
+
+</body>
+</html>
