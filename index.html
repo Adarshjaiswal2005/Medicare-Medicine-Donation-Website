@@ -27,14 +27,59 @@
     .dark-mode .navbar,
     .dark-mode footer,
     .dark-mode .card,
-    .dark-mode .testimonial-card {
+    .dark-mode .testimonial-card,
+    .dark-mode .bg-white {
       background-color: #1e1e1e !important;
+      color: #f1f1f1 !important;
+    }
+
+    .dark-mode .bg-light {
+      background-color: #2c2c2c !important;
     }
 
     .dark-mode a,
     .dark-mode p,
-    .dark-mode h5 {
+    .dark-mode h1,
+    .dark-mode h2,
+    .dark-mode h3,
+    .dark-mode h4,
+    .dark-mode h5,
+    .dark-mode h6 {
       color: #f1f1f1 !important;
+    }
+
+    .dark-mode .text-muted {
+      color: #b0b0b0 !important;
+    }
+
+    .dark-mode .form-control,
+    .dark-mode .form-select {
+      background-color: #2c2c2c !important;
+      border-color: #404040 !important;
+      color: #f1f1f1 !important;
+    }
+
+    .dark-mode .form-control:focus,
+    .dark-mode .form-select:focus {
+      background-color: #2c2c2c !important;
+      border-color: #dc3545 !important;
+      color: #f1f1f1 !important;
+      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+    }
+
+    .dark-mode .btn-outline-danger {
+      border-color: #dc3545 !important;
+      color: #dc3545 !important;
+    }
+
+    .dark-mode .btn-outline-danger:hover {
+      background-color: #dc3545 !important;
+      color: #fff !important;
+    }
+
+    .dark-mode .feature-card:hover {
+      background: #2c2c2c !important;
+      box-shadow: 0 8px 24px rgba(220, 53, 69, 0.3) !important;
     }
 
     .hero {
@@ -111,6 +156,192 @@
       background: linear-gradient(90deg, #ff6f61 60%, #dc3545 100%);
       transform: scale(1.05);
     }
+
+    /* Enhanced Contact Section Styles */
+    .contact-card, .location-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .contact-card:hover, .location-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(220, 53, 69, 0.15) !important;
+    }
+
+    .contact-icon-wrapper, .location-icon-wrapper {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, #dc3545, #ff6f61);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(220, 53, 69, 0.3);
+    }
+
+    .contact-method-card {
+      background: linear-gradient(135deg, #f8f9fa, #ffffff);
+      border: 1px solid #e9ecef;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-method-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(220, 53, 69, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .contact-method-card:hover::before {
+      left: 100%;
+    }
+
+    .contact-method-card:hover {
+      transform: translateX(5px);
+      border-color: #dc3545;
+      box-shadow: 0 5px 15px rgba(220, 53, 69, 0.2);
+    }
+
+    .contact-method-icon {
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(135deg, #dc3545, #ff6f61);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .quick-stat {
+      padding: 10px;
+      border-radius: 8px;
+      background: rgba(220, 53, 69, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .quick-stat:hover {
+      background: rgba(220, 53, 69, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .map-container {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 10;
+      transition: opacity 0.3s ease;
+    }
+
+    .map-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .map-activate-btn {
+      border-radius: 50px;
+      padding: 15px 30px;
+      font-weight: 600;
+      box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .map-activate-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 35px rgba(220, 53, 69, 0.6);
+    }
+
+    .location-detail-item {
+      background: rgba(220, 53, 69, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .location-detail-item:hover {
+      background: rgba(220, 53, 69, 0.1);
+      transform: translateY(-3px);
+    }
+
+    .emergency-banner {
+      background: linear-gradient(135deg, #dc3545, #c82333);
+      box-shadow: 0 10px 30px rgba(220, 53, 69, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .emergency-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(255, 255, 255, 0.05) 10px,
+        rgba(255, 255, 255, 0.05) 20px
+      );
+      animation: emergencyPattern 20s linear infinite;
+    }
+
+    @keyframes emergencyPattern {
+      0% { transform: translateX(-50px) translateY(-50px); }
+      100% { transform: translateX(50px) translateY(50px); }
+    }
+
+    /* Dark mode styles for contact section */
+    .dark-mode .contact-method-card {
+      background: linear-gradient(135deg, #2c2c2c, #1e1e1e);
+      border-color: #404040;
+    }
+
+    .dark-mode .contact-method-card:hover {
+      border-color: #dc3545;
+    }
+
+    .dark-mode .location-detail-item,
+    .dark-mode .quick-stat {
+      background: rgba(220, 53, 69, 0.1);
+    }
+
+    .dark-mode .location-detail-item:hover,
+    .dark-mode .quick-stat:hover {
+      background: rgba(220, 53, 69, 0.2);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .contact-icon-wrapper, .location-icon-wrapper {
+        width: 50px;
+        height: 50px;
+      }
+
+      .contact-method-card {
+        margin-bottom: 15px;
+      }
+
+      .emergency-banner {
+        text-align: center;
+      }
+
+      .emergency-banner .col-md-4 {
+        margin-top: 20px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -124,11 +355,37 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
+          <li class="nav-item"><a class="nav-link" href="donate.html">Donate Medicine</a></li>
+          <li class="nav-item"><a class="nav-link" href="donate-money.html">Donate Money</a></li>
           <li class="nav-item"><a class="nav-link" href="request.html">Request</a></li>
           <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-          <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+          <li class="nav-item" id="loginNav">
+            <a class="nav-link" href="login.html">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-danger fw-bold" href="admin-login.html">
+              <i class="bi bi-shield-lock me-1"></i>Admin Login
+            </a>
+          </li>
+          <li class="nav-item dropdown d-none" id="profileNav">
+            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
+              <i class="bi bi-person-circle"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown" style="min-width: 220px;">
+              <li class="px-3 py-2 border-bottom">
+                <div class="fw-bold" id="profileName"></div>
+                <div class="small text-muted" id="profileEmail"></div>
+              </li>
+              <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person me-2"></i>My Profile</a></li>
+              <li><a class="dropdown-item" href="my-donations.html"><i class="bi bi-heart me-2"></i>My Donations</a></li>
+              <li><a class="dropdown-item" href="my-requests.html"><i class="bi bi-capsule-pill me-2"></i>My Requests</a></li>
+              <li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear me-2"></i>Settings</a></li>
+              <li><a class="dropdown-item" href="#" onclick="showChangePasswordModal()"><i class="bi bi-key me-2"></i>Change Password</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+            </ul>
+          </li>
           <li class="nav-item">
             <button onclick="toggleDarkMode()" class="btn btn-outline-danger btn-sm ms-3">Dark Mode</button>
           </li>
@@ -204,26 +461,27 @@
       <div class="card shadow-sm border-0 h-100">
         <div class="card-body p-4">
           <h3 class="text-danger text-center mb-4">Donor Registration</h3>
-          <form>
+          <form id="registerForm">
             <div class="mb-3">
               <label class="form-label">Full Name *</label>
-              <input type="text" class="form-control" placeholder="Enter your full name" required />
+              <input type="text" class="form-control" placeholder="Enter your full name" name="name" required />
             </div>
             <div class="mb-3">
               <label class="form-label">Email Address *</label>
-              <input type="email" class="form-control" placeholder="Enter your email" required />
+              <input type="email" class="form-control" placeholder="Enter your email" name="email" required />
             </div>
             <div class="mb-3">
               <label class="form-label">Mobile Number *</label>
-              <input type="tel" class="form-control" placeholder="10-digit phone number" required />
+              <input type="tel" class="form-control" placeholder="10-digit phone number" name="mobile" required />
             </div>
             <div class="mb-3">
               <label class="form-label">Address *</label>
-              <textarea class="form-control" rows="2" placeholder="Your full address" required></textarea>
+              <textarea class="form-control" rows="2" placeholder="Your full address" name="address" required></textarea>
             </div>
             <div class="mb-3">
               <label class="form-label">Password (Optional)</label>
-              <input type="password" class="form-control" placeholder="Create a password" />
+              <input type="password" class="form-control" placeholder="Create a password (min 6 characters if provided)" name="password" minlength="6" />
+              <div class="form-text">Leave blank if you don't want to create an account. Password must be at least 6 characters if provided.</div>
             </div>
             <button type="submit" class="btn btn-danger w-100">Register as Donor</button>
           </form>
@@ -320,38 +578,235 @@
     </div>
   </section>
 
+<!-- Enhanced Contact & Location Section -->
 <section class="container py-5">
-    <div class="row g-4">
-      <div class="col-md-6" data-aos="fade-right">
-        <h3 class="text-danger">Reach Out</h3>
-        <p><i class="bi bi-telephone-fill me-2"></i> 8104073670</p>
-        <p><i class="bi bi-envelope-fill me-2"></i> adarshgupta7374@gmail.com</p>
-        <p><i class="bi bi-geo-alt-fill me-2"></i> Kandivali West, Mumbai, India</p>
-      </div>
-      <div class="col-md-6" data-aos="fade-left">
-        <h3 class="text-danger mb-3">Our Location</h3>
-        <iframe
-          src="https://www.google.com/maps?q=Kandivali%20West%2C%20Mumbai%2C%20India&output=embed"
-          allowfullscreen=""
-          loading="lazy">
-        </iframe>
+  <div class="row mb-5">
+    <div class="col-12 text-center" data-aos="fade-down">
+      <h2 class="display-5 fw-bold text-danger mb-2">Get In Touch</h2>
+      <p class="lead text-secondary mb-3">We're here to help you make a difference. Reach out to us anytime!</p>
+      <hr class="mx-auto" style="width: 80px; height: 4px; background: linear-gradient(90deg, #dc3545 60%, #ff6f61 100%); border: none; border-radius: 2px;">
+    </div>
+  </div>
+
+  <div class="row g-4 align-items-stretch">
+    <!-- Enhanced Contact Information -->
+    <div class="col-lg-6" data-aos="fade-right">
+      <div class="card h-100 border-0 shadow-lg contact-card">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center mb-4">
+            <div class="contact-icon-wrapper me-3">
+              <i class="bi bi-headset display-4 text-danger"></i>
+            </div>
+            <div>
+              <h3 class="text-danger mb-1">Let's Connect</h3>
+              <p class="text-muted mb-0">Multiple ways to reach us</p>
+            </div>
+          </div>
+
+          <!-- Contact Methods -->
+          <div class="contact-methods">
+            <!-- Phone Contact -->
+            <div class="contact-item mb-4" data-aos="fade-up" data-aos-delay="100">
+              <div class="d-flex align-items-center p-3 rounded-3 contact-method-card">
+                <div class="contact-method-icon me-3">
+                  <i class="bi bi-telephone-fill text-white"></i>
+                </div>
+                <div class="flex-grow-1">
+                  <h6 class="mb-1 fw-bold">Call Us</h6>
+                  <p class="mb-1 text-muted">Available 24/7 for emergencies</p>
+                  <a href="tel:+918104073670" class="text-danger fw-bold text-decoration-none">
+                    +91 8104073670
+                  </a>
+                </div>
+                <div class="contact-action">
+                  <a href="tel:+918104073670" class="btn btn-outline-danger btn-sm">
+                    <i class="bi bi-telephone me-1"></i>Call
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Email Contact -->
+            <div class="contact-item mb-4" data-aos="fade-up" data-aos-delay="200">
+              <div class="d-flex align-items-center p-3 rounded-3 contact-method-card">
+                <div class="contact-method-icon me-3">
+                  <i class="bi bi-envelope-fill text-white"></i>
+                </div>
+                <div class="flex-grow-1">
+                  <h6 class="mb-1 fw-bold">Email Us</h6>
+                  <p class="mb-1 text-muted">We'll respond within 24 hours</p>
+                  <a href="mailto:adarshgupta7374@gmail.com" class="text-danger fw-bold text-decoration-none">
+                    adarshgupta7374@gmail.com
+                  </a>
+                </div>
+                <div class="contact-action">
+                  <a href="mailto:adarshgupta7374@gmail.com" class="btn btn-outline-danger btn-sm">
+                    <i class="bi bi-envelope me-1"></i>Email
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- WhatsApp Contact -->
+            <div class="contact-item mb-4" data-aos="fade-up" data-aos-delay="300">
+              <div class="d-flex align-items-center p-3 rounded-3 contact-method-card">
+                <div class="contact-method-icon me-3" style="background: #25D366;">
+                  <i class="bi bi-whatsapp text-white"></i>
+                </div>
+                <div class="flex-grow-1">
+                  <h6 class="mb-1 fw-bold">WhatsApp</h6>
+                  <p class="mb-1 text-muted">Quick responses & instant help</p>
+                  <span class="text-danger fw-bold">+91 8104073670</span>
+                </div>
+                <div class="contact-action">
+                  <a href="https://wa.me/918104073670?text=Hi! I'm interested in MediCare services."
+                     target="_blank" class="btn btn-sm" style="background: #25D366; color: white;">
+                    <i class="bi bi-whatsapp me-1"></i>Chat
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Address -->
+            <div class="contact-item" data-aos="fade-up" data-aos-delay="400">
+              <div class="d-flex align-items-center p-3 rounded-3 contact-method-card">
+                <div class="contact-method-icon me-3">
+                  <i class="bi bi-geo-alt-fill text-white"></i>
+                </div>
+                <div class="flex-grow-1">
+                  <h6 class="mb-1 fw-bold">Visit Us</h6>
+                  <p class="mb-1 text-muted">Our office location</p>
+                  <span class="text-danger fw-bold">Kandivali West, Mumbai, India</span>
+                </div>
+                <div class="contact-action">
+                  <button class="btn btn-outline-danger btn-sm" onclick="showDirections()">
+                    <i class="bi bi-map me-1"></i>Directions
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Stats -->
+          <div class="row mt-4 pt-4 border-top">
+            <div class="col-4 text-center">
+              <div class="quick-stat">
+                <h5 class="text-danger mb-1">24/7</h5>
+                <small class="text-muted">Support</small>
+              </div>
+            </div>
+            <div class="col-4 text-center">
+              <div class="quick-stat">
+                <h5 class="text-danger mb-1">&lt;1hr</h5>
+                <small class="text-muted">Response</small>
+              </div>
+            </div>
+            <div class="col-4 text-center">
+              <div class="quick-stat">
+                <h5 class="text-danger mb-1">100%</h5>
+                <small class="text-muted">Secure</small>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+
+    <!-- Enhanced Location Section -->
+    <div class="col-lg-6" data-aos="fade-left">
+      <div class="card h-100 border-0 shadow-lg location-card">
+        <div class="card-body p-0">
+          <div class="location-header p-4 pb-3">
+            <div class="d-flex align-items-center mb-3">
+              <div class="location-icon-wrapper me-3">
+                <i class="bi bi-geo-alt-fill display-4 text-danger"></i>
+              </div>
+              <div>
+                <h3 class="text-danger mb-1">Find Us Here</h3>
+                <p class="text-muted mb-0">Kandivali West, Mumbai</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Map Container -->
+          <div class="map-container position-relative">
+            <div class="map-overlay d-flex align-items-center justify-content-center">
+              <button class="btn btn-danger btn-lg map-activate-btn" onclick="activateMap()">
+                <i class="bi bi-geo-alt-fill me-2"></i>
+                Click to Activate Map
+              </button>
+            </div>
+            <iframe id="locationMap"
+              src="https://www.google.com/maps?q=Kandivali%20West%2C%20Mumbai%2C%20India&output=embed"
+              allowfullscreen=""
+              loading="lazy"
+              class="w-100"
+              style="height: 300px; border: 0; border-radius: 0 0 10px 10px;">
+            </iframe>
+          </div>
+
+          <!-- Location Details -->
+          <div class="location-details p-4">
+            <div class="row g-3">
+              <div class="col-6">
+                <div class="location-detail-item text-center p-3 rounded-3">
+                  <i class="bi bi-clock text-danger mb-2 d-block" style="font-size: 1.5rem;"></i>
+                  <h6 class="mb-1">Office Hours</h6>
+                  <small class="text-muted">Mon-Sat: 9AM-6PM</small>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="location-detail-item text-center p-3 rounded-3">
+                  <i class="bi bi-car-front text-danger mb-2 d-block" style="font-size: 1.5rem;"></i>
+                  <h6 class="mb-1">Parking</h6>
+                  <small class="text-muted">Free parking available</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="row mt-3">
+              <div class="col-6">
+                <a href="https://maps.google.com/?q=Kandivali+West,+Mumbai,+India"
+                   target="_blank" class="btn btn-outline-danger w-100 btn-sm">
+                  <i class="bi bi-map me-1"></i>Open in Maps
+                </a>
+              </div>
+              <div class="col-6">
+                <button class="btn btn-danger w-100 btn-sm" onclick="shareLocation()">
+                  <i class="bi bi-share me-1"></i>Share Location
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="container my-5">
   <h2 class="text-center mb-4 text-danger">Our Features</h2>
   <div class="row g-4">
-    <div class="col-md-3">
+    <div class="col-md-2 col-lg-2">
       <a href="donate.html" class="text-decoration-none">
         <div class="card feature-card text-center p-4 shadow h-100">
           <i class="bi bi-heart-pulse display-4 text-danger mb-3"></i>
-          <h5 class="text-dark">Donate</h5>
+          <h5 class="text-dark">Donate Medicine</h5>
           <p class="text-dark">Give unused medicines to those in need.</p>
         </div>
       </a>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2 col-lg-2">
+      <a href="donate-money.html" class="text-decoration-none">
+        <div class="card feature-card text-center p-4 shadow h-100">
+          <i class="bi bi-cash-coin display-4 text-danger mb-3"></i>
+          <h5 class="text-dark">Donate Money</h5>
+          <p class="text-dark">Support our cause with financial contributions.</p>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-2 col-lg-2">
       <a href="request.html" class="text-decoration-none">
         <div class="card feature-card text-center p-4 shadow h-100">
           <i class="bi bi-capsule-pill display-4 text-danger mb-3"></i>
@@ -360,7 +815,7 @@
         </div>
       </a>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-lg-3">
       <a href="about.html" class="text-decoration-none">
         <div class="card feature-card text-center p-4 shadow h-100">
           <i class="bi bi-people-fill display-4 text-danger mb-3"></i>
@@ -369,7 +824,7 @@
         </div>
       </a>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-lg-3">
       <a href="contact.html" class="text-decoration-none">
         <div class="card feature-card text-center p-4 shadow h-100">
           <i class="bi bi-envelope-open-fill display-4 text-danger mb-3"></i>
@@ -381,6 +836,43 @@
   </div>
 </section>
 
+  <!-- Change Password Modal -->
+  <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="changePasswordModalLabel">
+            <i class="bi bi-key me-2"></i>Change Password
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="changePasswordForm">
+            <div class="mb-3">
+              <label for="currentPassword" class="form-label">Current Password</label>
+              <input type="password" class="form-control" id="currentPassword" required>
+            </div>
+            <div class="mb-3">
+              <label for="newPassword" class="form-label">New Password</label>
+              <input type="password" class="form-control" id="newPassword" required minlength="6">
+              <div class="form-text">Password must be at least 6 characters long</div>
+            </div>
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm New Password</label>
+              <input type="password" class="form-control" id="confirmPassword" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" onclick="changePassword()">
+            <i class="bi bi-check-circle me-1"></i>Change Password
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer class="bg-dark text-white pt-4">
     <div class="container">
       <div class="row text-center text-md-start">
@@ -388,7 +880,8 @@
           <h5>Quick Links</h5>
           <ul class="list-unstyled">
             <li><a href="index.html" class="text-white text-decoration-none">Home</a></li>
-            <li><a href="donate.html" class="text-white text-decoration-none">Donate</a></li>
+            <li><a href="donate.html" class="text-white text-decoration-none">Donate Medicine</a></li>
+            <li><a href="donate-money.html" class="text-white text-decoration-none">Donate Money</a></li>
             <li><a href="request.html" class="text-white text-decoration-none">Request</a></li>
             <li><a href="about.html" class="text-white text-decoration-none">About</a></li>
             <li><a href="contact.html" class="text-white text-decoration-none">Contact</a></li>
@@ -435,7 +928,20 @@
   AOS.init();
   function toggleDarkMode() {
     document.body.classList.toggle("dark-mode");
+    // Save preference to localStorage
+    if (document.body.classList.contains('dark-mode')) {
+      localStorage.setItem('darkMode', 'enabled');
+    } else {
+      localStorage.setItem('darkMode', 'disabled');
+    }
   }
+
+  // Load saved dark mode preference on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('darkMode') === 'enabled') {
+      document.body.classList.add('dark-mode');
+    }
+  });
 
   // Show popup only once per session
   window.addEventListener("load", function () {
@@ -446,22 +952,386 @@
     }
   });
 
-  // Counter logic
-  const counters = document.querySelectorAll('.counter');
-  counters.forEach(counter => {
-    counter.innerText = '0';
-    const updateCounter = () => {
-      const target = +counter.getAttribute('data-target');
-      const count = +counter.innerText;
-      const increment = target / 200;
-      if (count < target) {
-        counter.innerText = Math.ceil(count + increment);
-        setTimeout(updateCounter, 10);
-      } else {
-        counter.innerText = target;
-      }
+  // Counter logic with real data from API
+  async function updateCounters() {
+    try {
+      // Fetch medicine donations count
+      const medicineResponse = await fetch('http://localhost:5500/api/donations/count');
+      const medicineData = await medicineResponse.json();
+      const medicineCount = medicineData.count || 0;
+
+      // Fetch money donations count
+      const moneyResponse = await fetch('http://localhost:5500/api/money-donations/count');
+      const moneyData = await moneyResponse.json();
+      const moneyCount = moneyData.count || 0;
+
+      // Fetch total amount raised
+      const totalResponse = await fetch('http://localhost:5500/api/money-donations/total');
+      const totalData = await totalResponse.json();
+      const totalAmount = totalData.total || 0;
+
+      // Update counters with real data
+      const counters = document.querySelectorAll('.counter');
+      counters.forEach((counter, index) => {
+        let target = 0;
+        
+        // Set different targets based on counter position
+        if (index === 0) {
+          target = medicineCount; // Medicines Donated
+        } else if (index === 1) {
+          target = Math.floor(medicineCount * 1.5); // Patients Helped (estimated)
+        } else if (index === 2) {
+          target = Math.floor(medicineCount * 0.8); // Active Donors (estimated)
+        }
+
+        counter.setAttribute('data-target', target);
+        counter.innerText = '0';
+        
+        const updateCounter = () => {
+          const currentTarget = +counter.getAttribute('data-target');
+          const count = +counter.innerText;
+          const increment = currentTarget / 200;
+          if (count < currentTarget) {
+            counter.innerText = Math.ceil(count + increment);
+            setTimeout(updateCounter, 10);
+          } else {
+            counter.innerText = currentTarget;
+          }
+        };
+        updateCounter();
+      });
+    } catch (error) {
+      console.error('Error fetching counter data:', error);
+      // Fallback to default values if API fails
+      const counters = document.querySelectorAll('.counter');
+      counters.forEach((counter, index) => {
+        const defaultTargets = [15, 25, 12]; // Default values
+        const target = defaultTargets[index] || 0;
+        counter.setAttribute('data-target', target);
+        counter.innerText = '0';
+        
+        const updateCounter = () => {
+          const currentTarget = +counter.getAttribute('data-target');
+          const count = +counter.innerText;
+          const increment = currentTarget / 200;
+          if (count < currentTarget) {
+            counter.innerText = Math.ceil(count + increment);
+            setTimeout(updateCounter, 10);
+          } else {
+            counter.innerText = currentTarget;
+          }
+        };
+        updateCounter();
+      });
+    }
+  }
+
+  // Call updateCounters when page loads
+  document.addEventListener('DOMContentLoaded', updateCounters);
+
+  document.getElementById('registerForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    const form = event.target;
+    
+    // Validate password if provided
+    const password = form.password.value.trim();
+    if (password && password.length < 6) {
+      alert('Password must be at least 6 characters long if provided.');
+      return;
+    }
+    
+    const data = {
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
+      mobile: form.mobile.value.trim(),
+      address: form.address.value.trim(),
+      password: password || null // Send null if password is empty
     };
-    updateCounter();
+    
+    const response = await fetch('http://localhost:5500/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const result = await response.json();
+    if (response.ok) {
+      if (password) {
+        alert('Registration successful! Please log in.');
+        window.location.href = 'login.html'; // Redirect to login page
+      } else {
+        alert('Registration successful! You can now access all forms.');
+        // Set login flag for users who register without password
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userName', data.name);
+        localStorage.setItem('userEmail', data.email);
+        // Refresh the page to update navbar and form access
+        window.location.reload();
+      }
+      form.reset();
+    } else {
+      alert(result.error || 'Registration failed.');
+    }
+  });
+
+  function updateNavbar() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    document.getElementById('loginNav').style.display = isLoggedIn ? 'none' : '';
+    document.getElementById('profileNav').classList.toggle('d-none', !isLoggedIn);
+
+    // Set profile name and email if logged in
+    if (isLoggedIn) {
+      document.getElementById('profileName').textContent = localStorage.getItem('userName') || '';
+      document.getElementById('profileEmail').textContent = localStorage.getItem('userEmail') || '';
+    }
+  }
+
+  // Update profile dropdown with user info
+  function updateProfileDropdown() {
+    const name = localStorage.getItem('userName') || 'John Doe';
+    const email = localStorage.getItem('userEmail') || 'john@example.com';
+    document.getElementById('profileName').textContent = name;
+    document.getElementById('profileEmail').textContent = email;
+  }
+
+  // Call on page load
+  updateNavbar();
+  updateProfileDropdown();
+
+  // Logout functionality
+  document.getElementById('logoutBtn').addEventListener('click', function() {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userEmail');
+    window.location.href = 'login.html';
+  });
+
+  // Show change password modal
+  function showChangePasswordModal() {
+    const modal = new bootstrap.Modal(document.getElementById('changePasswordModal'));
+    modal.show();
+  }
+
+  // Change password function
+  async function changePassword() {
+    const form = document.getElementById('changePasswordForm');
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const currentPassword = document.getElementById('currentPassword').value;
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (newPassword !== confirmPassword) {
+      alert('New password and confirm password do not match!');
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      alert('New password must be at least 6 characters long!');
+      return;
+    }
+
+    const userEmail = localStorage.getItem('userEmail');
+
+    try {
+      const response = await fetch('http://localhost:5500/api/user/change-password', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: userEmail,
+          currentPassword: currentPassword,
+          newPassword: newPassword
+        })
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to change password');
+      }
+
+      const result = await response.json();
+
+      // Clear form and close modal
+      form.reset();
+      const modal = bootstrap.Modal.getInstance(document.getElementById('changePasswordModal'));
+      modal.hide();
+
+      alert('Password changed successfully!');
+
+    } catch (error) {
+      console.error('Error changing password:', error);
+      alert(error.message || 'Failed to change password. Please try again.');
+    }
+  }
+
+  // Enhanced Contact Section Functions
+  function activateMap() {
+    const mapOverlay = document.querySelector('.map-overlay');
+    if (mapOverlay) {
+      mapOverlay.classList.add('hidden');
+      // Add a small delay to ensure smooth transition
+      setTimeout(() => {
+        mapOverlay.style.display = 'none';
+      }, 300);
+    }
+  } 
+
+  function showDirections() {
+    const address = "Kandivali West, Mumbai, India";
+    const encodedAddress = encodeURIComponent(address);
+
+    // Check if user is on mobile device
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      // Try to open in native maps app
+      window.open(`https://maps.google.com/maps?daddr=${encodedAddress}`, '_blank');
+    } else {
+      // Open in Google Maps web
+      window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`, '_blank');
+    }
+  }
+
+  function shareLocation() {
+    const locationData = {
+      title: 'MediCare Location',
+      text: 'Visit us at MediCare - Kandivali West, Mumbai, India',
+      url: 'https://maps.google.com/?q=Kandivali+West,+Mumbai,+India'
+    };
+
+    // Check if Web Share API is supported
+    if (navigator.share) {
+      navigator.share(locationData)
+        .then(() => console.log('Location shared successfully'))
+        .catch((error) => console.log('Error sharing location:', error));
+    } else {
+      // Fallback: Copy to clipboard
+      const textToCopy = `${locationData.title}\n${locationData.text}\n${locationData.url}`;
+
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(textToCopy)
+          .then(() => {
+            // Show success message
+            showToast('Location details copied to clipboard!', 'success');
+          })
+          .catch(() => {
+            // Fallback for older browsers
+            fallbackCopyToClipboard(textToCopy);
+          });
+      } else {
+        fallbackCopyToClipboard(textToCopy);
+      }
+    }
+  }
+
+  function fallbackCopyToClipboard(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    textArea.style.top = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      document.execCommand('copy');
+      showToast('Location details copied to clipboard!', 'success');
+    } catch (err) {
+      showToast('Unable to copy location details', 'error');
+    }
+
+    document.body.removeChild(textArea);
+  }
+
+  function showToast(message, type = 'info') {
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.className = `toast-notification toast-${type}`;
+    toast.innerHTML = `
+      <div class="toast-content">
+        <i class="bi bi-${type === 'success' ? 'check-circle-fill' : type === 'error' ? 'exclamation-triangle-fill' : 'info-circle-fill'} me-2"></i>
+        ${message}
+      </div>
+    `;
+
+    // Add toast styles if not already added
+    if (!document.querySelector('#toast-styles')) {
+      const toastStyles = document.createElement('style');
+      toastStyles.id = 'toast-styles';
+      toastStyles.textContent = `
+        .toast-notification {
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          z-index: 9999;
+          padding: 15px 20px;
+          border-radius: 8px;
+          color: white;
+          font-weight: 500;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+          transform: translateX(100%);
+          transition: transform 0.3s ease;
+        }
+        .toast-success { background: linear-gradient(135deg, #28a745, #20c997); }
+        .toast-error { background: linear-gradient(135deg, #dc3545, #e74c3c); }
+        .toast-info { background: linear-gradient(135deg, #17a2b8, #6f42c1); }
+        .toast-notification.show { transform: translateX(0); }
+        .toast-content { display: flex; align-items: center; }
+      `;
+      document.head.appendChild(toastStyles);
+    }
+
+    // Add to page
+    document.body.appendChild(toast);
+
+    // Show toast
+    setTimeout(() => toast.classList.add('show'), 100);
+
+    // Remove toast after 3 seconds
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => document.body.removeChild(toast), 300);
+    }, 3000);
+  }
+
+  // Add click-to-call analytics (optional)
+  function trackContactMethod(method) {
+    // You can add analytics tracking here
+    console.log(`Contact method used: ${method}`);
+
+    // Example: Google Analytics event tracking
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'contact_method_used', {
+        'method': method,
+        'page_title': document.title
+      });
+    }
+  }
+
+  // Add event listeners for contact methods
+  document.addEventListener('DOMContentLoaded', function() {
+    // Track phone calls
+    const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+    phoneLinks.forEach(link => {
+      link.addEventListener('click', () => trackContactMethod('phone'));
+    });
+
+    // Track email clicks
+    const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
+    emailLinks.forEach(link => {
+      link.addEventListener('click', () => trackContactMethod('email'));
+    });
+
+    // Track WhatsApp clicks
+    const whatsappLinks = document.querySelectorAll('a[href*="wa.me"]');
+    whatsappLinks.forEach(link => {
+      link.addEventListener('click', () => trackContactMethod('whatsapp'));
+    });
   });
 </script>
 </body>

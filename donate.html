@@ -571,6 +571,11 @@
           <li class="nav-item" id="loginNav">
             <a class="nav-link" href="login.html">Login</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link text-danger fw-bold" href="admin-login.html">
+              <i class="bi bi-shield-lock me-1"></i>Admin Login
+            </a>
+          </li>
           <li class="nav-item dropdown d-none" id="profileNav">
             <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
               <i class="bi bi-person-circle"></i>
@@ -580,11 +585,11 @@
                 <div class="fw-bold" id="profileName"></div>
                 <div class="small text-muted" id="profileEmail"></div>
               </li>
-              <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>My Profile</a></li>
-              <li><a class="dropdown-item" href="#"><i class="bi bi-heart me-2"></i>My Donations</a></li>
-              <li><a class="dropdown-item" href="#"><i class="bi bi-capsule-pill me-2"></i>My Requests</a></li>
-              <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
-              <li><a class="dropdown-item" href="#"><i class="bi bi-key me-2"></i>Change Password</a></li>
+              <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person me-2"></i>My Profile</a></li>
+              <li><a class="dropdown-item" href="my-donations.html"><i class="bi bi-heart me-2"></i>My Donations</a></li>
+              <li><a class="dropdown-item" href="my-requests.html"><i class="bi bi-capsule-pill me-2"></i>My Requests</a></li>
+              <li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear me-2"></i>Settings</a></li>
+              <li><a class="dropdown-item" href="#" onclick="showChangePasswordModal()"><i class="bi bi-key me-2"></i>Change Password</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item text-danger" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
             </ul>
@@ -1008,6 +1013,43 @@
     </div>
   </section>
 
+  <!-- Change Password Modal -->
+  <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="changePasswordModalLabel">
+            <i class="bi bi-key me-2"></i>Change Password
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="changePasswordForm">
+            <div class="mb-3">
+              <label for="currentPassword" class="form-label">Current Password</label>
+              <input type="password" class="form-control" id="currentPassword" required>
+            </div>
+            <div class="mb-3">
+              <label for="newPassword" class="form-label">New Password</label>
+              <input type="password" class="form-control" id="newPassword" required minlength="6">
+              <div class="form-text">Password must be at least 6 characters long</div>
+            </div>
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm New Password</label>
+              <input type="password" class="form-control" id="confirmPassword" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" onclick="changePassword()">
+            <i class="bi bi-check-circle me-1"></i>Change Password
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="bg-dark text-white pt-4">
     <div class="container-fluid px-5">
@@ -1060,7 +1102,59 @@
     if (localStorage.getItem('darkMode') === 'enabled') {
       document.body.classList.add('dark-mode');
     }
+
+    // Add login check to form inputs
+    addLoginCheckToForm();
   });
+
+  // Add login check to all form inputs
+  function addLoginCheckToForm() {
+    const formInputs = document.querySelectorAll('#donateForm input, #donateForm textarea, #donateForm select');
+
+    formInputs.forEach(input => {
+      input.addEventListener('focus', function() {
+        if (!isUserLoggedIn()) {
+          this.blur(); // Remove focus from input
+          showLoginRequiredPopup();
+        }
+      });
+
+      input.addEventListener('input', function() {
+        if (!isUserLoggedIn()) {
+          this.value = ''; // Clear the input
+          showLoginRequiredPopup();
+        }
+      });
+    });
+
+    // Also check form submission
+    const form = document.getElementById('donateForm');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        if (!isUserLoggedIn()) {
+          e.preventDefault();
+          showLoginRequiredPopup();
+        }
+      });
+    }
+  }
+
+  // Check if user is logged in
+  function isUserLoggedIn() {
+    return localStorage.getItem('isLoggedIn') === 'true';
+  }
+
+  // Show login required popup
+  function showLoginRequiredPopup() {
+    const userChoice = confirm('🔒 Login Required\n\nPlease login or register to fill this form.\n\nClick OK to go to Login page, or Cancel to stay here.');
+
+    if (userChoice) {
+      window.location.href = 'login.html';
+    }
+  }
+
+
+
   function updateNavbar() {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     document.getElementById('loginNav').style.display = isLoggedIn ? 'none' : '';
@@ -1082,10 +1176,24 @@
   // Donation Form Submission
   document.getElementById('donateForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    
+
+    // Check if user is logged in
+    if (!isUserLoggedIn()) {
+      showLoginRequiredPopup();
+      return;
+    }
+
     const submitBtn = document.getElementById('submitBtn');
     const successAlert = document.getElementById('successAlert');
-    
+
+    // Get logged-in user's email from localStorage
+    const loggedInUserEmail = localStorage.getItem('userEmail');
+    if (!loggedInUserEmail) {
+      alert('Please log in again to continue.');
+      window.location.href = 'login.html';
+      return;
+    }
+
     // Get form data
     const formData = {
       name: document.getElementById('donorName').value,
@@ -1097,19 +1205,19 @@
       expiry: document.getElementById('expiryDate').value,
       quantity: parseInt(document.getElementById('quantity').value)
     };
-    
+
     // Validate required fields
     if (!formData.name || !formData.phone || !formData.medicine || !formData.address1 || !formData.expiry || !formData.quantity) {
       alert('Please fill in all required fields!');
       return;
     }
-    
+
     // Show loading state
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Submitting...';
-    
+
     try {
-      // Send to backend
+      // Send to backend - use logged-in user's email instead of form email
       const response = await fetch('http://localhost:5500/api/donate', {
         method: 'POST',
         headers: {
@@ -1117,7 +1225,7 @@
         },
         body: JSON.stringify({
           name: formData.name,
-          email: formData.email,
+          email: loggedInUserEmail, // Use logged-in user's email
           medicine: formData.medicine,
           quantity: formData.quantity,
           expiry: formData.expiry,
@@ -1181,6 +1289,100 @@
     });
     item.addEventListener('hide.bs.collapse', function () {
       item.classList.remove('active');
+    });
+  });
+
+  // Show change password modal
+  function showChangePasswordModal() {
+    const modal = new bootstrap.Modal(document.getElementById('changePasswordModal'));
+    modal.show();
+  }
+
+  // Change password function
+  async function changePassword() {
+    const form = document.getElementById('changePasswordForm');
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    
+    const currentPassword = document.getElementById('currentPassword').value;
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    
+    if (newPassword !== confirmPassword) {
+      alert('New password and confirm password do not match!');
+      return;
+    }
+    
+    if (newPassword.length < 6) {
+      alert('New password must be at least 6 characters long!');
+      return;
+    }
+    
+    const userEmail = localStorage.getItem('userEmail');
+    
+    try {
+      const response = await fetch('http://localhost:5500/api/user/change-password', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: userEmail,
+          currentPassword: currentPassword,
+          newPassword: newPassword
+        })
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to change password');
+      }
+      
+      const result = await response.json();
+      
+      // Clear form and close modal
+      form.reset();
+      const modal = bootstrap.Modal.getInstance(document.getElementById('changePasswordModal'));
+      modal.hide();
+      
+      alert('Password changed successfully!');
+      
+    } catch (error) {
+      console.error('Error changing password:', error);
+      alert(error.message || 'Failed to change password. Please try again.');
+    }
+  }
+
+  // Auto-populate form with logged-in user data
+  function populateUserData() {
+    if (isUserLoggedIn()) {
+      const userName = localStorage.getItem('userName');
+      const userEmail = localStorage.getItem('userEmail');
+
+      if (userName) {
+        document.getElementById('donorName').value = userName;
+      }
+      if (userEmail) {
+        document.getElementById('donorEmail').value = userEmail;
+        // Make email field readonly since we'll use the logged-in user's email
+        document.getElementById('donorEmail').readOnly = true;
+        document.getElementById('donorEmail').style.backgroundColor = '#f8f9fa';
+      }
+    }
+  }
+
+  // Initialize page
+  document.addEventListener('DOMContentLoaded', function() {
+    updateNavbar();
+    addLoginCheckToForm();
+    populateUserData(); // Auto-populate user data
+
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      once: true
     });
   });
   </script>

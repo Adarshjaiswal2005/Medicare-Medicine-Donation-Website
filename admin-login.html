@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | MediCare</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      background-color: #121212;
+      color: #f1f1f1;
+    }
+
+    .dark-mode .navbar,
+    .dark-mode footer,
+    .dark-mode .card,
+    .dark-mode .form-control {
+      background-color: #1e1e1e !important;
+      color: #f1f1f1 !important;
+    }
+
+    .dark-mode .bg-light {
+      background-color: #2c2c2c !important;
+    }
+
+    .dark-mode a,
+    .dark-mode p,
+    .dark-mode h1,
+    .dark-mode h2,
+    .dark-mode h3,
+    .dark-mode h4,
+    .dark-mode h5,
+    .dark-mode h6 {
+      color: #f1f1f1 !important;
+    }
+
+    .dark-mode .text-muted {
+      color: #b0b0b0 !important;
+    }
+
+    .dark-mode .form-control:focus {
+      background-color: #2c2c2c !important;
+      border-color: #dc3545 !important;
+      color: #f1f1f1 !important;
+      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+    }
+
+    .hero {
+      height: 60vh;
+      background: linear-gradient(rgba(220, 53, 69, 0.4), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1f') center/cover no-repeat;
+    }
+
+    .admin-form-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      padding: 3rem;
+      margin-top: -100px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .dark-mode .admin-form-container {
+      background: rgba(30, 30, 30, 0.95);
+    }
+
+    .form-control {
+      border: 2px solid #e9ecef;
+      border-radius: 10px;
+      padding: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: #dc3545;
+      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+    }
+
+    .btn-admin {
+      background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+      border: none;
+      border-radius: 10px;
+      padding: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .btn-admin:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(220, 53, 69, 0.3);
+    }
+
+    .loading-spinner {
+      display: none;
+    }
+
+    .admin-icon {
+      font-size: 4rem;
+      color: #dc3545;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand text-danger fw-bold" href="index.html">MediCare</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="donate.html">Donate Medicine</a></li>
+          <li class="nav-item"><a class="nav-link" href="donate-money.html">Donate Money</a></li>
+          <li class="nav-item"><a class="nav-link" href="request.html">Request</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item">
+            <button onclick="toggleDarkMode()" class="btn btn-outline-danger btn-sm ms-3">Dark Mode</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero text-white d-flex align-items-center justify-content-center position-relative">
+    <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(120deg, rgba(220,53,69,0.7) 0%, rgba(0,0,0,0.7) 100%); opacity: 0.7; z-index:1;"></div>
+    <div class="bg-transparent p-5 rounded text-center position-relative" style="z-index:2;" data-aos="zoom-in">
+      <i class="bi bi-shield-lock-fill admin-icon"></i>
+      <h1 class="display-4 fw-bold mb-3">Admin Portal</h1>
+      <p class="lead mb-4">Secure access to MediCare administration dashboard</p>
+    </div>
+  </section>
+
+  <!-- Admin Login Form -->
+  <section class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="admin-form-container" data-aos="fade-up">
+          <div class="text-center mb-4">
+            <h3 class="text-danger mb-3">Administrator Login</h3>
+            <p class="text-muted">Enter your credentials to access the admin dashboard</p>
+          </div>
+
+          <div id="alertContainer"></div>
+
+          <form id="adminLoginForm">
+            <div class="mb-3">
+              <label class="form-label">Admin Email</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                <input type="email" class="form-control" id="adminEmail" placeholder="Enter admin email" required>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Password</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                <input type="password" class="form-control" id="adminPassword" placeholder="Enter password" required>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-danger btn-admin">
+              <span class="login-text">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Access Dashboard
+              </span>
+              <span class="loading-spinner">
+                <i class="bi bi-arrow-clockwise spin me-2"></i>Authenticating...
+              </span>
+            </button>
+          </form>
+
+          <div class="text-center mt-4">
+            <a href="index.html" class="text-decoration-none">
+              <i class="bi bi-arrow-left me-1"></i>Back to Homepage
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white pt-4">
+    <div class="container">
+      <div class="row text-center text-md-start">
+        <div class="col-md-4 mb-4">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="index.html" class="text-white text-decoration-none">Home</a></li>
+            <li><a href="donate.html" class="text-white text-decoration-none">Donate Medicine</a></li>
+            <li><a href="donate-money.html" class="text-white text-decoration-none">Donate Money</a></li>
+            <li><a href="request.html" class="text-white text-decoration-none">Request</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Follow Us</h5>
+          <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-twitter"></i></a>
+          <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-instagram"></i></a>
+          <a href="https://wa.me/918104073670" class="btn btn-outline-light btn-sm"><i class="bi bi-whatsapp"></i></a>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Contact</h5>
+          <p><i class="bi bi-telephone-fill me-2"></i> 8104073670</p>
+          <p><i class="bi bi-envelope-fill me-2"></i> adarshgupta7374@gmail.com</p>
+        </div>
+      </div>
+      <hr class="border-light" />
+      <p class="text-center mb-0 pb-3">&copy; 2025 MediCare. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Success Modal -->
+  <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg">
+        <div class="modal-body text-center p-5">
+          <div class="mb-4">
+            <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+          </div>
+          <h3 class="text-success mb-3">Login Successful!</h3>
+          <p class="text-muted mb-4">Welcome to the MediCare Admin Dashboard</p>
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border text-danger me-3" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <span class="text-muted">Redirecting to dashboard...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // Initialize AOS
+    AOS.init();
+
+    // Dark mode functionality
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+      if (document.body.classList.contains('dark-mode')) {
+        localStorage.setItem('darkMode', 'enabled');
+      } else {
+        localStorage.setItem('darkMode', 'disabled');
+      }
+    }
+
+    // Load saved dark mode preference
+    document.addEventListener('DOMContentLoaded', function() {
+      if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+      }
+    });
+
+    // Admin credentials
+    const ADMIN_EMAIL = 'adarshgupta7374@gmail.com';
+    const ADMIN_PASSWORD = 'Adarsh@2005';
+
+    document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById('adminEmail').value.trim();
+      const password = document.getElementById('adminPassword').value;
+
+      // Clear previous alerts
+      document.getElementById('alertContainer').innerHTML = '';
+
+      // Show loading state
+      const loginText = document.querySelector('.login-text');
+      const loadingSpinner = document.querySelector('.loading-spinner');
+      const submitBtn = document.querySelector('.btn-admin');
+
+      loginText.style.display = 'none';
+      loadingSpinner.style.display = 'inline';
+      submitBtn.disabled = true;
+
+      // Simulate authentication delay
+      setTimeout(() => {
+        if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+          // Store admin session
+          localStorage.setItem('adminLoggedIn', 'true');
+          localStorage.setItem('adminEmail', email);
+          localStorage.setItem('adminLoginTime', new Date().toISOString());
+
+          // Show success modal
+          const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+          successModal.show();
+
+          // Redirect to dashboard after 2 seconds
+          setTimeout(() => {
+            window.location.href = 'admin-dashboard.html';
+          }, 2000);
+
+        } else {
+          // Show error alert
+          showAlert('Invalid admin credentials. Please check your email and password.', 'danger');
+
+          // Reset button state
+          loginText.style.display = 'inline';
+          loadingSpinner.style.display = 'none';
+          submitBtn.disabled = false;
+        }
+      }, 1500);
+    });
+
+    function showAlert(message, type) {
+      const alertContainer = document.getElementById('alertContainer');
+      const alertHTML = `
+        <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          ${message}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      `;
+      alertContainer.innerHTML = alertHTML;
+    }
+
+    // Check if admin is already logged in
+    if (localStorage.getItem('adminLoggedIn') === 'true') {
+      window.location.href = 'admin-dashboard.html';
+    }
+
+    // Add CSS animation for spinner
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      .spin {
+        animation: spin 1s linear infinite;
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>

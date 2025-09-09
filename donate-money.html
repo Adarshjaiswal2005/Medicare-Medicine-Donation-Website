@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Donate Money | MediCare</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.4s cubic-bezier(.77,0,.18,1), color 0.4s cubic-bezier(.77,0,.18,1);
+    }
+    .navbar {
+      background: rgba(255,255,255,0.85) !important;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 12px rgba(220,53,69,0.07);
+      transition: background 0.4s, box-shadow 0.4s;
+    }
+    .hero {
+      background: linear-gradient(120deg, #ffb3b3 0%, #dc3545 100%);
+      background-size: 200% 200%;
+      animation: gradientMove 8s ease-in-out infinite alternate;
+      position: relative;
+      overflow: hidden;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    .animated-heading {
+      opacity: 0;
+      animation: fadeInHeading 1.2s 0.2s forwards, underlineGrow 1.2s 0.2s forwards;
+      background: linear-gradient(90deg, #dc3545 60%, #ffb3b3 100%);
+      background-repeat: no-repeat;
+      background-size: 0 3px;
+      background-position: 0 100%;
+      padding-bottom: 4px;
+    }
+    @keyframes fadeInHeading {
+      to { opacity: 1; }
+    }
+    @keyframes underlineGrow {
+      to { background-size: 100% 3px; }
+    }
+    .cta-btn, .btn {
+      position: relative;
+      overflow: hidden;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:active, .btn:active {
+      transform: scale(0.96);
+      box-shadow: 0 2px 8px rgba(220,53,69,0.15);
+    }
+    .glass-card {
+      background: rgba(255,255,255,0.7) !important;
+      box-shadow: 0 8px 32px 0 rgba(31,38,135,0.10);
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+    
+    .amount-option {
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 2px solid #e9ecef;
+    }
+    .amount-option:hover {
+      border-color: #dc3545;
+      background-color: #ffeaea;
+    }
+    .amount-option.selected {
+      border-color: #dc3545;
+      background-color: #dc3545;
+      color: white;
+    }
+    .form-control:focus {
+      border-color: #dc3545;
+      box-shadow: 0 0 0 0.2rem rgba(220,53,69,.15);
+    }
+    .impact-card {
+      background: linear-gradient(135deg, #dc3545 0%, #b52a37 100%);
+      color: white;
+      border-radius: 16px;
+      padding: 24px;
+      margin: 16px 0;
+    }
+    .testimonial-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(220,53,69,0.1);
+      padding: 20px;
+      margin: 16px 0;
+      border-left: 4px solid #dc3545;
+    }
+    .security-badge {
+      background: #28a745;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    
+    .donation-stats {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      margin: 16px 0;
+    }
+    .donation-stats .number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #dc3545;
+    }
+    .donation-stats .label {
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    body.dark-mode {
+      background-color: #181a1b !important;
+      color: #f1f1f1 !important;
+    }
+    body.dark-mode .navbar,
+    body.dark-mode .bg-white {
+      background-color: #23272b !important;
+      color: #f1f1f1 !important;
+    }
+    body.dark-mode .card,
+    body.dark-mode .bg-light {
+      background-color: #23272b !important;
+      color: #f1f1f1 !important;
+    }
+    body.dark-mode .glass-card {
+      background: rgba(35,39,43,0.7) !important;
+      color: #f1f1f1 !important;
+    }
+    
+    body.dark-mode .amount-option {
+      background-color: #23272b !important;
+      color: #f1f1f1 !important;
+      border-color: #495057;
+    }
+    body.dark-mode .amount-option:hover {
+      background-color: #2d3236 !important;
+    }
+    body.dark-mode .amount-option.selected {
+      background-color: #dc3545 !important;
+      color: white !important;
+    }
+    body.dark-mode .testimonial-card {
+      background-color: #23272b !important;
+      color: #f1f1f1 !important;
+    }
+    body.dark-mode .donation-stats {
+      background: linear-gradient(135deg, #23272b 0%, #2d3236 100%);
+      color: #f1f1f1 !important;
+    }
+    .floating-icon {
+      position: absolute;
+      font-size: 2.5rem;
+      color: #dc3545a0;
+      opacity: 0.7;
+      pointer-events: none;
+      animation: floatY 4s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+    @keyframes floatY {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-20px); }
+    }
+    
+    /* FAQ Cards Styling */
+    .faq-card {
+      transition: all 0.3s ease;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+    .faq-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(220,53,69,0.15);
+    }
+    .faq-card .card-body {
+      transition: all 0.3s ease;
+    }
+    .faq-card:hover .card-body {
+      background: linear-gradient(135deg, #fff 0%, #ffeaea 100%);
+    }
+    .faq-card .rounded-circle {
+      transition: all 0.3s ease;
+    }
+    .faq-card:hover .rounded-circle {
+      transform: scale(1.1);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .faq-card h5 {
+      transition: color 0.3s ease;
+    }
+    .faq-card:hover h5 {
+      color: #dc3545 !important;
+    }
+    
+         /* Payment Modal Styling */
+     .payment-card-option {
+       transition: all 0.3s ease;
+       cursor: pointer;
+     }
+     .payment-card-option:hover {
+       background-color: #f8f9fa;
+       border-color: #dc3545 !important;
+       transform: translateX(5px);
+     }
+     .payment-card-option.selected {
+       background-color: #ffeaea;
+       border-color: #dc3545 !important;
+       border-width: 2px;
+     }
+     .payment-option {
+       transition: all 0.3s ease;
+     }
+     .payment-option:hover {
+       transform: scale(1.02);
+     }
+     
+     /* Payment Form Styling */
+     .payment-form {
+       animation: fadeIn 0.3s ease-in;
+     }
+     @keyframes fadeIn {
+       from { opacity: 0; transform: translateY(10px); }
+       to { opacity: 1; transform: translateY(0); }
+     }
+     
+     .qr-code-container {
+       background: white;
+       padding: 20px;
+       border-radius: 10px;
+       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+     }
+     
+     .payment-form .form-control:focus {
+       border-color: #dc3545;
+       box-shadow: 0 0 0 0.2rem rgba(220,53,69,.15);
+     }
+    #whatsapp-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      background-color: #25D366;
+      color: white;
+      border-radius: 50%;
+      padding: 15px;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: background 0.2s, transform 0.2s;
+    }
+    #whatsapp-button:hover {
+      background: #128c7e;
+      transform: scale(1.1);
+    }
+    #back-to-top {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      z-index: 9999;
+      background: #dc3545;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 22px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: background 0.2s, transform 0.2s;
+    }
+    #back-to-top:hover {
+      background: #b52a37;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand text-danger fw-bold" href="index.html">MediCare</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="donate.html">Donate Medicine</a></li>
+          <li class="nav-item"><a class="nav-link active fw-bold text-danger" href="#">Donate Money</a></li>
+          <li class="nav-item"><a class="nav-link" href="request.html">Request</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item" id="loginNav">
+            <a class="nav-link" href="login.html">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-danger fw-bold" href="admin-login.html">
+              <i class="bi bi-shield-lock me-1"></i>Admin Login
+            </a>
+          </li>
+          <li class="nav-item dropdown d-none" id="profileNav">
+            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
+              <i class="bi bi-person-circle"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown" style="min-width: 220px;">
+              <li class="px-3 py-2 border-bottom">
+                <div class="fw-bold" id="profileName"></div>
+                <div class="small text-muted" id="profileEmail"></div>
+              </li>
+              <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person me-2"></i>My Profile</a></li>
+              <li><a class="dropdown-item" href="my-donations.html"><i class="bi bi-heart me-2"></i>My Donations</a></li>
+              <li><a class="dropdown-item" href="my-requests.html"><i class="bi bi-capsule-pill me-2"></i>My Requests</a></li>
+              <li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear me-2"></i>Settings</a></li>
+              <li><a class="dropdown-item" href="#" onclick="showChangePasswordModal()"><i class="bi bi-key me-2"></i>Change Password</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <button onclick="toggleDarkMode()" class="btn btn-outline-danger btn-sm ms-3">Dark Mode</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero d-flex align-items-center justify-content-center text-white position-relative" style="height: 60vh;">
+    <div class="text-center" data-aos="fade-up">
+      <h1 class="display-5 fw-bold animated-heading">Donate Money</h1>
+      <p class="lead">Your financial contribution helps us provide medicines to those in need</p>
+      <button class="cta-btn btn btn-light btn-lg px-4" onclick="document.getElementById('donation-form').scrollIntoView({behavior: 'smooth'});">
+        Make a Donation
+      </button>
+    </div>
+    <!-- Floating Decorative Icons -->
+    <i class="bi bi-heart-fill floating-icon" style="top:20%;left:5%;"></i>
+    <i class="bi bi-cash-coin floating-icon" style="top:60%;right:8%;"></i>
+    <i class="bi bi-gift-fill floating-icon" style="bottom:10%;left:15%;"></i>
+  </section>
+
+  <!-- Impact Section -->
+  <section class="container py-5">
+    <div class="row">
+      <div class="col-md-8" data-aos="fade-right">
+        <h2 class="text-danger mb-4">Your Donation Makes a Real Impact</h2>
+        <p class="lead">
+          When you donate money to MediCare, you're not just giving funds – you're giving hope, health, and a chance at a better life to thousands of people who can't afford essential medicines.
+        </p>
+        <p>
+          Your financial contribution helps us:
+        </p>
+        <ul class="list-unstyled">
+          <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i>Purchase medicines for emergency cases</li>
+          <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i>Cover transportation costs for medicine delivery</li>
+          <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i>Maintain our verification and safety processes</li>
+          <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i>Support awareness campaigns in rural areas</li>
+          <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i>Provide free health check-up camps</li>
+          <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i>Train volunteers and expand our network</li>
+        </ul>
+      </div>
+      <div class="col-md-4" data-aos="fade-left">
+        <div class="impact-card">
+          <h5><i class="bi bi-graph-up me-2"></i>Our Impact</h5>
+          <div class="donation-stats">
+            <div class="number">₹0</div>
+            <div class="label">Raised This Year</div>
+          </div>
+          <div class="donation-stats">
+            <div class="number">0</div>
+            <div class="label">Lives Impacted</div>
+          </div>
+          <div class="donation-stats">
+            <div class="number">3</div>
+            <div class="label">Donors</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Donation Form Section -->
+  <section class="container py-5" id="donation-form">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card glass-card shadow-lg p-4" data-aos="fade-up">
+          <h3 class="text-danger mb-4"><i class="bi bi-heart-fill me-2"></i>Make Your Donation</h3>
+          
+          <!-- Amount Selection -->
+          <div class="mb-4">
+            <h5 class="mb-3">Select Amount</h5>
+            <div class="row g-3">
+              <div class="col-6 col-md-3">
+                <div class="amount-option text-center p-3 rounded" onclick="selectAmount(100)">
+                  <div class="fw-bold">₹100</div>
+                  <small class="text-muted">Provides 1 week of medicines</small>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="amount-option text-center p-3 rounded" onclick="selectAmount(500)">
+                  <div class="fw-bold">₹500</div>
+                  <small class="text-muted">Provides 1 month of medicines</small>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="amount-option text-center p-3 rounded" onclick="selectAmount(1000)">
+                  <div class="fw-bold">₹1,000</div>
+                  <small class="text-muted">Provides 3 months of medicines</small>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="amount-option text-center p-3 rounded" onclick="selectAmount(2500)">
+                  <div class="fw-bold">₹2,500</div>
+                  <small class="text-muted">Provides 6 months of medicines</small>
+                </div>
+              </div>
+            </div>
+            <div class="mt-3">
+              <label for="customAmount" class="form-label">Or enter custom amount:</label>
+              <input type="number" class="form-control" id="customAmount" placeholder="Enter amount in ₹" min="10">
+            </div>
+          </div>
+
+          
+
+          <!-- Donor Information -->
+          <div class="mb-4">
+            <h5 class="mb-3">Your Information</h5>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="donorName" class="form-label">Full Name *</label>
+                <input type="text" class="form-control" id="donorName" required>
+              </div>
+              <div class="col-md-6">
+                <label for="donorEmail" class="form-label">Email Address *</label>
+                <input type="email" class="form-control" id="donorEmail" required>
+              </div>
+              <div class="col-md-6">
+                <label for="donorPhone" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="donorPhone">
+              </div>
+              <div class="col-md-6">
+                <label for="donorCity" class="form-label">City</label>
+                <input type="text" class="form-control" id="donorCity">
+              </div>
+            </div>
+          </div>
+
+          <!-- Donation Purpose -->
+          <div class="mb-4">
+            <label for="donationPurpose" class="form-label">Purpose of Donation (Optional)</label>
+            <textarea class="form-control" id="donationPurpose" rows="3" placeholder="Tell us why you're donating or any specific cause you'd like to support..."></textarea>
+          </div>
+
+          <!-- Security Badge -->
+          <div class="mb-4 text-center">
+            <span class="security-badge">
+              <i class="bi bi-shield-check me-2"></i>100% Secure Payment
+            </span>
+            <p class="small text-muted mt-2">Your payment information is encrypted and secure</p>
+          </div>
+
+          <!-- Donate Button -->
+          <button class="btn btn-danger btn-lg w-100" onclick="showPaymentModal()">
+            <i class="bi bi-heart-fill me-2"></i>Donate Now
+          </button>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <div class="card glass-card shadow-lg p-4" data-aos="fade-left">
+          <h5 class="text-danger mb-3">Why Donate Money?</h5>
+          <div class="testimonial-card">
+            <p class="mb-2"><i class="bi bi-quote text-danger"></i></p>
+            <p>"Your donation helps us reach more people who desperately need medicines but can't afford them."</p>
+            <small class="text-muted">- MediCare Team</small>
+          </div>
+          
+          <div class="testimonial-card">
+            <p class="mb-2"><i class="bi bi-quote text-danger"></i></p>
+            <p>"Every rupee you donate goes directly towards purchasing and distributing medicines to those in need."</p>
+            <small class="text-muted">- Our Promise</small>
+          </div>
+
+          <div class="mt-4">
+            <h6 class="text-danger">Transparency</h6>
+            <ul class="list-unstyled">
+              <li><i class="bi bi-check text-success me-2"></i>Monthly reports published</li>
+              <li><i class="bi bi-check text-success me-2"></i>80G tax exemption</li>
+              <li><i class="bi bi-check text-success me-2"></i>Regular updates on impact</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQs Section -->
+  <section class="container py-5">
+    <div class="text-center mb-5">
+      <h3 class="text-danger mb-3">Frequently Asked Questions</h3>
+      <p class="text-muted">Everything you need to know about donating to MediCare</p>
+      <div class="d-flex justify-content-center align-items-center mt-4">
+        <div class="bg-danger text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+          <i class="bi bi-question-circle-fill fs-4"></i>
+        </div>
+        <div class="bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+          <i class="bi bi-lightbulb-fill fs-4"></i>
+        </div>
+        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+          <i class="bi bi-check-circle-fill fs-4"></i>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="faq-card card border-0 shadow-sm mb-3" data-aos="fade-right">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-start">
+              <div class="bg-danger text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; min-width: 50px;">
+                <i class="bi bi-cash-coin"></i>
+              </div>
+              <div class="flex-grow-1">
+                <h5 class="mb-3 text-danger">How will my money donation be used?</h5>
+                <p class="mb-0 text-muted">Your donation is used to purchase medicines for emergency cases, cover transportation costs for medicine delivery, maintain our verification processes, and support awareness campaigns in rural areas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-card card border-0 shadow-sm mb-3" data-aos="fade-right" data-aos-delay="100">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-start">
+              <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; min-width: 50px;">
+                <i class="bi bi-receipt"></i>
+              </div>
+              <div class="flex-grow-1">
+                <h5 class="mb-3 text-success">Is my donation tax-deductible?</h5>
+                <p class="mb-0 text-muted">Yes, we provide 80G tax exemption certificates for all donations. You can claim tax benefits under Section 80G of the Income Tax Act.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-card card border-0 shadow-sm mb-3" data-aos="fade-right" data-aos-delay="200">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-start">
+              <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; min-width: 50px;">
+                <i class="bi bi-credit-card"></i>
+              </div>
+              <div class="flex-grow-1">
+                <h5 class="mb-3 text-primary">What payment methods do you accept?</h5>
+                <p class="mb-0 text-muted">We accept all major payment methods including credit/debit cards, UPI payments (Google Pay, PhonePe, Paytm), net banking, and digital wallets.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-card card border-0 shadow-sm mb-3" data-aos="fade-right" data-aos-delay="300">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-start">
+              <div class="bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; min-width: 50px;">
+                <i class="bi bi-shield-check"></i>
+              </div>
+              <div class="flex-grow-1">
+                <h5 class="mb-3 text-warning">How do I know my donation is secure?</h5>
+                <p class="mb-0 text-muted">All payments are processed through secure payment gateways with SSL encryption. We never store your payment information and follow strict security protocols.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-card card border-0 shadow-sm mb-3" data-aos="fade-right" data-aos-delay="400">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-start">
+              <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; min-width: 50px;">
+                <i class="bi bi-calendar-check"></i>
+              </div>
+              <div class="flex-grow-1">
+                <h5 class="mb-3 text-info">Can I set up a monthly recurring donation?</h5>
+                <p class="mb-0 text-muted">Yes, you can set up monthly recurring donations. Contact us through WhatsApp and we'll help you set up automatic monthly payments.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-6">
+        <div class="faq-card card border-0 shadow-sm mb-3" data-aos="fade-left">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-start">
+              <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; min-width: 50px;">
+                <i class="bi bi-graph-up"></i>
+              </div>
+              <div class="flex-grow-1">
+                <h5 class="mb-3 text-secondary">Will I receive updates on how my donation is used?</h5>
+                <p class="mb-0 text-muted">Yes, we provide monthly impact reports showing how your donation has been used, including the number of people helped and medicines distributed.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-card card border-0 shadow-sm mb-3" data-aos="fade-left" data-aos-delay="100">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-start">
+              <div class="bg-danger text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; min-width: 50px;">
+                <i class="bi bi-currency-rupee"></i>
+              </div>
+              <div class="flex-grow-1">
+                <h5 class="mb-3 text-danger">What is the minimum donation amount?</h5>
+                <p class="mb-0 text-muted">The minimum donation amount is ₹10. Every rupee counts and helps us provide medicines to those in need.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-card card border-0 shadow-sm mb-3" data-aos="fade-left" data-aos-delay="200">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-start">
+              <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; min-width: 50px;">
+                <i class="bi bi-heart"></i>
+              </div>
+              <div class="flex-grow-1">
+                <h5 class="mb-3 text-success">Can I donate in memory of someone?</h5>
+                <p class="mb-0 text-muted">Yes, you can make a donation in memory of a loved one. Mention this in the purpose field when making your donation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-card card border-0 shadow-sm mb-3" data-aos="fade-left" data-aos-delay="300">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-start">
+              <div class="bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; min-width: 50px;">
+                <i class="bi bi-gear"></i>
+              </div>
+              <div class="flex-grow-1">
+                <h5 class="mb-3 text-warning">How can I cancel or modify my recurring donation?</h5>
+                <p class="mb-0 text-muted">You can cancel or modify your recurring donation anytime by contacting us through WhatsApp or email. We'll process your request within 24 hours.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-card card border-0 shadow-sm mb-3" data-aos="fade-left" data-aos-delay="400">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-start">
+              <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; min-width: 50px;">
+                <i class="bi bi-file-earmark-text"></i>
+              </div>
+              <div class="flex-grow-1">
+                <h5 class="mb-3 text-primary">Do you provide donation receipts?</h5>
+                <p class="mb-0 text-muted">Yes, we provide official donation receipts for all contributions. These receipts can be used for tax purposes and are sent via email within 24 hours of your donation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-center mt-5">
+      <div class="bg-light rounded-pill p-3 d-inline-block">
+        <i class="bi bi-chat-dots text-danger me-2"></i>
+        <span class="text-muted">Still have questions? Contact us via WhatsApp!</span>
+        <a href="https://wa.me/918104073670" class="btn btn-danger btn-sm ms-3" target="_blank">
+          <i class="bi bi-whatsapp me-1"></i>Ask Now
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Change Password Modal -->
+  <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="changePasswordModalLabel">
+            <i class="bi bi-key me-2"></i>Change Password
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="changePasswordForm">
+            <div class="mb-3">
+              <label for="currentPassword" class="form-label">Current Password</label>
+              <input type="password" class="form-control" id="currentPassword" required>
+            </div>
+            <div class="mb-3">
+              <label for="newPassword" class="form-label">New Password</label>
+              <input type="password" class="form-control" id="newPassword" required minlength="6">
+              <div class="form-text">Password must be at least 6 characters long</div>
+            </div>
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm New Password</label>
+              <input type="password" class="form-control" id="confirmPassword" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" onclick="changePassword()">
+            <i class="bi bi-check-circle me-1"></i>Change Password
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white pt-4">
+    <div class="container">
+      <div class="row text-center text-md-start">
+        <div class="col-md-4 mb-4">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="index.html" class="text-white text-decoration-none">Home</a></li>
+            <li><a href="donate.html" class="text-white text-decoration-none">Donate Medicine</a></li>
+            <li><a href="donate-money.html" class="text-white text-decoration-none">Donate Money</a></li>
+            <li><a href="request.html" class="text-white text-decoration-none">Request</a></li>
+            <li><a href="about.html" class="text-white text-decoration-none">About</a></li>
+            <li><a href="contact.html" class="text-white text-decoration-none">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Follow Us</h5>
+          <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-twitter"></i></a>
+          <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-instagram"></i></a>
+          <a href="https://wa.me/918104073670" class="btn btn-outline-light btn-sm"><i class="bi bi-whatsapp"></i></a>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Contact</h5>
+          <p><i class="bi bi-telephone-fill me-2"></i> 8104073670</p>
+          <p><i class="bi bi-envelope-fill me-2"></i> adarshgupta7374@gmail.com</p>
+        </div>
+      </div>
+      <hr class="border-light" />
+      <p class="text-center mb-0 pb-3">&copy; 2025 MediCare. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Payment Modal -->
+  <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0 shadow-lg">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title" id="paymentModalLabel">
+            <i class="bi bi-credit-card me-2"></i>Pay ₹<span id="modalAmount">0</span>.00
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <!-- Payment Methods Selection -->
+          <div class="payment-methods mb-4" id="paymentMethods">
+            <h6 class="mb-3">Choose Payment Method</h6>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="payment-option" onclick="showPaymentForm('card')">
+                  <div class="d-flex align-items-center justify-content-between p-3 border rounded payment-card-option">
+                    <div class="d-flex align-items-center">
+                      <i class="bi bi-credit-card text-primary fs-4 me-3"></i>
+                      <div>
+                        <h6 class="mb-0">Credit / Debit Cards</h6>
+                        <small class="text-muted">Visa, MasterCard, RuPay</small>
+                      </div>
+                    </div>
+                    <i class="bi bi-chevron-right"></i>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-4">
+                <div class="payment-option" onclick="showPaymentForm('upi')">
+                  <div class="d-flex align-items-center justify-content-between p-3 border rounded payment-card-option">
+                    <div class="d-flex align-items-center">
+                      <div class="bg-success text-white rounded px-2 py-1 me-3">
+                        <small class="fw-bold">UPI</small>
+                      </div>
+                      <div>
+                        <h6 class="mb-0">UPI</h6>
+                        <small class="text-muted">Google Pay, PhonePe, Paytm</small>
+                      </div>
+                    </div>
+                    <i class="bi bi-chevron-right"></i>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-4">
+                <div class="payment-option" onclick="showPaymentForm('qr')">
+                  <div class="d-flex align-items-center justify-content-between p-3 border rounded payment-card-option">
+                    <div class="d-flex align-items-center">
+                      <i class="bi bi-qr-code text-secondary fs-4 me-3"></i>
+                      <div>
+                        <h6 class="mb-0">QR Code</h6>
+                        <small class="text-muted">Scan QR code to pay</small>
+                      </div>
+                    </div>
+                    <i class="bi bi-chevron-right"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Payment Form -->
+          <div class="payment-form d-none" id="cardPaymentForm">
+            <h6 class="mb-3">Credit / Debit Card Details</h6>
+            <form id="cardForm">
+              <div class="row g-3">
+                <div class="col-12">
+                  <label class="form-label">Card Number</label>
+                  <input type="text" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Expiry Date</label>
+                  <input type="text" class="form-control" placeholder="MM/YY" maxlength="5">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">CVV</label>
+                  <input type="text" class="form-control" placeholder="123" maxlength="3">
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Cardholder Name</label>
+                  <input type="text" class="form-control" placeholder="John Doe">
+                </div>
+                <div class="col-12">
+                  <button type="button" class="btn btn-danger w-100" onclick="processCardPayment()">
+                    <i class="bi bi-lock me-2"></i>Pay Securely ₹<span id="cardAmount">0</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- UPI Payment Form -->
+          <div class="payment-form d-none" id="upiPaymentForm">
+            <h6 class="mb-3">UPI Payment</h6>
+            <div class="text-center">
+              <div class="bg-light rounded p-4 mb-3">
+                <h5 class="text-danger mb-2">UPI ID: sumangupta1280-1@oksbi</h5>
+                <p class="text-muted mb-3">Send ₹<span id="upiAmount">0</span> to this UPI ID</p>
+                <div class="d-flex justify-content-center gap-2">
+                  <button class="btn btn-outline-primary btn-sm" onclick="copyUpiId()">
+                    <i class="bi bi-copy me-1"></i>Copy UPI ID
+                  </button>
+                  <button class="btn btn-outline-success btn-sm" onclick="openUpiApp()">
+                    <i class="bi bi-phone me-1"></i>Open UPI App
+                  </button>
+                </div>
+              </div>
+              <button type="button" class="btn btn-danger" onclick="confirmUpiPayment()">
+                <i class="bi bi-check-circle me-2"></i>I've Made the Payment
+              </button>
+            </div>
+          </div>
+
+          <!-- QR Code Payment -->
+          <div class="payment-form d-none" id="qrPaymentForm">
+            <h6 class="mb-3">Scan QR Code to Pay</h6>
+            <div class="text-center">
+              <div class="bg-light rounded p-4 mb-3">
+                <div class="qr-code-container mb-3">
+                  <img src="sc.jpg" alt="QR Code" class="img-fluid" style="max-width: 200px;">
+                </div>
+                <p class="text-muted mb-3">Scan this QR code with any UPI app to pay ₹<span id="qrAmount">0</span></p>
+                <div class="d-flex justify-content-center gap-2">
+                  <button class="btn btn-outline-primary btn-sm" onclick="downloadQR()">
+                    <i class="bi bi-download me-1"></i>Download QR
+                  </button>
+                  <button class="btn btn-outline-success btn-sm" onclick="confirmQRPayment()">
+                    <i class="bi bi-check-circle me-2"></i>Payment Complete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="text-center mt-4">
+            <div class="bg-light rounded-pill p-2 d-inline-block">
+              <img src="https://www.billdesk.com/images/billdesk-logo.png" alt="BillDesk" height="20" class="me-2">
+              <small class="text-muted">Powered by BillDesk</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WhatsApp Floating Button -->
+  <a id="whatsapp-button" href="https://wa.me/918104073670" target="_blank">
+    <i class="bi bi-whatsapp"></i>
+  </a>
+  <!-- Back to Top Button -->
+  <button id="back-to-top" title="Back to top"><i class="bi bi-arrow-up"></i></button>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+    
+    // Counter logic with real data from API for money donation page
+    async function updateMoneyDonationCounters() {
+      try {
+        // Fetch total amount raised
+        const totalResponse = await fetch('http://localhost:5500/api/money-donations/total');
+        const totalData = await totalResponse.json();
+        const totalAmount = totalData.total || 0;
+
+        // Fetch money donations count
+        const moneyResponse = await fetch('http://localhost:5500/api/money-donations/count');
+        const moneyData = await moneyResponse.json();
+        const moneyCount = moneyData.count || 0;
+
+        // Fetch medicine donations count for lives impacted calculation
+        const medicineResponse = await fetch('http://localhost:5500/api/donations/count');
+        const medicineData = await medicineResponse.json();
+        const medicineCount = medicineData.count || 0;
+
+        // Update the impact section numbers
+        const raisedElement = document.querySelector('.impact-card .donation-stats:nth-child(2) .number');
+        const livesElement = document.querySelector('.impact-card .donation-stats:nth-child(3) .number');
+        const donorsElement = document.querySelector('.impact-card .donation-stats:nth-child(4) .number');
+
+        if (raisedElement) {
+          raisedElement.textContent = `₹${totalAmount.toLocaleString()}`;
+        }
+        if (livesElement) {
+          const livesImpacted = Math.floor(medicineCount * 1.5) + Math.floor(moneyCount * 2);
+          livesElement.textContent = livesImpacted;
+        }
+        if (donorsElement) {
+          donorsElement.textContent = moneyCount;
+        }
+
+      } catch (error) {
+        console.error('Error fetching counter data:', error);
+        // Fallback to default values if API fails
+        const raisedElement = document.querySelector('.impact-card .donation-stats:nth-child(2) .number');
+        const livesElement = document.querySelector('.impact-card .donation-stats:nth-child(3) .number');
+        const donorsElement = document.querySelector('.impact-card .donation-stats:nth-child(4) .number');
+
+        if (raisedElement) raisedElement.textContent = '₹15,000';
+        if (livesElement) livesElement.textContent = '45';
+        if (donorsElement) donorsElement.textContent = '12';
+      }
+    }
+
+    // Call updateMoneyDonationCounters when page loads
+    document.addEventListener('DOMContentLoaded', updateMoneyDonationCounters);
+    
+    let selectedAmount = 0;
+    let selectedPaymentMethod = '';
+
+      function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+    // Save preference to localStorage
+    if (document.body.classList.contains('dark-mode')) {
+      localStorage.setItem('darkMode', 'enabled');
+    } else {
+      localStorage.setItem('darkMode', 'disabled');
+    }
+  }
+
+  // Load saved dark mode preference on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('darkMode') === 'enabled') {
+      document.body.classList.add('dark-mode');
+    }
+
+    // Add login check to form inputs
+    addLoginCheckToForm();
+  });
+
+  // Add login check to all form inputs and interactions
+  function addLoginCheckToForm() {
+    // Check amount selection buttons
+    const amountButtons = document.querySelectorAll('.amount-option');
+    amountButtons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        if (!isUserLoggedIn()) {
+          e.preventDefault();
+          showLoginRequiredPopup();
+        }
+      });
+    });
+
+    // Check custom amount input
+    const customAmountInput = document.getElementById('customAmount');
+    if (customAmountInput) {
+      customAmountInput.addEventListener('focus', function() {
+        if (!isUserLoggedIn()) {
+          this.blur();
+          showLoginRequiredPopup();
+        }
+      });
+    }
+
+    // Check all form inputs
+    const formInputs = document.querySelectorAll('#donorName, #donorEmail, #donorPhone, #donorCity, #donationPurpose');
+    formInputs.forEach(input => {
+      input.addEventListener('focus', function() {
+        if (!isUserLoggedIn()) {
+          this.blur();
+          showLoginRequiredPopup();
+        }
+      });
+
+      input.addEventListener('input', function() {
+        if (!isUserLoggedIn()) {
+          this.value = '';
+          showLoginRequiredPopup();
+        }
+      });
+    });
+
+    // Check payment method selection
+    const paymentMethods = document.querySelectorAll('.payment-card-option');
+    paymentMethods.forEach(method => {
+      method.addEventListener('click', function(e) {
+        if (!isUserLoggedIn()) {
+          e.preventDefault();
+          showLoginRequiredPopup();
+        }
+      });
+    });
+
+    // Check proceed to payment button
+    const proceedBtn = document.getElementById('proceedToPayment');
+    if (proceedBtn) {
+      proceedBtn.addEventListener('click', function(e) {
+        if (!isUserLoggedIn()) {
+          e.preventDefault();
+          showLoginRequiredPopup();
+        }
+      });
+    }
+  }
+
+  // Check if user is logged in
+  function isUserLoggedIn() {
+    return localStorage.getItem('isLoggedIn') === 'true';
+  }
+
+  // Show login required popup
+  function showLoginRequiredPopup() {
+    const userChoice = confirm('🔒 Login Required\n\nPlease login or register to make a donation.\n\nClick OK to go to Login page, or Cancel to stay here.');
+
+    if (userChoice) {
+      window.location.href = 'login.html';
+    }
+  }
+
+    function selectAmount(amount) {
+      selectedAmount = amount;
+      // Remove selected class from all amount options
+      document.querySelectorAll('.amount-option').forEach(option => {
+        option.classList.remove('selected');
+      });
+      // Add selected class to clicked option
+      event.target.closest('.amount-option').classList.add('selected');
+      // Update custom amount field
+      document.getElementById('customAmount').value = amount;
+    }
+
+    
+
+    function showPaymentModal() {
+      const amount = document.getElementById('customAmount').value || selectedAmount;
+      const name = document.getElementById('donorName').value;
+      const email = document.getElementById('donorEmail').value;
+      const phone = document.getElementById('donorPhone').value;
+      const city = document.getElementById('donorCity').value;
+      const purpose = document.getElementById('donationPurpose').value;
+
+      if (!amount || amount < 10) {
+        alert('Please select or enter a valid amount (minimum ₹10)');
+        return;
+      }
+
+      if (!name || !email) {
+        alert('Please fill in your name and email address');
+        return;
+      }
+
+      // Store donation data for later use
+      window.donationData = {
+        amount: amount,
+        name: name,
+        email: email,
+        phone: phone,
+        city: city,
+        purpose: purpose
+      };
+
+      // Update modal amount
+      document.getElementById('modalAmount').textContent = amount;
+      
+      // Show payment modal
+      const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+      paymentModal.show();
+    }
+
+    function showPaymentForm(method) {
+      // Hide all payment forms
+      document.querySelectorAll('.payment-form').forEach(form => {
+        form.classList.add('d-none');
+      });
+      
+      // Remove selected class from all payment options
+      document.querySelectorAll('.payment-card-option').forEach(option => {
+        option.classList.remove('selected');
+      });
+      
+      // Add selected class to clicked option
+      event.target.closest('.payment-card-option').classList.add('selected');
+      
+      // Show the selected payment form
+      const formId = method + 'PaymentForm';
+      document.getElementById(formId).classList.remove('d-none');
+      
+      // Update amounts in the forms
+      const amount = window.donationData.amount;
+      document.getElementById('cardAmount').textContent = amount;
+      document.getElementById('upiAmount').textContent = amount;
+      document.getElementById('qrAmount').textContent = amount;
+    }
+
+    function processCardPayment() {
+      // Simulate card payment processing
+      const cardNumber = document.querySelector('#cardPaymentForm input[placeholder*="Card Number"]').value;
+      const expiry = document.querySelector('#cardPaymentForm input[placeholder*="MM/YY"]').value;
+      const cvv = document.querySelector('#cardPaymentForm input[placeholder*="123"]').value;
+      const name = document.querySelector('#cardPaymentForm input[placeholder*="John Doe"]').value;
+      
+      if (!cardNumber || !expiry || !cvv || !name) {
+        alert('Please fill in all card details');
+        return;
+      }
+      
+      // Show processing animation
+      const button = document.querySelector('#cardPaymentForm button');
+      const originalText = button.innerHTML;
+      button.innerHTML = '<i class="bi bi-arrow-clockwise me-2"></i>Processing...';
+      button.disabled = true;
+      
+      // Simulate payment processing
+      setTimeout(() => {
+        completePayment('Card Payment');
+      }, 2000);
+    }
+
+    function copyUpiId() {
+      navigator.clipboard.writeText('sumangupta1280-1@oksbi').then(() => {
+        alert('UPI ID copied to clipboard!');
+      });
+    }
+
+    function openUpiApp() {
+      // Try to open UPI apps
+      const upiUrl = `upi://pay?pa=sumangupta1280-1@oksbi&pn=MediCare&am=${window.donationData.amount}&cu=INR`;
+      window.open(upiUrl, '_blank');
+    }
+
+    function confirmUpiPayment() {
+      if (confirm('Have you completed the UPI payment?')) {
+        completePayment('UPI Payment');
+      }
+    }
+
+    function downloadQR() {
+      // Create a download link for the QR code
+      const link = document.createElement('a');
+      link.href = document.querySelector('#qrPaymentForm img').src;
+      link.download = 'medicare-payment-qr.png';
+      link.click();
+    }
+
+    function confirmQRPayment() {
+      if (confirm('Have you completed the QR payment?')) {
+        completePayment('QR Payment');
+      }
+    }
+
+    async function completePayment(method) {
+      const data = window.donationData;
+      
+      try {
+        // Get logged-in user's email from localStorage
+        const loggedInUserEmail = localStorage.getItem('userEmail');
+        if (!loggedInUserEmail) {
+          alert('Please log in again to continue.');
+          window.location.href = 'login.html';
+          return;
+        }
+
+        // Prepare donation data for MongoDB
+        const donationData = {
+          name: data.name,
+          email: loggedInUserEmail, // Use logged-in user's email instead of form email
+          phone: data.phone,
+          amount: parseInt(data.amount),
+          paymentMethod: method.toLowerCase().replace(' payment', ''),
+          address: data.city,
+          message: data.purpose,
+          paymentStatus: 'completed',
+          transactionId: 'TXN_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
+        };
+
+        // Send data to MongoDB Atlas via backend API
+        const response = await fetch('http://localhost:5500/api/donate-money', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(donationData)
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          
+          // Close payment modal
+          const paymentModal = bootstrap.Modal.getInstance(document.getElementById('paymentModal'));
+          paymentModal.hide();
+          
+          // Show success message
+          alert(`Thank you for your donation of ₹${data.amount}! Your payment via ${method} has been received and saved to our database. We'll send you a confirmation email shortly.`);
+          
+          // Reset form
+          document.getElementById('donorName').value = '';
+          document.getElementById('donorEmail').value = '';
+          document.getElementById('donorPhone').value = '';
+          document.getElementById('donorCity').value = '';
+          document.getElementById('donationPurpose').value = '';
+          document.getElementById('customAmount').value = '';
+          selectedAmount = 0;
+          
+          // Remove selected classes
+          document.querySelectorAll('.amount-option').forEach(option => {
+            option.classList.remove('selected');
+          });
+          
+          // Clear stored data
+          window.donationData = null;
+          
+        } else {
+          throw new Error('Failed to save donation data');
+        }
+        
+      } catch (error) {
+        console.error('Error saving donation:', error);
+        alert('Payment completed but there was an issue saving your donation data. Please contact support.');
+        
+        // Still close modal and reset form even if save failed
+        const paymentModal = bootstrap.Modal.getInstance(document.getElementById('paymentModal'));
+        paymentModal.hide();
+        
+        // Reset form
+        document.getElementById('donorName').value = '';
+        document.getElementById('donorEmail').value = '';
+        document.getElementById('donorPhone').value = '';
+        document.getElementById('donorCity').value = '';
+        document.getElementById('donationPurpose').value = '';
+        document.getElementById('customAmount').value = '';
+        selectedAmount = 0;
+        
+        // Remove selected classes
+        document.querySelectorAll('.amount-option').forEach(option => {
+          option.classList.remove('selected');
+        });
+        
+        // Clear stored data
+        window.donationData = null;
+      }
+    }
+
+    function updateNavbar() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      document.getElementById('loginNav').style.display = isLoggedIn ? 'none' : '';
+      document.getElementById('profileNav').classList.toggle('d-none', !isLoggedIn);
+      if (isLoggedIn) {
+        document.getElementById('profileName').textContent = localStorage.getItem('userName') || '';
+        document.getElementById('profileEmail').textContent = localStorage.getItem('userEmail') || '';
+      }
+    }
+    updateNavbar();
+    
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('userEmail');
+      window.location.href = 'login.html';
+    });
+
+    // Back to Top Button
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 300) {
+        backToTop.style.display = 'block';
+      } else {
+        backToTop.style.display = 'none';
+      }
+    });
+    backToTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Custom amount input handler
+    document.getElementById('customAmount').addEventListener('input', function() {
+      const value = this.value;
+      if (value) {
+        selectedAmount = parseInt(value);
+        // Remove selected class from predefined amounts
+        document.querySelectorAll('.amount-option').forEach(option => {
+          option.classList.remove('selected');
+        });
+      }
+    });
+
+    // Show change password modal
+    function showChangePasswordModal() {
+      const modal = new bootstrap.Modal(document.getElementById('changePasswordModal'));
+      modal.show();
+    }
+
+    // Change password function
+    async function changePassword() {
+      const form = document.getElementById('changePasswordForm');
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      
+      const currentPassword = document.getElementById('currentPassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      if (newPassword !== confirmPassword) {
+        alert('New password and confirm password do not match!');
+        return;
+      }
+      
+      if (newPassword.length < 6) {
+        alert('New password must be at least 6 characters long!');
+        return;
+      }
+      
+      const userEmail = localStorage.getItem('userEmail');
+      
+      try {
+        const response = await fetch('http://localhost:5500/api/user/change-password', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: userEmail,
+            currentPassword: currentPassword,
+            newPassword: newPassword
+          })
+        });
+        
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || 'Failed to change password');
+        }
+        
+        const result = await response.json();
+        
+        // Clear form and close modal
+        form.reset();
+        const modal = bootstrap.Modal.getInstance(document.getElementById('changePasswordModal'));
+        modal.hide();
+        
+        alert('Password changed successfully!');
+        
+      } catch (error) {
+        console.error('Error changing password:', error);
+        alert(error.message || 'Failed to change password. Please try again.');
+      }
+    }
+
+    // Auto-populate form with logged-in user data
+    function populateUserData() {
+      if (isUserLoggedIn()) {
+        const userName = localStorage.getItem('userName');
+        const userEmail = localStorage.getItem('userEmail');
+
+        if (userName) {
+          document.getElementById('donorName').value = userName;
+        }
+        if (userEmail) {
+          document.getElementById('donorEmail').value = userEmail;
+          // Make email field readonly since we'll use the logged-in user's email
+          document.getElementById('donorEmail').readOnly = true;
+          document.getElementById('donorEmail').style.backgroundColor = '#f8f9fa';
+        }
+      }
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      populateUserData(); // Auto-populate user data
+
+      // Initialize AOS
+      AOS.init({
+        duration: 800,
+        once: true
+      });
+    });
+  </script>
+</body>
+</html> 

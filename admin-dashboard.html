@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | MediCare</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .sidebar {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 250px;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar.collapsed {
+      width: 70px;
+    }
+
+    .sidebar-header {
+      padding: 1.5rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-header h4 {
+      color: white;
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .sidebar-header .admin-info {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    .sidebar-nav {
+      padding: 1rem 0;
+    }
+
+    .nav-item {
+      margin: 0.2rem 0;
+    }
+
+    .nav-link {
+      color: rgba(255, 255, 255, 0.8);
+      padding: 0.8rem 1.5rem;
+      border-radius: 0;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      transform: translateX(5px);
+    }
+
+    .nav-link i {
+      margin-right: 0.8rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .main-content.expanded {
+      margin-left: 70px;
+    }
+
+    .top-navbar {
+      background: white;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: between;
+      align-items: center;
+    }
+
+    .stats-card {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      border: none;
+      transition: transform 0.3s ease;
+      height: 100%;
+    }
+
+    .stats-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .stats-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .stats-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .stats-label {
+      color: #6c757d;
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .data-table-container {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      margin-top: 2rem;
+    }
+
+    .table-header {
+      display: flex;
+      justify-content: between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .table-header h5 {
+      margin: 0;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .btn-export {
+      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .logout-btn {
+      background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      color: white;
+    }
+
+    .toggle-sidebar {
+      background: none;
+      border: none;
+      color: #333;
+      font-size: 1.2rem;
+    }
+
+    .badge-status {
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .content-section {
+      display: none;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 70px;
+      }
+      .main-content {
+        margin-left: 70px;
+      }
+      .sidebar-header h4,
+      .nav-link span {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="text-center">
+      <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;"></div>
+      <h5>Loading Dashboard...</h5>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h4 id="sidebarTitle">MediCare Admin</h4>
+      <div class="admin-info" id="adminInfo">
+        <i class="bi bi-person-circle me-1"></i>
+        <span id="adminEmailDisplay"></span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="#" data-section="dashboard">
+            <i class="bi bi-speedometer2"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-section="users">
+            <i class="bi bi-people"></i>
+            <span>Users</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-section="donations">
+            <i class="bi bi-heart"></i>
+            <span>Medicine Donations</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-section="money-donations">
+            <i class="bi bi-cash-coin"></i>
+            <span>Money Donations</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-section="requests">
+            <i class="bi bi-capsule"></i>
+            <span>Medicine Requests</span>
+          </a>
+        </li>
+        <li class="nav-item mt-4">
+          <a class="nav-link" href="#" id="logoutBtn">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" id="mainContent">
+    <!-- Top Navbar -->
+    <div class="top-navbar">
+      <div class="d-flex align-items-center">
+        <button class="toggle-sidebar me-3" id="toggleSidebar">
+          <i class="bi bi-list"></i>
+        </button>
+        <h4 class="mb-0">Admin Dashboard</h4>
+      </div>
+      <div class="d-flex align-items-center">
+        <span class="me-3 text-muted">Last updated: <span id="lastUpdated"></span></span>
+        <button class="btn logout-btn" id="topLogoutBtn">
+          <i class="bi bi-box-arrow-right me-1"></i>Logout
+        </button>
+      </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div class="content-section active" id="dashboard-section">
+      <div class="row g-4 mb-4">
+        <div class="col-xl-3 col-md-6">
+          <div class="stats-card">
+            <div class="d-flex align-items-center">
+              <div class="stats-icon bg-primary bg-opacity-10 text-primary">
+                <i class="bi bi-people-fill"></i>
+              </div>
+              <div class="ms-3">
+                <h3 class="stats-number text-primary" id="totalUsers">0</h3>
+                <p class="stats-label">Total Users</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+          <div class="stats-card">
+            <div class="d-flex align-items-center">
+              <div class="stats-icon bg-success bg-opacity-10 text-success">
+                <i class="bi bi-heart-fill"></i>
+              </div>
+              <div class="ms-3">
+                <h3 class="stats-number text-success" id="totalDonations">0</h3>
+                <p class="stats-label">Medicine Donations</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+          <div class="stats-card">
+            <div class="d-flex align-items-center">
+              <div class="stats-icon bg-warning bg-opacity-10 text-warning">
+                <i class="bi bi-cash-coin"></i>
+              </div>
+              <div class="ms-3">
+                <h3 class="stats-number text-warning" id="totalMoneyDonations">₹0</h3>
+                <p class="stats-label">Money Donated</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+          <div class="stats-card">
+            <div class="d-flex align-items-center">
+              <div class="stats-icon bg-info bg-opacity-10 text-info">
+                <i class="bi bi-capsule-pill"></i>
+              </div>
+              <div class="ms-3">
+                <h3 class="stats-number text-info" id="totalRequests">0</h3>
+                <p class="stats-label">Medicine Requests</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="row">
+        <div class="col-12">
+          <div class="data-table-container">
+            <div class="table-header">
+              <h5><i class="bi bi-activity me-2"></i>Recent Activity</h5>
+              <button class="btn btn-export" onclick="refreshDashboard()">
+                <i class="bi bi-arrow-clockwise me-1"></i>Refresh
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover" id="recentActivityTable">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>User</th>
+                    <th>Details</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="recentActivityBody">
+                  <!-- Data will be loaded here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Users Section -->
+    <div class="content-section" id="users-section">
+      <div class="data-table-container">
+        <div class="table-header">
+          <h5><i class="bi bi-people me-2"></i>All Registered Users</h5>
+          <button class="btn btn-export" onclick="exportUsers()">
+            <i class="bi bi-download me-1"></i>Export CSV
+          </button>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover" id="usersTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Address</th>
+                <th>Registration Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <!-- Data will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Medicine Donations Section -->
+    <div class="content-section" id="donations-section">
+      <div class="data-table-container">
+        <div class="table-header">
+          <h5><i class="bi bi-heart me-2"></i>Medicine Donations</h5>
+          <button class="btn btn-export" onclick="exportDonations()">
+            <i class="bi bi-download me-1"></i>Export CSV
+          </button>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover" id="donationsTable">
+            <thead>
+              <tr>
+                <th>Donor Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Medicine</th>
+                <th>Quantity</th>
+                <th>Expiry Date</th>
+                <th>Address</th>
+                <th>Donation Date</th>
+              </tr>
+            </thead>
+            <tbody id="donationsTableBody">
+              <!-- Data will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Money Donations Section -->
+    <div class="content-section" id="money-donations-section">
+      <div class="data-table-container">
+        <div class="table-header">
+          <h5><i class="bi bi-cash-coin me-2"></i>Money Donations</h5>
+          <button class="btn btn-export" onclick="exportMoneyDonations()">
+            <i class="bi bi-download me-1"></i>Export CSV
+          </button>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover" id="moneyDonationsTable">
+            <thead>
+              <tr>
+                <th>Donor Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Amount</th>
+                <th>Payment Method</th>
+                <th>Status</th>
+                <th>Message</th>
+                <th>Donation Date</th>
+              </tr>
+            </thead>
+            <tbody id="moneyDonationsTableBody">
+              <!-- Data will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Medicine Requests Section -->
+    <div class="content-section" id="requests-section">
+      <div class="data-table-container">
+        <div class="table-header">
+          <h5><i class="bi bi-capsule me-2"></i>Medicine Requests</h5>
+          <button class="btn btn-export" onclick="exportRequests()">
+            <i class="bi bi-download me-1"></i>Export CSV
+          </button>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover" id="requestsTable">
+            <thead>
+              <tr>
+                <th>Requester Name</th>
+                <th>Email</th>
+                <th>Medicine</th>
+                <th>Quantity</th>
+                <th>Reason</th>
+                <th>Request Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="requestsTableBody">
+              <!-- Data will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+  <script>
+    // Global variables
+    let allUsers = [];
+    let allDonations = [];
+    let allMoneyDonations = [];
+    let allRequests = [];
+
+    // API Base URL
+    const API_BASE = 'http://localhost:5500/api';
+
+    // Check admin authentication
+    function checkAdminAuth() {
+      if (localStorage.getItem('adminLoggedIn') !== 'true') {
+        window.location.href = 'admin-login.html';
+        return false;
+      }
+      return true;
+    }
+
+    // Initialize dashboard
+    document.addEventListener('DOMContentLoaded', function() {
+      if (!checkAdminAuth()) return;
+
+      // Set admin email in sidebar
+      const adminEmail = localStorage.getItem('adminEmail');
+      document.getElementById('adminEmailDisplay').textContent = adminEmail;
+
+      // Load dashboard data
+      loadDashboardData();
+
+      // Set up event listeners
+      setupEventListeners();
+
+      // Update last updated time
+      updateLastUpdatedTime();
+
+      // Hide loading overlay after 2 seconds
+      setTimeout(() => {
+        document.getElementById('loadingOverlay').style.display = 'none';
+      }, 2000);
+    });
+
+    // Setup event listeners
+    function setupEventListeners() {
+      // Sidebar navigation
+      document.querySelectorAll('.nav-link[data-section]').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const section = this.getAttribute('data-section');
+          showSection(section);
+
+          // Update active nav link
+          document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+
+      // Logout buttons
+      document.getElementById('logoutBtn').addEventListener('click', logout);
+      document.getElementById('topLogoutBtn').addEventListener('click', logout);
+
+      // Sidebar toggle
+      document.getElementById('toggleSidebar').addEventListener('click', toggleSidebar);
+    }
+
+    // Show specific section
+    function showSection(sectionName) {
+      // Hide all sections
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+      });
+
+      // Show selected section
+      document.getElementById(sectionName + '-section').classList.add('active');
+
+      // Load section-specific data
+      switch(sectionName) {
+        case 'users':
+          loadUsersTable();
+          break;
+        case 'donations':
+          loadDonationsTable();
+          break;
+        case 'money-donations':
+          loadMoneyDonationsTable();
+          break;
+        case 'requests':
+          loadRequestsTable();
+          break;
+      }
+    }
+
+    // Load dashboard data
+    async function loadDashboardData() {
+      try {
+        console.log('🔄 Loading dashboard data from MongoDB...');
+
+        // Load all data from database
+        await Promise.all([
+          loadUsers(),
+          loadDonations(),
+          loadMoneyDonations(),
+          loadRequests()
+        ]);
+
+        // Validate loaded data
+        validateData();
+
+        // Update statistics
+        updateStatistics();
+
+        // Load recent activity
+        loadRecentActivity();
+
+        console.log('✅ Dashboard data loaded successfully!');
+
+      } catch (error) {
+        console.error('❌ Error loading dashboard data:', error);
+        showAlert('Error loading dashboard data. Please check your backend server and database connection.', 'danger');
+      }
+    }
+
+    // Load users data
+    async function loadUsers() {
+      try {
+        const response = await fetch(`${API_BASE}/admin/users`);
+        if (!response.ok) {
+          // If admin endpoint doesn't exist, we'll create a workaround
+          allUsers = [];
+          return;
+        }
+        allUsers = await response.json();
+      } catch (error) {
+        console.error('Error loading users:', error);
+        allUsers = [];
+      }
+    }
+
+    // Load donations data
+    async function loadDonations() {
+      try {
+        const response = await fetch(`${API_BASE}/admin/donations`);
+        if (!response.ok) {
+          allDonations = [];
+          return;
+        }
+        allDonations = await response.json();
+      } catch (error) {
+        console.error('Error loading donations:', error);
+        allDonations = [];
+      }
+    }
+
+    // Load money donations data
+    async function loadMoneyDonations() {
+      try {
+        const response = await fetch(`${API_BASE}/admin/money-donations`);
+        if (!response.ok) {
+          allMoneyDonations = [];
+          return;
+        }
+        allMoneyDonations = await response.json();
+      } catch (error) {
+        console.error('Error loading money donations:', error);
+        allMoneyDonations = [];
+      }
+    }
+
+    // Load requests data
+    async function loadRequests() {
+      try {
+        const response = await fetch(`${API_BASE}/admin/requests`);
+        if (!response.ok) {
+          allRequests = [];
+          return;
+        }
+        allRequests = await response.json();
+      } catch (error) {
+        console.error('Error loading requests:', error);
+        allRequests = [];
+      }
+    }
+
+    // Update statistics
+    function updateStatistics() {
+      document.getElementById('totalUsers').textContent = allUsers.length;
+      document.getElementById('totalDonations').textContent = allDonations.length;
+      document.getElementById('totalRequests').textContent = allRequests.length;
+
+      // Calculate total money donated
+      const totalMoney = allMoneyDonations
+        .filter(donation => donation.paymentStatus === 'completed')
+        .reduce((sum, donation) => sum + (donation.amount || 0), 0);
+
+      document.getElementById('totalMoneyDonations').textContent = `₹${totalMoney.toLocaleString()}`;
+    }
+
+    // Load recent activity
+    function loadRecentActivity() {
+      const recentActivityBody = document.getElementById('recentActivityBody');
+      const activities = [];
+
+      // Add recent donations
+      allDonations.slice(-5).forEach(donation => {
+        activities.push({
+          type: 'Medicine Donation',
+          user: donation.name,
+          details: `${donation.medicine} (${donation.quantity} units)`,
+          date: new Date(donation.createdAt).toLocaleDateString(),
+          status: 'Completed',
+          timestamp: new Date(donation.createdAt)
+        });
+      });
+
+      // Add recent money donations
+      allMoneyDonations.slice(-5).forEach(donation => {
+        activities.push({
+          type: 'Money Donation',
+          user: donation.name,
+          details: `₹${donation.amount}`,
+          date: new Date(donation.createdAt).toLocaleDateString(),
+          status: donation.paymentStatus,
+          timestamp: new Date(donation.createdAt)
+        });
+      });
+
+      // Add recent requests
+      allRequests.slice(-5).forEach(request => {
+        activities.push({
+          type: 'Medicine Request',
+          user: request.name,
+          details: `${request.medicine} (${request.quantity} units)`,
+          date: new Date(request.createdAt || Date.now()).toLocaleDateString(),
+          status: 'Pending',
+          timestamp: new Date(request.createdAt || Date.now())
+        });
+      });
+
+      // Sort by timestamp (newest first)
+      activities.sort((a, b) => b.timestamp - a.timestamp);
+
+      // Display recent activities
+      recentActivityBody.innerHTML = activities.slice(0, 10).map(activity => `
+        <tr>
+          <td><span class="badge bg-primary">${activity.type}</span></td>
+          <td>${activity.user}</td>
+          <td>${activity.details}</td>
+          <td>${activity.date}</td>
+          <td><span class="badge ${getStatusBadgeClass(activity.status)}">${activity.status}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    // Get status badge class
+    function getStatusBadgeClass(status) {
+      switch(status.toLowerCase()) {
+        case 'completed': return 'bg-success';
+        case 'pending': return 'bg-warning';
+        case 'failed': return 'bg-danger';
+        default: return 'bg-secondary';
+      }
+    }
+
+    // Load users table
+    function loadUsersTable() {
+      const usersTableBody = document.getElementById('usersTableBody');
+
+      if (allUsers.length === 0) {
+        usersTableBody.innerHTML = '<tr><td colspan="6" class="text-center text-muted"><i class="bi bi-info-circle me-2"></i>No users found in database</td></tr>';
+        return;
+      }
+
+      usersTableBody.innerHTML = allUsers.map(user => `
+        <tr>
+          <td><strong>${user.name || 'N/A'}</strong></td>
+          <td>${user.email || 'N/A'}</td>
+          <td>${user.mobile || 'N/A'}</td>
+          <td>${user.address || 'N/A'}</td>
+          <td>${user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-primary" onclick="viewUserDetails('${user._id}')" title="View Details">
+              <i class="bi bi-eye"></i>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+
+      // Destroy existing DataTable if it exists
+      if ($.fn.DataTable.isDataTable('#usersTable')) {
+        $('#usersTable').DataTable().destroy();
+      }
+
+      // Initialize new DataTable
+      $('#usersTable').DataTable({
+        responsive: true,
+        pageLength: 10,
+        order: [[4, 'desc']],
+        language: {
+          emptyTable: "No users found in database"
+        }
+      });
+    }
+
+    // Load donations table
+    function loadDonationsTable() {
+      const donationsTableBody = document.getElementById('donationsTableBody');
+
+      if (allDonations.length === 0) {
+        donationsTableBody.innerHTML = '<tr><td colspan="8" class="text-center text-muted"><i class="bi bi-info-circle me-2"></i>No medicine donations found in database</td></tr>';
+        return;
+      }
+
+      donationsTableBody.innerHTML = allDonations.map(donation => `
+        <tr>
+          <td><strong>${donation.name || 'N/A'}</strong></td>
+          <td>${donation.email || 'N/A'}</td>
+          <td>${donation.phone || 'N/A'}</td>
+          <td><span class="badge bg-primary">${donation.medicine || 'N/A'}</span></td>
+          <td>${donation.quantity || 'N/A'}</td>
+          <td>${donation.expiry || 'N/A'}</td>
+          <td>${donation.address || 'N/A'}</td>
+          <td>${donation.createdAt ? new Date(donation.createdAt).toLocaleDateString() : 'N/A'}</td>
+        </tr>
+      `).join('');
+
+      // Destroy existing DataTable if it exists
+      if ($.fn.DataTable.isDataTable('#donationsTable')) {
+        $('#donationsTable').DataTable().destroy();
+      }
+
+      // Initialize new DataTable
+      $('#donationsTable').DataTable({
+        responsive: true,
+        pageLength: 10,
+        order: [[7, 'desc']],
+        language: {
+          emptyTable: "No medicine donations found in database"
+        }
+      });
+    }
+
+    // Load money donations table
+    function loadMoneyDonationsTable() {
+      const moneyDonationsTableBody = document.getElementById('moneyDonationsTableBody');
+
+      if (allMoneyDonations.length === 0) {
+        moneyDonationsTableBody.innerHTML = '<tr><td colspan="8" class="text-center text-muted"><i class="bi bi-info-circle me-2"></i>No money donations found in database</td></tr>';
+        return;
+      }
+
+      moneyDonationsTableBody.innerHTML = allMoneyDonations.map(donation => `
+        <tr>
+          <td><strong>${donation.name || 'N/A'}</strong></td>
+          <td>${donation.email || 'N/A'}</td>
+          <td>${donation.phone || 'N/A'}</td>
+          <td><strong>₹${donation.amount ? donation.amount.toLocaleString() : '0'}</strong></td>
+          <td><span class="badge bg-info">${donation.paymentMethod || 'N/A'}</span></td>
+          <td><span class="badge ${getStatusBadgeClass(donation.paymentStatus)}">${donation.paymentStatus || 'pending'}</span></td>
+          <td>${donation.message || 'N/A'}</td>
+          <td>${donation.createdAt ? new Date(donation.createdAt).toLocaleDateString() : 'N/A'}</td>
+        </tr>
+      `).join('');
+
+      // Destroy existing DataTable if it exists
+      if ($.fn.DataTable.isDataTable('#moneyDonationsTable')) {
+        $('#moneyDonationsTable').DataTable().destroy();
+      }
+
+      // Initialize new DataTable
+      $('#moneyDonationsTable').DataTable({
+        responsive: true,
+        pageLength: 10,
+        order: [[7, 'desc']],
+        language: {
+          emptyTable: "No money donations found in database"
+        }
+      });
+    }
+
+    // Load requests table
+    function loadRequestsTable() {
+      const requestsTableBody = document.getElementById('requestsTableBody');
+
+      if (allRequests.length === 0) {
+        requestsTableBody.innerHTML = '<tr><td colspan="7" class="text-center text-muted"><i class="bi bi-info-circle me-2"></i>No medicine requests found in database</td></tr>';
+        return;
+      }
+
+      requestsTableBody.innerHTML = allRequests.map(request => `
+        <tr>
+          <td><strong>${request.name || 'N/A'}</strong></td>
+          <td>${request.email || 'N/A'}</td>
+          <td><span class="badge bg-warning">${request.medicine || 'N/A'}</span></td>
+          <td>${request.quantity || 'N/A'}</td>
+          <td>${request.reason || 'N/A'}</td>
+          <td>${request.createdAt ? new Date(request.createdAt).toLocaleDateString() : 'N/A'}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-success" onclick="approveRequest('${request._id}')" title="Approve Request">
+              <i class="bi bi-check"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger ms-1" onclick="rejectRequest('${request._id}')" title="Reject Request">
+              <i class="bi bi-x"></i>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+
+      // Destroy existing DataTable if it exists
+      if ($.fn.DataTable.isDataTable('#requestsTable')) {
+        $('#requestsTable').DataTable().destroy();
+      }
+
+      // Initialize new DataTable
+      $('#requestsTable').DataTable({
+        responsive: true,
+        pageLength: 10,
+        order: [[5, 'desc']],
+        language: {
+          emptyTable: "No medicine requests found in database"
+        }
+      });
+    }
+
+    // Export functions
+    function exportUsers() {
+      exportToCSV(allUsers, 'users.csv', ['name', 'email', 'mobile', 'address']);
+    }
+
+    function exportDonations() {
+      exportToCSV(allDonations, 'medicine_donations.csv', ['name', 'email', 'phone', 'medicine', 'quantity', 'expiry', 'address']);
+    }
+
+    function exportMoneyDonations() {
+      exportToCSV(allMoneyDonations, 'money_donations.csv', ['name', 'email', 'phone', 'amount', 'paymentMethod', 'paymentStatus', 'message']);
+    }
+
+    function exportRequests() {
+      exportToCSV(allRequests, 'medicine_requests.csv', ['name', 'email', 'medicine', 'quantity', 'reason']);
+    }
+
+    // Generic CSV export function
+    function exportToCSV(data, filename, fields) {
+      if (data.length === 0) {
+        alert('No data to export');
+        return;
+      }
+
+      const csvContent = [
+        fields.join(','), // Header
+        ...data.map(item => fields.map(field => `"${item[field] || ''}"`).join(','))
+      ].join('\n');
+
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+
+    // Utility functions
+    function viewUserDetails(userId) {
+      // Find user details
+      const user = allUsers.find(u => u._id === userId);
+      if (!user) return;
+
+      alert(`User Details:\nName: ${user.name}\nEmail: ${user.email}\nMobile: ${user.mobile}\nAddress: ${user.address}`);
+    }
+
+    async function approveRequest(requestId) {
+      if (confirm('Are you sure you want to approve this request?')) {
+        try {
+          const response = await fetch(`${API_BASE}/admin/request/${requestId}/status`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ status: 'approved' })
+          });
+
+          if (response.ok) {
+            showAlert('Request approved successfully!', 'success');
+            // Refresh the requests data
+            await loadRequests();
+            loadRequestsTable();
+          } else {
+            showAlert('Failed to approve request. Please try again.', 'danger');
+          }
+        } catch (error) {
+          console.error('Error approving request:', error);
+          showAlert('Error approving request. Please try again.', 'danger');
+        }
+      }
+    }
+
+    async function rejectRequest(requestId) {
+      if (confirm('Are you sure you want to reject this request?')) {
+        try {
+          const response = await fetch(`${API_BASE}/admin/request/${requestId}/status`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ status: 'rejected' })
+          });
+
+          if (response.ok) {
+            showAlert('Request rejected successfully!', 'success');
+            // Refresh the requests data
+            await loadRequests();
+            loadRequestsTable();
+          } else {
+            showAlert('Failed to reject request. Please try again.', 'danger');
+          }
+        } catch (error) {
+          console.error('Error rejecting request:', error);
+          showAlert('Error rejecting request. Please try again.', 'danger');
+        }
+      }
+    }
+
+    function refreshDashboard() {
+      document.getElementById('loadingOverlay').style.display = 'flex';
+      loadDashboardData().then(() => {
+        document.getElementById('loadingOverlay').style.display = 'none';
+        updateLastUpdatedTime();
+        showAlert('Dashboard refreshed successfully!', 'success');
+      });
+    }
+
+    function updateLastUpdatedTime() {
+      const now = new Date();
+      document.getElementById('lastUpdated').textContent = now.toLocaleTimeString();
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const mainContent = document.getElementById('mainContent');
+
+      sidebar.classList.toggle('collapsed');
+      mainContent.classList.toggle('expanded');
+    }
+
+    function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('adminLoggedIn');
+        localStorage.removeItem('adminEmail');
+        localStorage.removeItem('adminLoginTime');
+        window.location.href = 'admin-login.html';
+      }
+    }
+
+    function showAlert(message, type) {
+      // Create alert element
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+      alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+      alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      `;
+
+      document.body.appendChild(alertDiv);
+
+      // Auto remove after 5 seconds
+      setTimeout(() => {
+        if (alertDiv.parentNode) {
+          alertDiv.parentNode.removeChild(alertDiv);
+        }
+      }, 5000);
+    }
+
+    // Enhanced error handling and data validation
+    function validateData() {
+      console.log('📊 Data Summary:');
+      console.log(`👥 Users: ${allUsers.length}`);
+      console.log(`💊 Medicine Donations: ${allDonations.length}`);
+      console.log(`💰 Money Donations: ${allMoneyDonations.length}`);
+      console.log(`📋 Requests: ${allRequests.length}`);
+
+      if (allUsers.length === 0 && allDonations.length === 0 &&
+          allMoneyDonations.length === 0 && allRequests.length === 0) {
+        showAlert('No data found in database. Make sure your backend server is running and connected to MongoDB.', 'warning');
+      }
+    }
+
+    // Load real data from MongoDB database
+    async function loadUsers() {
+      try {
+        const response = await fetch(`${API_BASE}/admin/users`);
+        if (response.ok) {
+          allUsers = await response.json();
+          console.log('✅ Loaded real users data:', allUsers.length, 'users');
+        } else {
+          console.log('❌ Admin users endpoint failed, status:', response.status);
+          allUsers = [];
+        }
+      } catch (error) {
+        console.error('❌ Error loading users from database:', error);
+        allUsers = [];
+      }
+    }
+
+    async function loadDonations() {
+      try {
+        const response = await fetch(`${API_BASE}/admin/donations`);
+        if (response.ok) {
+          allDonations = await response.json();
+          console.log('✅ Loaded real donations data:', allDonations.length, 'donations');
+        } else {
+          console.log('❌ Admin donations endpoint failed, status:', response.status);
+          allDonations = [];
+        }
+      } catch (error) {
+        console.error('❌ Error loading donations from database:', error);
+        allDonations = [];
+      }
+    }
+
+    async function loadMoneyDonations() {
+      try {
+        const response = await fetch(`${API_BASE}/admin/money-donations`);
+        if (response.ok) {
+          allMoneyDonations = await response.json();
+          console.log('✅ Loaded real money donations data:', allMoneyDonations.length, 'money donations');
+        } else {
+          console.log('❌ Admin money donations endpoint failed, status:', response.status);
+          allMoneyDonations = [];
+        }
+      } catch (error) {
+        console.error('❌ Error loading money donations from database:', error);
+        allMoneyDonations = [];
+      }
+    }
+
+    async function loadRequests() {
+      try {
+        const response = await fetch(`${API_BASE}/admin/requests`);
+        if (response.ok) {
+          allRequests = await response.json();
+          console.log('✅ Loaded real requests data:', allRequests.length, 'requests');
+        } else {
+          console.log('❌ Admin requests endpoint failed, status:', response.status);
+          allRequests = [];
+        }
+      } catch (error) {
+        console.error('❌ Error loading requests from database:', error);
+        allRequests = [];
+      }
+    }
+  </script>
+</body>
+</html>
