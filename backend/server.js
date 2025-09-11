@@ -1,15 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Test route
+// Serve static files from the parent directory
+app.use(express.static(path.join(__dirname, '..')));
+
+// Serve main page
 app.get('/', (req, res) => {
-  res.send('API is running!');
+  res.sendFile(path.join(__dirname, '../index.html'));
 });
 
 const Donation = require('./Donation');
@@ -465,6 +469,55 @@ app.put('/api/admin/request/:id/status', async (req, res) => {
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
+});
+
+// HTML Page Routes
+app.get('/donate', (req, res) => {
+  res.sendFile(path.join(__dirname, '../donate.html'));
+});
+
+app.get('/donate-money', (req, res) => {
+  res.sendFile(path.join(__dirname, '../donate-money.html'));
+});
+
+app.get('/contact', (req, res) => {
+  res.sendFile(path.join(__dirname, '../contact.html'));
+});
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, '../login.html'));
+});
+
+app.get('/request', (req, res) => {
+  res.sendFile(path.join(__dirname, '../request.html'));
+});
+
+app.get('/about', (req, res) => {
+  res.sendFile(path.join(__dirname, '../about.html'));
+});
+
+app.get('/profile', (req, res) => {
+  res.sendFile(path.join(__dirname, '../profile.html'));
+});
+
+app.get('/settings', (req, res) => {
+  res.sendFile(path.join(__dirname, '../settings.html'));
+});
+
+app.get('/my-donations', (req, res) => {
+  res.sendFile(path.join(__dirname, '../my-donations.html'));
+});
+
+app.get('/my-requests', (req, res) => {
+  res.sendFile(path.join(__dirname, '../my-requests.html'));
+});
+
+app.get('/admin-login', (req, res) => {
+  res.sendFile(path.join(__dirname, '../admin-login.html'));
+});
+
+app.get('/admin-dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, '../admin-dashboard.html'));
 });
 
 // Connect to MongoDB

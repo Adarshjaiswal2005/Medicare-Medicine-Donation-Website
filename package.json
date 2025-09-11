@@ -1,0 +1,17 @@
+{
+  "name": "medicare-platform",
+  "version": "1.0.0",
+  "description": "Healthcare donation platform connecting donors with those in need",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node backend/server.js",
+    "install-backend": "cd backend && npm install"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "keywords": ["healthcare", "donation", "medicine", "charity"],
+  "author": "",
+  "license": "MIT"
+}
