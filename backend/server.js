@@ -5,8 +5,27 @@ const path = require('path');
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
-app.use(express.json());
+
+// Enhanced CORS configuration
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:5500',
+    'https://medicare-medicine-donation-website-5.onrender.com'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Add request logging middleware
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  next();
+});
 
 // Serve static files from the parent directory
 app.use(express.static(path.join(__dirname, '..')));
@@ -520,10 +539,65 @@ app.get('/admin-dashboard', (req, res) => {
   res.sendFile(path.join(__dirname, '../admin-dashboard.html'));
 });
 
+// Database health check endpoint
+app.get('/api/health', async (req, res) => {
+  try {
+    // Check if MongoDB is connected
+    const dbState = mongoose.connection.readyState;
+    const states = {
+      0: 'disconnected',
+      1: 'connected',
+      2: 'connecting',
+      3: 'disconnecting'
+    };
+    
+    if (dbState === 1) {
+      // Test database with a simple query
+      const testResult = await mongoose.connection.db.admin().ping();
+      res.json({
+        success: true,
+        database: 'connected',
+        state: states[dbState],
+        mongodb: testResult ? 'responsive' : 'not responsive',
+        timestamp: new Date().toISOString()
+      });
+    } else {
+      res.status(503).json({
+        success: false,
+        database: 'not connected',
+        state: states[dbState],
+        timestamp: new Date().toISOString()
+      });
+    }
+  } catch (error) {
+    res.status(503).json({
+      success: false,
+      database: 'error',
+      error: error.message,
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
+// API status endpoint
+app.get('/api/status', (req, res) => {
+  res.json({
+    message: 'API is running!',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
+
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch((err) => console.error('MongoDB connection error:', err));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log('✅ MongoDB connected successfully');
+    console.log('Database Name:', mongoose.connection.name);
+  })
+  .catch((err) => {
+    console.error('❌ MongoDB connection error:', err.message);
+    console.error('Full error:', err);
+  });
 
 // Start server
 const PORT = process.env.PORT || 5500;
