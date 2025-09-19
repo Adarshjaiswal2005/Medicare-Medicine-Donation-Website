@@ -251,6 +251,15 @@ app.get('/api/user/profile/:email', async (req, res) => {
       return donation.paymentStatus === 'completed' ? sum + donation.amount : sum;
     }, 0);
 
+    // Calculate total medicine quantities donated
+    const totalMedicineQuantity = donations.reduce((sum, donation) => {
+      const quantity = parseInt(donation.quantity, 10);
+      return sum + (isNaN(quantity) ? 0 : quantity);
+    }, 0);
+
+    console.log(`User ${email} - Total donations: ${donations.length}, Total medicine quantity: ${totalMedicineQuantity}`);
+    console.log('Donation details:', donations.map(d => ({ medicine: d.medicine, quantity: d.quantity })));
+
     res.json({
       user: {
         name: user.name,
@@ -262,11 +271,13 @@ app.get('/api/user/profile/:email', async (req, res) => {
       requests: requests,
       moneyDonations: moneyDonations,
       totalMoneyDonated: totalMoneyDonated,
+      totalMedicineQuantity: totalMedicineQuantity,
       stats: {
         totalDonations: donations.length,
         totalRequests: requests.length,
         totalMoneyDonations: moneyDonations.length,
-        totalMoneyDonated: totalMoneyDonated
+        totalMoneyDonated: totalMoneyDonated,
+        totalMedicineQuantity: totalMedicineQuantity
       }
     });
   } catch (err) {

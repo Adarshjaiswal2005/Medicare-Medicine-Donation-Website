@@ -374,7 +374,7 @@
         console.log('Raw API response:', data);
         console.log('Donations data:', data.donations);
         displayDonations(data.donations);
-        updateStats(data.donations);
+        updateStats(data.donations, data);
       } catch (error) {
         console.error('Error loading donations:', error);
         alert('Failed to load donation data. Please try again.');
@@ -416,32 +416,14 @@
     }
 
     // Update stats
-    function updateStats(donations) {
+    function updateStats(donations, apiData) {
       document.getElementById('totalDonations').textContent = donations.length;
       
-      // Calculate total medicine quantities with proper number parsing
-      const totalMedicines = donations.reduce((sum, donation) => {
-        const quantity = donation.quantity;
-        let numQuantity = 0;
-        
-        // Handle different data types for quantity
-        if (typeof quantity === 'number') {
-          numQuantity = quantity;
-        } else if (typeof quantity === 'string') {
-          numQuantity = parseInt(quantity, 10);
-        }
-        
-        // Only add if it's a valid positive number
-        if (!isNaN(numQuantity) && numQuantity > 0) {
-          console.log(`Adding quantity: ${numQuantity} for medicine: ${donation.medicine}`);
-          return sum + numQuantity;
-        } else {
-          console.log(`Invalid quantity found: ${quantity} for medicine: ${donation.medicine}`);
-          return sum;
-        }
-      }, 0);
+      // Use backend-calculated medicine quantity instead of frontend calculation
+      const totalMedicines = apiData.totalMedicineQuantity || apiData.stats?.totalMedicineQuantity || 0;
+      console.log(`Backend calculated total medicines: ${totalMedicines}`);
+      console.log('API stats object:', apiData.stats);
       
-      console.log(`Total medicines calculated: ${totalMedicines}`);
       document.getElementById('totalMedicines').textContent = totalMedicines;
       
       if (donations.length > 0) {
