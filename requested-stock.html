@@ -63,7 +63,7 @@
     }
 
     .page-header {
-      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      background: linear-gradient(135deg, #dc3545 0%, #ff6f61 100%);
       color: white;
       padding: 7rem 0 3rem;
       margin-bottom: 2rem;
@@ -75,7 +75,7 @@
       padding: 1.5rem;
       margin-bottom: 1.5rem;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      border-left: 4px solid #28a745;
+      border-left: 4px solid #dc3545;
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
@@ -88,14 +88,14 @@
       left: 0;
       right: 0;
       height: 3px;
-      background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
+      background: linear-gradient(90deg, #dc3545 0%, #ff6f61 100%);
       transform: scaleX(0);
       transition: transform 0.3s ease;
     }
 
     .request-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(40, 167, 69, 0.2);
+      box-shadow: 0 8px 25px rgba(220, 53, 69, 0.2);
     }
 
     .request-card:hover::before {
@@ -105,7 +105,7 @@
     .dark-mode .request-card {
       background-color: #1e1e1e !important;
       color: #f1f1f1 !important;
-      border-left-color: #20c997;
+      border-left-color: #dc3545;
     }
 
     .status-badge {
@@ -159,7 +159,7 @@
     }
 
     .meta-item i {
-      color: #28a745;
+      color: #dc3545;
     }
 
     .dark-mode .meta-item {
@@ -187,7 +187,7 @@
 
     .stats-card:hover {
       transform: translateY(-3px);
-      border-color: rgba(40, 167, 69, 0.2);
+      border-color: rgba(220, 53, 69, 0.2);
     }
 
     .dark-mode .stats-card {
@@ -198,7 +198,7 @@
     .stats-number {
       font-size: 2.5rem;
       font-weight: 700;
-      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      background: linear-gradient(135deg, #dc3545 0%, #ff6f61 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -225,9 +225,9 @@
     }
 
     .filter-btn.active {
-      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      background: linear-gradient(135deg, #dc3545 0%, #ff6f61 100%);
       color: white;
-      border-color: #28a745;
+      border-color: #dc3545;
     }
 
     .empty-state {
@@ -239,7 +239,7 @@
     .empty-state i {
       font-size: 4rem;
       margin-bottom: 1rem;
-      color: #28a745;
+      color: #dc3545;
       opacity: 0.5;
     }
 
@@ -267,7 +267,7 @@
       padding: 0.5rem;
       background: #f8f9fa;
       border-radius: 8px;
-      border-left: 3px solid #28a745;
+      border-left: 3px solid #dc3545;
     }
 
     .dark-mode .request-reason {
@@ -321,7 +321,7 @@
           <li class="nav-item"><a class="nav-link" href="donate.html">Donate Medicine</a></li>
           <li class="nav-item"><a class="nav-link" href="donate-money.html">Donate Money</a></li>
           <li class="nav-item"><a class="nav-link" href="request.html">Request</a></li>
-          <li class="nav-item"><a class="nav-link active fw-bold text-success" href="#">Stock Requests</a></li>
+          <li class="nav-item"><a class="nav-link active fw-bold text-danger" href="#">Stock Requests</a></li>
           <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
           <li class="nav-item" id="loginNav">
@@ -409,7 +409,7 @@
         </div>
         <div class="col-md-6">
           <div class="d-flex justify-content-end flex-wrap">
-            <button class="btn btn-outline-success filter-btn active" data-filter="all">All</button>
+            <button class="btn btn-outline-danger filter-btn active" data-filter="all">All</button>
             <button class="btn btn-outline-warning filter-btn" data-filter="pending">Pending</button>
             <button class="btn btn-outline-success filter-btn" data-filter="approved">Approved</button>
             <button class="btn btn-outline-danger filter-btn" data-filter="rejected">Rejected</button>
@@ -423,7 +423,7 @@
       <div class="col-12">
         <div id="requestsList">
           <div class="loading-spinner">
-            <div class="spinner-border text-success" role="status">
+            <div class="spinner-border text-danger" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
           </div>
@@ -533,7 +533,7 @@
             <i class="bi bi-clipboard-check"></i>
             <h5>No Medicine Requests Found</h5>
             <p>There are currently no medicine requests matching your criteria.</p>
-            <a href="request.html" class="btn btn-success">Make a Request</a>
+            <a href="request.html" class="btn btn-danger">Make a Request</a>
           </div>
         `;
         return;
