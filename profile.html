@@ -606,154 +606,227 @@
       }
 
       try {
+        console.log('Loading profile for email:', userEmail);
+        console.log('API URL:', `${getApiUrl('/api/user/profile')}/${encodeURIComponent(userEmail)}`);
+        
         const response = await fetch(`${getApiUrl('/api/user/profile')}/${encodeURIComponent(userEmail)}`);
+        console.log('Response status:', response.status);
+        
         if (!response.ok) {
-          throw new Error('Failed to load profile');
+          const errorText = await response.text();
+          console.error('Response error:', errorText);
+          throw new Error(`Failed to load profile: ${response.status} ${response.statusText}`);
         }
 
         const data = await response.json();
+        console.log('Profile data loaded:', data);
         displayProfile(data);
       } catch (error) {
         console.error('Error loading profile:', error);
-        alert('Failed to load profile data. Please try again.');
+        alert(`Failed to load donation data. Please try again. Error: ${error.message}`);
       }
     }
 
     // Display profile data
     function displayProfile(data) {
-      // Update header
-      document.getElementById('userName').textContent = data.user.name;
-      document.getElementById('userEmail').textContent = data.user.email;
+      try {
+        console.log('Displaying profile data:', data);
+        
+        // Validate data structure
+        if (!data || !data.user) {
+          throw new Error('Invalid profile data structure');
+        }
 
-      // Update personal information
-      document.getElementById('profileFullName').textContent = data.user.name;
-      document.getElementById('profileEmailAddress').textContent = data.user.email;
-      document.getElementById('profileMobile').textContent = data.user.mobile || 'Not provided';
-      document.getElementById('profileAddress').textContent = data.user.address || 'Not provided';
+        // Update header
+        document.getElementById('userName').textContent = data.user.name || 'User';
+        document.getElementById('userEmail').textContent = data.user.email || 'No email';
 
-      // Update stats
-      document.getElementById('totalDonations').textContent = data.stats.totalDonations;
-      document.getElementById('totalRequests').textContent = data.stats.totalRequests;
-      document.getElementById('totalMoneyDonations').textContent = data.stats.totalMoneyDonations;
-      document.getElementById('totalAmount').textContent = `₹${data.stats.totalMoneyDonated.toLocaleString()}`;
+        // Update personal information
+        document.getElementById('profileFullName').textContent = data.user.name || 'Not provided';
+        document.getElementById('profileEmailAddress').textContent = data.user.email || 'Not provided';
+        document.getElementById('profileMobile').textContent = data.user.mobile || 'Not provided';
+        document.getElementById('profileAddress').textContent = data.user.address || 'Not provided';
 
-      // Display donations
-      displayDonations(data.donations);
-      
-      // Display requests
-      displayRequests(data.requests);
-      
-      // Display money donations
-      displayMoneyDonations(data.moneyDonations);
+        // Update stats
+        const stats = data.stats || { totalDonations: 0, totalRequests: 0, totalMoneyDonations: 0, totalMoneyDonated: 0 };
+        document.getElementById('totalDonations').textContent = stats.totalDonations || 0;
+        document.getElementById('totalRequests').textContent = stats.totalRequests || 0;
+        document.getElementById('totalMoneyDonations').textContent = stats.totalMoneyDonations || 0;
+        document.getElementById('totalAmount').textContent = `₹${(stats.totalMoneyDonated || 0).toLocaleString()}`;
+
+        // Display donations
+        displayDonations(data.donations || []);
+        
+        // Display requests
+        displayRequests(data.requests || []);
+        
+        // Display money donations
+        displayMoneyDonations(data.moneyDonations || []);
+        
+        console.log('Profile data displayed successfully');
+      } catch (error) {
+        console.error('Error displaying profile data:', error);
+        alert(`Error displaying profile: ${error.message}`);
+      }
     }
 
     // Display medicine donations
     function displayDonations(donations) {
-      const container = document.getElementById('donationsList');
-      
-      if (donations.length === 0) {
-        container.innerHTML = `
-          <div class="empty-state">
-            <i class="bi bi-heart-pulse"></i>
-            <h5>No Medicine Donations Yet</h5>
-            <p>You haven't donated any medicines yet. Start making a difference today!</p>
-            <a href="donate.html" class="btn btn-danger">Donate Medicine</a>
-          </div>
-        `;
-        return;
-      }
+      try {
+        const container = document.getElementById('donationsList');
+        if (!container) {
+          console.error('Donations container not found');
+          return;
+        }
+        
+        if (!donations || donations.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <i class="bi bi-heart-pulse"></i>
+              <h5>No Medicine Donations Yet</h5>
+              <p>You haven't donated any medicines yet. Start making a difference today!</p>
+              <a href="donate.html" class="btn btn-danger">Donate Medicine</a>
+            </div>
+          `;
+          return;
+        }
 
-      container.innerHTML = donations.map(donation => `
-        <div class="donation-card">
-          <div class="row align-items-center">
-            <div class="col-md-8">
-              <h6 class="mb-1">${donation.medicine}</h6>
-              <p class="text-muted mb-1">Quantity: ${donation.quantity}</p>
-              <p class="text-muted mb-1">Expiry: ${donation.expiry}</p>
-              <p class="text-muted mb-0">Address: ${donation.address}</p>
+        container.innerHTML = donations.map(donation => {
+          const createdAt = donation.createdAt ? new Date(donation.createdAt).toLocaleDateString() : 'Unknown date';
+          return `
+            <div class="donation-card">
+              <div class="row align-items-center">
+                <div class="col-md-8">
+                  <h6 class="mb-1">${donation.medicine || 'Unknown medicine'}</h6>
+                  <p class="text-muted mb-1">Quantity: ${donation.quantity || 'Not specified'}</p>
+                  <p class="text-muted mb-1">Expiry: ${donation.expiry || 'Not specified'}</p>
+                  <p class="text-muted mb-0">Address: ${donation.address || 'Not specified'}</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                  <span class="status-badge status-completed">Donated</span>
+                  <p class="text-muted small mt-2">${createdAt}</p>
+                </div>
+              </div>
             </div>
-            <div class="col-md-4 text-md-end">
-              <span class="status-badge status-completed">Donated</span>
-              <p class="text-muted small mt-2">${new Date(donation.createdAt).toLocaleDateString()}</p>
-            </div>
-          </div>
-        </div>
-      `).join('');
+          `;
+        }).join('');
+        
+        console.log(`Displayed ${donations.length} donations`);
+      } catch (error) {
+        console.error('Error displaying donations:', error);
+      }
     }
 
     // Display medicine requests
     function displayRequests(requests) {
-      const container = document.getElementById('requestsList');
-      
-      if (requests.length === 0) {
-        container.innerHTML = `
-          <div class="empty-state">
-            <i class="bi bi-capsule-pill"></i>
-            <h5>No Medicine Requests Yet</h5>
-            <p>You haven't requested any medicines yet.</p>
-            <a href="request.html" class="btn btn-success">Request Medicine</a>
-          </div>
-        `;
-        return;
-      }
+      try {
+        const container = document.getElementById('requestsList');
+        if (!container) {
+          console.error('Requests container not found');
+          return;
+        }
+        
+        if (!requests || requests.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <i class="bi bi-capsule-pill"></i>
+              <h5>No Medicine Requests Yet</h5>
+              <p>You haven't requested any medicines yet.</p>
+              <a href="request.html" class="btn btn-success">Request Medicine</a>
+            </div>
+          `;
+          return;
+        }
 
-      container.innerHTML = requests.map(request => `
-        <div class="request-card">
-          <div class="row align-items-center">
-            <div class="col-md-8">
-              <h6 class="mb-1">${request.medicine}</h6>
-              <p class="text-muted mb-1">Quantity: ${request.quantity}</p>
-              <p class="text-muted mb-0">Reason: ${request.reason}</p>
+        container.innerHTML = requests.map(request => {
+          const createdAt = request.createdAt ? new Date(request.createdAt).toLocaleDateString() : 'Unknown date';
+          return `
+            <div class="request-card">
+              <div class="row align-items-center">
+                <div class="col-md-8">
+                  <h6 class="mb-1">${request.medicine || 'Unknown medicine'}</h6>
+                  <p class="text-muted mb-1">Quantity: ${request.quantity || 'Not specified'}</p>
+                  <p class="text-muted mb-0">Reason: ${request.reason || 'Not specified'}</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                  <span class="status-badge status-pending">Requested</span>
+                  <p class="text-muted small mt-2">${createdAt}</p>
+                </div>
+              </div>
             </div>
-            <div class="col-md-4 text-md-end">
-              <span class="status-badge status-pending">Requested</span>
-            </div>
-          </div>
-        </div>
-      `).join('');
+          `;
+        }).join('');
+        
+        console.log(`Displayed ${requests.length} requests`);
+      } catch (error) {
+        console.error('Error displaying requests:', error);
+      }
     }
 
     // Display money donations
     function displayMoneyDonations(moneyDonations) {
-      const container = document.getElementById('moneyDonationsList');
-      
-      if (moneyDonations.length === 0) {
-        container.innerHTML = `
-          <div class="empty-state">
-            <i class="bi bi-cash-coin"></i>
-            <h5>No Money Donations Yet</h5>
-            <p>You haven't made any monetary donations yet. Support our cause!</p>
-            <a href="donate-money.html" class="btn btn-warning">Donate Money</a>
-          </div>
-        `;
-        return;
-      }
+      try {
+        const container = document.getElementById('moneyDonationsList');
+        if (!container) {
+          console.error('Money donations container not found');
+          return;
+        }
+        
+        if (!moneyDonations || moneyDonations.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <i class="bi bi-cash-coin"></i>
+              <h5>No Money Donations Yet</h5>
+              <p>You haven't made any monetary donations yet. Support our cause!</p>
+              <a href="donate-money.html" class="btn btn-warning">Donate Money</a>
+            </div>
+          `;
+          return;
+        }
 
-      container.innerHTML = moneyDonations.map(donation => `
-        <div class="money-donation-card">
-          <div class="row align-items-center">
-            <div class="col-md-8">
-              <h6 class="mb-1">₹${donation.amount.toLocaleString()}</h6>
-              <p class="text-muted mb-1">Payment Method: ${donation.paymentMethod || 'Not specified'}</p>
-              <p class="text-muted mb-0">Message: ${donation.message || 'No message'}</p>
+        container.innerHTML = moneyDonations.map(donation => {
+          const createdAt = donation.createdAt ? new Date(donation.createdAt).toLocaleDateString() : 'Unknown date';
+          const amount = donation.amount || 0;
+          return `
+            <div class="money-donation-card">
+              <div class="row align-items-center">
+                <div class="col-md-8">
+                  <h6 class="mb-1">₹${amount.toLocaleString()}</h6>
+                  <p class="text-muted mb-1">Payment Method: ${donation.paymentMethod || 'Not specified'}</p>
+                  <p class="text-muted mb-0">Message: ${donation.message || 'No message'}</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                  <span class="status-badge ${getStatusClass(donation.paymentStatus)}">${donation.paymentStatus || 'Unknown'}</span>
+                  <p class="text-muted small mt-2">${createdAt}</p>
+                </div>
+              </div>
             </div>
-            <div class="col-md-4 text-md-end">
-              <span class="status-badge ${getStatusClass(donation.paymentStatus)}">${donation.paymentStatus}</span>
-              <p class="text-muted small mt-2">${new Date(donation.createdAt).toLocaleDateString()}</p>
-            </div>
-          </div>
-        </div>
-      `).join('');
+          `;
+        }).join('');
+        
+        console.log(`Displayed ${moneyDonations.length} money donations`);
+      } catch (error) {
+        console.error('Error displaying money donations:', error);
+      }
     }
 
     // Get status class for money donations
     function getStatusClass(status) {
-      switch (status) {
+      if (!status || typeof status !== 'string') {
+        return 'status-pending';
+      }
+      
+      switch (status.toLowerCase()) {
         case 'completed':
+        case 'success':
+        case 'paid':
           return 'status-completed';
         case 'pending':
+        case 'processing':
           return 'status-pending';
         case 'failed':
+        case 'cancelled':
+        case 'error':
           return 'status-failed';
         default:
           return 'status-pending';
