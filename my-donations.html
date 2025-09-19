@@ -371,6 +371,8 @@
         }
 
         const data = await response.json();
+        console.log('Raw API response:', data);
+        console.log('Donations data:', data.donations);
         displayDonations(data.donations);
         updateStats(data.donations);
       } catch (error) {
@@ -417,9 +419,29 @@
     function updateStats(donations) {
       document.getElementById('totalDonations').textContent = donations.length;
       
+      // Calculate total medicine quantities with proper number parsing
       const totalMedicines = donations.reduce((sum, donation) => {
-        return sum + parseInt(donation.quantity) || 0;
+        const quantity = donation.quantity;
+        let numQuantity = 0;
+        
+        // Handle different data types for quantity
+        if (typeof quantity === 'number') {
+          numQuantity = quantity;
+        } else if (typeof quantity === 'string') {
+          numQuantity = parseInt(quantity, 10);
+        }
+        
+        // Only add if it's a valid positive number
+        if (!isNaN(numQuantity) && numQuantity > 0) {
+          console.log(`Adding quantity: ${numQuantity} for medicine: ${donation.medicine}`);
+          return sum + numQuantity;
+        } else {
+          console.log(`Invalid quantity found: ${quantity} for medicine: ${donation.medicine}`);
+          return sum;
+        }
       }, 0);
+      
+      console.log(`Total medicines calculated: ${totalMedicines}`);
       document.getElementById('totalMedicines').textContent = totalMedicines;
       
       if (donations.length > 0) {
