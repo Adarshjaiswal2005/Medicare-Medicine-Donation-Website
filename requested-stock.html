@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Requested Stock | MediCare</title>
+  <title>Stock Requests | MediCare</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
@@ -275,6 +275,21 @@
       color: #b0b0b0 !important;
     }
 
+    /* Navbar alignment fixes */
+    .navbar-nav {
+      align-items: center;
+    }
+    
+    .navbar-nav .nav-item {
+      white-space: nowrap;
+    }
+    
+    .navbar-nav .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0.75rem;
+    }
+
     @media (max-width: 768px) {
       .request-meta {
         flex-direction: column;
@@ -283,6 +298,10 @@
       
       .page-header {
         padding: 5rem 0 2rem;
+      }
+      
+      .navbar-nav .nav-link {
+        padding: 0.5rem 0;
       }
     }
   </style>
@@ -297,12 +316,12 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto align-items-center">
           <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="donate.html">Donate Medicine</a></li>
           <li class="nav-item"><a class="nav-link" href="donate-money.html">Donate Money</a></li>
           <li class="nav-item"><a class="nav-link" href="request.html">Request</a></li>
-          <li class="nav-item"><a class="nav-link active fw-bold text-success" href="#">Requested Stock</a></li>
+          <li class="nav-item"><a class="nav-link active fw-bold text-success" href="#">Stock Requests</a></li>
           <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
           <li class="nav-item" id="loginNav">
@@ -343,7 +362,7 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-md-8 text-center text-md-start">
-          <h1 class="mb-2" data-aos="fade-up"><i class="bi bi-clipboard-check me-3"></i>Requested Stock</h1>
+          <h1 class="mb-2" data-aos="fade-up"><i class="bi bi-clipboard-check me-3"></i>Stock Requests</h1>
           <p class="mb-0 opacity-75" data-aos="fade-up" data-aos-delay="100">See what medicines are currently being requested by people in need</p>
         </div>
         <div class="col-md-4 text-center text-md-end mt-3 mt-md-0">

@@ -312,6 +312,21 @@
     .dark-mode .contact-method-card:hover {
       border-color: #dc3545;
     }
+    
+    /* Navbar alignment fixes */
+    .navbar-nav {
+      align-items: center;
+    }
+    
+    .navbar-nav .nav-item {
+      white-space: nowrap;
+    }
+    
+    .navbar-nav .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0.75rem;
+    }
 
     .dark-mode .location-detail-item,
     .dark-mode .quick-stat {
@@ -353,12 +368,12 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto align-items-center">
           <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="donate.html">Donate Medicine</a></li>
           <li class="nav-item"><a class="nav-link" href="donate-money.html">Donate Money</a></li>
           <li class="nav-item"><a class="nav-link" href="request.html">Request</a></li>
-          <li class="nav-item"><a class="nav-link" href="requested-stock.html">Requested Stock</a></li>
+          <li class="nav-item"><a class="nav-link" href="requested-stock.html">Stock Requests</a></li>
           <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
           <li class="nav-item" id="loginNav">
