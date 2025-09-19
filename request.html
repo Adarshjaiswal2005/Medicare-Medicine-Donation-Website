@@ -1460,7 +1460,7 @@
             quantity: form.quantity.value,
             reason: form.message.value // Changed from 'message' to 'reason'
           };
-          const response = await fetch('http://localhost:5500/api/request', {
+          const response = await fetch(getApiUrl(API_CONFIG.ENDPOINTS.REQUEST), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
@@ -1513,7 +1513,7 @@
       const userEmail = localStorage.getItem('userEmail');
       
       try {
-        const response = await fetch('http://localhost:5500/api/user/change-password', {
+        const response = await fetch(getApiUrl(API_CONFIG.ENDPOINTS.CHANGE_PASSWORD), {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
