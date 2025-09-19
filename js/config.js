@@ -12,6 +12,7 @@ const API_CONFIG = {
         DONATE: '/api/donate',
         DONATE_MONEY: '/api/donate-money',
         REQUEST: '/api/request',
+        REQUESTS: '/api/requests',
         USER_PROFILE: '/api/user/profile',
         USER_UPDATE: '/api/user/update',
         USER_DELETE: '/api/user/delete',

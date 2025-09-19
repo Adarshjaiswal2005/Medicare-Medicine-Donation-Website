@@ -419,6 +419,33 @@ app.get('/api/admin/requests', async (req, res) => {
   }
 });
 
+// Get all requests for public (requested stock page)
+app.get('/api/requests', async (req, res) => {
+  try {
+    // Only show pending requests for public view (excluding email for privacy)
+    const requests = await Request.find({})
+      .select('name medicine quantity reason status createdAt -email')
+      .sort({ createdAt: -1 });
+    
+    // Add some statistics
+    const totalRequests = await Request.countDocuments();
+    const pendingRequests = await Request.countDocuments({ status: 'pending' });
+    const approvedRequests = await Request.countDocuments({ status: 'approved' });
+    
+    res.json({
+      success: true,
+      requests: requests,
+      stats: {
+        total: totalRequests,
+        pending: pendingRequests,
+        approved: approvedRequests
+      }
+    });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 // Get admin dashboard statistics
 app.get('/api/admin/stats', async (req, res) => {
   try {
@@ -520,6 +547,10 @@ app.get('/login', (req, res) => {
 
 app.get('/request', (req, res) => {
   res.sendFile(path.join(__dirname, '../request.html'));
+});
+
+app.get('/requested-stock', (req, res) => {
+  res.sendFile(path.join(__dirname, '../requested-stock.html'));
 });
 
 app.get('/about', (req, res) => {

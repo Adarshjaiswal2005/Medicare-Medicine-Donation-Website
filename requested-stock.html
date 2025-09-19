@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Requested Stock | MediCare</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      background-color: #121212;
+      color: #f1f1f1;
+    }
+
+    .dark-mode .navbar,
+    .dark-mode footer,
+    .dark-mode .card,
+    .dark-mode .bg-white {
+      background-color: #1e1e1e !important;
+      color: #f1f1f1 !important;
+    }
+
+    .dark-mode .bg-light {
+      background-color: #2c2c2c !important;
+    }
+
+    .dark-mode a,
+    .dark-mode p,
+    .dark-mode h1,
+    .dark-mode h2,
+    .dark-mode h3,
+    .dark-mode h4,
+    .dark-mode h5,
+    .dark-mode h6 {
+      color: #f1f1f1 !important;
+    }
+
+    .dark-mode .text-muted {
+      color: #b0b0b0 !important;
+    }
+
+    .dark-mode .btn-outline-danger {
+      border-color: #dc3545 !important;
+      color: #dc3545 !important;
+    }
+
+    .dark-mode .btn-outline-danger:hover {
+      background-color: #dc3545 !important;
+      color: #fff !important;
+    }
+
+    .page-header {
+      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      color: white;
+      padding: 7rem 0 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .request-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border-left: 4px solid #28a745;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .request-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .request-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(40, 167, 69, 0.2);
+    }
+
+    .request-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .dark-mode .request-card {
+      background-color: #1e1e1e !important;
+      color: #f1f1f1 !important;
+      border-left-color: #20c997;
+    }
+
+    .status-badge {
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-pending {
+      background: linear-gradient(135deg, #ffc107 0%, #ffeb3b 100%);
+      color: #856404;
+    }
+
+    .status-approved {
+      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      color: white;
+    }
+
+    .status-rejected {
+      background: linear-gradient(135deg, #dc3545 0%, #f8d7da 100%);
+      color: #721c24;
+    }
+
+    .medicine-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 0.5rem;
+    }
+
+    .dark-mode .medicine-name {
+      color: #f1f1f1 !important;
+    }
+
+    .request-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+
+    .meta-item i {
+      color: #28a745;
+    }
+
+    .dark-mode .meta-item {
+      color: #b0b0b0 !important;
+    }
+
+    .quantity-badge {
+      background: linear-gradient(135deg, #17a2b8 0%, #20c997 100%);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .stats-card {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .stats-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(40, 167, 69, 0.2);
+    }
+
+    .dark-mode .stats-card {
+      background-color: #1e1e1e !important;
+      color: #f1f1f1 !important;
+    }
+
+    .stats-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .search-container {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .dark-mode .search-container {
+      background-color: #1e1e1e !important;
+    }
+
+    .filter-btn {
+      margin: 0.25rem;
+      border-radius: 20px;
+      padding: 0.4rem 1rem;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn.active {
+      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      color: white;
+      border-color: #28a745;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #6c757d;
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      color: #28a745;
+      opacity: 0.5;
+    }
+
+    .loading-spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+    }
+
+    .requester-name {
+      font-weight: 600;
+      color: #495057;
+      margin-bottom: 0.25rem;
+    }
+
+    .dark-mode .requester-name {
+      color: #f1f1f1 !important;
+    }
+
+    .request-reason {
+      font-style: italic;
+      color: #6c757d;
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border-left: 3px solid #28a745;
+    }
+
+    .dark-mode .request-reason {
+      background: #2c2c2c !important;
+      color: #b0b0b0 !important;
+    }
+
+    @media (max-width: 768px) {
+      .request-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .page-header {
+        padding: 5rem 0 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand text-danger fw-bold" href="index.html">MediCare</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="donate.html">Donate Medicine</a></li>
+          <li class="nav-item"><a class="nav-link" href="donate-money.html">Donate Money</a></li>
+          <li class="nav-item"><a class="nav-link" href="request.html">Request</a></li>
+          <li class="nav-item"><a class="nav-link active fw-bold text-success" href="#">Requested Stock</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item" id="loginNav">
+            <a class="nav-link" href="login.html">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-danger fw-bold" href="admin-login.html">
+              <i class="bi bi-shield-lock me-1"></i>Admin Login
+            </a>
+          </li>
+          <li class="nav-item dropdown d-none" id="profileNav">
+            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
+              <i class="bi bi-person-circle"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown" style="min-width: 220px;">
+              <li class="px-3 py-2 border-bottom">
+                <div class="fw-bold" id="profileName"></div>
+                <div class="small text-muted" id="profileEmail"></div>
+              </li>
+              <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person me-2"></i>My Profile</a></li>
+              <li><a class="dropdown-item" href="my-donations.html"><i class="bi bi-heart me-2"></i>My Donations</a></li>
+              <li><a class="dropdown-item" href="my-requests.html"><i class="bi bi-capsule-pill me-2"></i>My Requests</a></li>
+              <li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear me-2"></i>Settings</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <button onclick="toggleDarkMode()" class="btn btn-outline-danger btn-sm ms-3">Dark Mode</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-8 text-center text-md-start">
+          <h1 class="mb-2" data-aos="fade-up"><i class="bi bi-clipboard-check me-3"></i>Requested Stock</h1>
+          <p class="mb-0 opacity-75" data-aos="fade-up" data-aos-delay="100">See what medicines are currently being requested by people in need</p>
+        </div>
+        <div class="col-md-4 text-center text-md-end mt-3 mt-md-0">
+          <a href="request.html" class="btn btn-outline-light" data-aos="fade-left" data-aos-delay="200">
+            <i class="bi bi-plus-circle me-2"></i>Make Request
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Statistics Cards -->
+    <div class="row mb-5" data-aos="fade-up">
+      <div class="col-md-4 mb-4">
+        <div class="stats-card">
+          <div class="stats-number" id="totalRequests">0</div>
+          <h6 class="text-muted mb-0">Total Requests</h6>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="stats-card">
+          <div class="stats-number text-warning" id="pendingRequests">0</div>
+          <h6 class="text-muted mb-0">Pending Requests</h6>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="stats-card">
+          <div class="stats-number text-success" id="approvedRequests">0</div>
+          <h6 class="text-muted mb-0">Approved Requests</h6>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="search-container" data-aos="fade-up">
+      <div class="row align-items-center">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-search"></i></span>
+            <input type="text" class="form-control" id="searchInput" placeholder="Search medicines...">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex justify-content-end flex-wrap">
+            <button class="btn btn-outline-success filter-btn active" data-filter="all">All</button>
+            <button class="btn btn-outline-warning filter-btn" data-filter="pending">Pending</button>
+            <button class="btn btn-outline-success filter-btn" data-filter="approved">Approved</button>
+            <button class="btn btn-outline-danger filter-btn" data-filter="rejected">Rejected</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Requests List -->
+    <div class="row">
+      <div class="col-12">
+        <div id="requestsList">
+          <div class="loading-spinner">
+            <div class="spinner-border text-success" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white pt-4 mt-5">
+    <div class="container">
+      <div class="row text-center text-md-start">
+        <div class="col-md-4 mb-4">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="index.html" class="text-white text-decoration-none">Home</a></li>
+            <li><a href="donate.html" class="text-white text-decoration-none">Donate Medicine</a></li>
+            <li><a href="donate-money.html" class="text-white text-decoration-none">Donate Money</a></li>
+            <li><a href="request.html" class="text-white text-decoration-none">Request</a></li>
+            <li><a href="requested-stock.html" class="text-white text-decoration-none">Requested Stock</a></li>
+            <li><a href="about.html" class="text-white text-decoration-none">About</a></li>
+            <li><a href="contact.html" class="text-white text-decoration-none">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Follow Us</h5>
+          <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-twitter"></i></a>
+          <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-instagram"></i></a>
+          <a href="https://wa.me/918104073670" class="btn btn-outline-light btn-sm"><i class="bi bi-whatsapp"></i></a>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Contact</h5>
+          <p><i class="bi bi-telephone-fill me-2"></i> 8104073670</p>
+          <p><i class="bi bi-envelope-fill me-2"></i> adarshgupta7374@gmail.com</p>
+        </div>
+      </div>
+      <hr class="border-light" />
+      <p class="text-center mb-0 pb-3">&copy; 2025 MediCare. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+
+    // Dark Mode Toggle Function
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+      if (document.body.classList.contains('dark-mode')) {
+        localStorage.setItem('darkMode', 'enabled');
+      } else {
+        localStorage.setItem('darkMode', 'disabled');
+      }
+    }
+
+    // Load saved dark mode preference
+    document.addEventListener('DOMContentLoaded', function() {
+      if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+      }
+    });
+
+    // Global variables
+    let allRequests = [];
+    let filteredRequests = [];
+
+    // Load requests from API
+    async function loadRequests() {
+      try {
+        const response = await fetch(getApiUrl('/api/requests'));
+        if (!response.ok) {
+          throw new Error('Failed to load requests');
+        }
+
+        const data = await response.json();
+        console.log('Requests API response:', data);
+
+        allRequests = data.requests || [];
+        filteredRequests = [...allRequests];
+
+        updateStatistics(data.stats);
+        displayRequests();
+      } catch (error) {
+        console.error('Error loading requests:', error);
+        showError('Failed to load requested medicines. Please try again later.');
+      }
+    }
+
+    // Update statistics
+    function updateStatistics(stats) {
+      document.getElementById('totalRequests').textContent = stats?.total || 0;
+      document.getElementById('pendingRequests').textContent = stats?.pending || 0;
+      document.getElementById('approvedRequests').textContent = stats?.approved || 0;
+    }
+
+    // Display requests
+    function displayRequests() {
+      const container = document.getElementById('requestsList');
+      
+      if (filteredRequests.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="bi bi-clipboard-check"></i>
+            <h5>No Medicine Requests Found</h5>
+            <p>There are currently no medicine requests matching your criteria.</p>
+            <a href="request.html" class="btn btn-success">Make a Request</a>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filteredRequests.map(request => `
+        <div class="request-card" data-aos="fade-up">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+              <div class="medicine-name">${request.medicine}</div>
+              <div class="requester-name">Requested by: ${request.name}</div>
+            </div>
+            <span class="status-badge status-${request.status}">${request.status}</span>
+          </div>
+          
+          <div class="request-meta">
+            <div class="meta-item">
+              <i class="bi bi-box"></i>
+              <span class="quantity-badge">${request.quantity} units needed</span>
+            </div>
+            <div class="meta-item">
+              <i class="bi bi-calendar-event"></i>
+              <span>Requested: ${formatDate(request.createdAt)}</span>
+            </div>
+          </div>
+          
+          ${request.reason ? `<div class="request-reason">
+            <strong>Reason:</strong> ${request.reason}
+          </div>` : ''}
+        </div>
+      `).join('');
+
+      // Re-initialize AOS for new elements
+      AOS.refresh();
+    }
+
+    // Format date
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+    }
+
+    // Show error message
+    function showError(message) {
+      const container = document.getElementById('requestsList');
+      container.innerHTML = `
+        <div class="alert alert-danger text-center">
+          <i class="bi bi-exclamation-triangle me-2"></i>
+          ${message}
+        </div>
+      `;
+    }
+
+    // Search functionality
+    function filterRequests() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+      
+      filteredRequests = allRequests.filter(request => {
+        const matchesSearch = request.medicine.toLowerCase().includes(searchTerm) ||
+                            request.name.toLowerCase().includes(searchTerm) ||
+                            (request.reason && request.reason.toLowerCase().includes(searchTerm));
+        
+        const matchesFilter = activeFilter === 'all' || request.status === activeFilter;
+        
+        return matchesSearch && matchesFilter;
+      });
+      
+      displayRequests();
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      updateNavbar();
+      loadRequests();
+
+      // Search input
+      document.getElementById('searchInput').addEventListener('input', filterRequests);
+
+      // Filter buttons
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          // Remove active class from all buttons
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          // Add active class to clicked button
+          this.classList.add('active');
+          filterRequests();
+        });
+      });
+
+      // Logout functionality
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('userName');
+          localStorage.removeItem('userEmail');
+          window.location.href = 'login.html';
+        });
+      }
+    });
+
+    // Update navbar for logged in users
+    function updateNavbar() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      const loginNav = document.getElementById('loginNav');
+      const profileNav = document.getElementById('profileNav');
+      
+      if (loginNav && profileNav) {
+        if (isLoggedIn) {
+          loginNav.style.display = 'none';
+          profileNav.classList.remove('d-none');
+          document.getElementById('profileName').textContent = localStorage.getItem('userName') || '';
+          document.getElementById('profileEmail').textContent = localStorage.getItem('userEmail') || '';
+        } else {
+          loginNav.style.display = '';
+          profileNav.classList.add('d-none');
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>
