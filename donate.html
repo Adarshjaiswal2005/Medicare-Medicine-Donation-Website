@@ -534,6 +534,21 @@
       background: linear-gradient(90deg, #dc3545 60%, #ff6f61 100%);
       color: #fff;
     }
+    
+    /* Navbar alignment fixes */
+    .navbar-nav {
+      align-items: center;
+    }
+    
+    .navbar-nav .nav-item {
+      white-space: nowrap;
+    }
+    
+    .navbar-nav .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0.75rem;
+    }
   </style>
 </head>
 <body>
@@ -561,11 +576,12 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto align-items-center">
           <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
           <li class="nav-item"><a class="nav-link active text-danger fw-bold" href="donate.html">Donate Medicine</a></li>
           <li class="nav-item"><a class="nav-link" href="donate-money.html">Donate Money</a></li>
           <li class="nav-item"><a class="nav-link" href="request.html">Request</a></li>
+          <li class="nav-item"><a class="nav-link" href="requested-stock.html">Stock Requests</a></li>
           <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
           <li class="nav-item" id="loginNav">
@@ -1058,8 +1074,10 @@
           <h5>Quick Links</h5>
           <ul class="list-unstyled">
             <li><a href="index.html" class="text-white text-decoration-none">Home</a></li>
-            <li><a href="donate.html" class="text-white text-decoration-none">Donate</a></li>
+            <li><a href="donate.html" class="text-white text-decoration-none">Donate Medicine</a></li>
+            <li><a href="donate-money.html" class="text-white text-decoration-none">Donate Money</a></li>
             <li><a href="request.html" class="text-white text-decoration-none">Request</a></li>
+            <li><a href="requested-stock.html" class="text-white text-decoration-none">Stock Requests</a></li>
             <li><a href="about.html" class="text-white text-decoration-none">About</a></li>
             <li><a href="contact.html" class="text-white text-decoration-none">Contact</a></li>
           </ul>
