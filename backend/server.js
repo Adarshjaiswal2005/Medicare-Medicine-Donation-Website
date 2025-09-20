@@ -529,6 +529,87 @@ app.put('/api/admin/request/:id/status', async (req, res) => {
   }
 });
 
+// User delete individual donation
+app.delete('/api/donation/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { email } = req.body; // Get user email for verification
+
+    if (!email) {
+      return res.status(400).json({ error: 'User email is required' });
+    }
+
+    // Find and verify the donation belongs to the user
+    const donation = await Donation.findOne({ _id: id, email: email });
+    if (!donation) {
+      return res.status(404).json({ error: 'Donation not found or you do not have permission to delete it' });
+    }
+
+    // Delete the donation
+    await Donation.findByIdAndDelete(id);
+
+    res.json({
+      message: 'Donation deleted successfully!'
+    });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// User delete individual request
+app.delete('/api/request/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { email } = req.body; // Get user email for verification
+
+    if (!email) {
+      return res.status(400).json({ error: 'User email is required' });
+    }
+
+    // Find and verify the request belongs to the user
+    const request = await Request.findOne({ _id: id, email: email });
+    if (!request) {
+      return res.status(404).json({ error: 'Request not found or you do not have permission to delete it' });
+    }
+
+    // Delete the request
+    await Request.findByIdAndDelete(id);
+
+    res.json({
+      message: 'Request deleted successfully!'
+    });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// User delete individual money donation
+app.delete('/api/money-donation/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { email } = req.body; // Get user email for verification
+
+    if (!email) {
+      return res.status(400).json({ error: 'User email is required' });
+    }
+
+    // Find and verify the money donation belongs to the user
+    const moneyDonation = await MoneyDonation.findOne({ _id: id, email: email });
+    if (!moneyDonation) {
+      return res.status(404).json({ error: 'Money donation not found or you do not have permission to delete it' });
+    }
+
+    // Delete the money donation
+    await MoneyDonation.findByIdAndDelete(id);
+
+    res.json({
+      message: 'Money donation deleted successfully!'
+    });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 // HTML Page Routes
 app.get('/donate', (req, res) => {
   res.sendFile(path.join(__dirname, '../donate.html'));
