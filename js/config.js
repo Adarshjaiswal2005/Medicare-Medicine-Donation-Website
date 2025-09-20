@@ -3,7 +3,7 @@ const API_CONFIG = {
     // Automatically detect if we're on localhost or production
     BASE_URL: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
         ? 'http://localhost:5500' 
-        : window.location.origin, // Use current domain for production
+        : 'https://medicare-backend-api.onrender.com', // Replace with your hosted backend URL
     
     // API endpoints
     ENDPOINTS: {
