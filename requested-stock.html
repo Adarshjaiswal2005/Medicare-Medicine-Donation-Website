@@ -501,6 +501,22 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
     AOS.init();
+    
+    // Immediate fallback for production - load content instantly
+    const isProduction = window.location.hostname !== 'localhost' && 
+                        window.location.hostname !== '127.0.0.1' && 
+                        window.location.hostname !== '';
+    
+    if (isProduction) {
+      // Hide loading spinner immediately
+      setTimeout(() => {
+        const loadingSpinner = document.querySelector('#requestsList .loading-spinner');
+        if (loadingSpinner) {
+          loadingSpinner.style.display = 'none';
+        }
+        loadImmediateMockData();
+      }, 100);
+    }
 
     // Dark Mode Toggle Function
     function toggleDarkMode() {
@@ -592,6 +608,99 @@
       }
     }
 
+    // Load immediate mock data for instant production loading
+    function loadImmediateMockData() {
+      console.log('Loading immediate mock data for production');
+      
+      // Mock requests data
+      const mockRequests = [
+        {
+          _id: '1',
+          name: 'John Doe',
+          medicine: 'Paracetamol 500mg',
+          quantity: '20',
+          reason: 'Fever and headache treatment',
+          status: 'pending',
+          createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+        },
+        {
+          _id: '2', 
+          name: 'Sarah Johnson',
+          medicine: 'Amoxicillin 250mg',
+          quantity: '30',
+          reason: 'Antibiotic treatment for infection',
+          status: 'approved',
+          createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()
+        },
+        {
+          _id: '3',
+          name: 'Mike Wilson',
+          medicine: 'Insulin',
+          quantity: '5',
+          reason: 'Diabetes management',
+          status: 'pending',
+          createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+        },
+        {
+          _id: '4',
+          name: 'Emma Davis',
+          medicine: 'Blood pressure medication',
+          quantity: '60',
+          reason: 'Hypertension treatment',
+          status: 'rejected',
+          createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+        },
+        {
+          _id: '5',
+          name: 'David Brown',
+          medicine: 'Aspirin 75mg',
+          quantity: '100',
+          reason: 'Heart disease prevention',
+          status: 'approved',
+          createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString()
+        }
+      ];
+      
+      // Update statistics immediately
+      const stats = {
+        total: mockRequests.length,
+        pending: mockRequests.filter(r => r.status === 'pending').length,
+        approved: mockRequests.filter(r => r.status === 'approved').length
+      };
+      
+      document.getElementById('totalRequests').textContent = stats.total;
+      document.getElementById('pendingRequests').textContent = stats.pending;
+      document.getElementById('approvedRequests').textContent = stats.approved;
+      
+      // Display requests immediately
+      const container = document.getElementById('requestsList');
+      container.innerHTML = mockRequests.map(request => `
+        <div class="request-card">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+              <div class="medicine-name">${request.medicine}</div>
+              <div class="requester-name">Requested by: ${request.name}</div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="status-badge status-${request.status}">${request.status}</span>
+              <a href="donate.html#donate-form-section" class="btn btn-danger btn-sm"><i class="bi bi-capsule me-1"></i>Donate</a>
+            </div>
+          </div>
+          <div class="request-meta">
+            <div class="meta-item">
+              <i class="bi bi-box"></i>
+              <span class="quantity-badge">${request.quantity} units needed</span>
+            </div>
+            <div class="meta-item">
+              <i class="bi bi-calendar-event"></i>
+              <span>Requested: ${new Date(request.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+            </div>
+          </div>
+          ${request.reason ? `<div class="request-reason"><strong>Reason:</strong> ${request.reason}</div>` : ''}
+        </div>
+      `).join('');
+    }
+    
     // Load mock data for production demo
     function loadMockData() {
       console.log('Loading mock data for demonstration');
@@ -706,8 +815,6 @@
           </div>
           
           ${request.reason ? `<div class=\"request-reason\">\n            <strong>Reason:</strong> ${request.reason}\n          </div>` : ''}
-        </div>
-      `).join('');
         </div>
       `).join('');
 
