@@ -3,7 +3,7 @@ const API_CONFIG = {
     // Automatically detect if we're on localhost or production
     BASE_URL: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
         ? 'http://localhost:5500' 
-        : 'https://medicare-medicine-donation-website-5.onrender.com', // Match the production deployment URL
+        : 'https://medicare-medicine-donation-website-4.onrender.com', // Match the production deployment URL
     
     // API endpoints
     ENDPOINTS: {
