@@ -422,9 +422,9 @@ app.get('/api/admin/requests', async (req, res) => {
 // Get all requests for public (requested stock page)
 app.get('/api/requests', async (req, res) => {
   try {
-    // Only show pending requests for public view (excluding email for privacy)
+    // Only show requests for public view (excluding email for privacy)
     const requests = await Request.find({})
-      .select('name medicine quantity reason status createdAt -email')
+      .select('name medicine quantity reason status createdAt')
       .sort({ createdAt: -1 });
     
     // Add some statistics
