@@ -1122,9 +1122,41 @@
       document.body.classList.add('dark-mode');
     }
 
+    // Auto-fill medicine name if passed via URL parameter
+    autoFillMedicineName();
+
     // Add login check to form inputs
     addLoginCheckToForm();
   });
+
+  // Function to auto-fill medicine name from URL parameter
+  function autoFillMedicineName() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const medicineName = urlParams.get('medicine');
+    
+    if (medicineName) {
+      const medicineInput = document.getElementById('medicineName');
+      if (medicineInput) {
+        medicineInput.value = decodeURIComponent(medicineName);
+        // Add a subtle highlight effect to show it was auto-filled
+        medicineInput.style.backgroundColor = '#fff3cd';
+        medicineInput.style.borderColor = '#ffc107';
+        
+        // Remove highlight after 3 seconds
+        setTimeout(() => {
+          medicineInput.style.backgroundColor = '';
+          medicineInput.style.borderColor = '';
+        }, 3000);
+        
+        // Scroll to the form section if hash is present
+        if (window.location.hash === '#donate-form-section') {
+          setTimeout(() => {
+            document.getElementById('donate-form-section').scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }
+      }
+    }
+  }
 
   // Add login check to all form inputs
   function addLoginCheckToForm() {
