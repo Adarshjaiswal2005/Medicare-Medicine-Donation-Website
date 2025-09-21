@@ -50,7 +50,7 @@ app.post('/api/donate', async (req, res) => {
     if (relatedRequestId) {
       // Find the related request
       const relatedRequest = await Request.findById(relatedRequestId);
-      if (relatedRequest && relatedRequest.status === 'pending') {
+      if (relatedRequest && ['pending','approved'].includes(relatedRequest.status)) {
         // Update request status and donation information
         relatedRequest.status = 'donated';
         relatedRequest.donatedBy = {
@@ -466,7 +466,7 @@ app.get('/api/requests', async (req, res) => {
   try {
     // Only show requests for public view (excluding email for privacy)
     const requests = await Request.find({})
-      .select('name medicine quantity reason status createdAt')
+      .select('name email medicine quantity reason status donatedBy donatedQuantity donatedAt createdAt')
       .sort({ createdAt: -1 });
     
     // Add some statistics
