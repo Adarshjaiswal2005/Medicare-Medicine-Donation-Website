@@ -41,10 +41,51 @@ const MoneyDonation = require('./MoneyDonation');
 
 app.post('/api/donate', async (req, res) => {
   try {
-    const donation = new Donation(req.body);
+    const donationData = req.body;
+    
+    // Check if this donation is for a specific request
+    const { relatedRequestId } = donationData;
+    let requestInfo = null;
+    
+    if (relatedRequestId) {
+      // Find the related request
+      const relatedRequest = await Request.findById(relatedRequestId);
+      if (relatedRequest && relatedRequest.status === 'pending') {
+        // Update request status and donation information
+        relatedRequest.status = 'donated';
+        relatedRequest.donatedBy = {
+          name: donationData.name,
+          email: donationData.email,
+          phone: donationData.phone
+        };
+        relatedRequest.donatedQuantity = donationData.quantity;
+        relatedRequest.donatedAt = new Date();
+        await relatedRequest.save();
+        
+        // Store request info for donation
+        requestInfo = {
+          name: relatedRequest.name,
+          email: relatedRequest.email
+        };
+      }
+    }
+    
+    // Create donation with request information
+    const donation = new Donation({
+      ...donationData,
+      relatedRequestId: relatedRequestId || null,
+      requestedBy: requestInfo
+    });
+    
     await donation.save();
-    res.status(201).json({ message: 'Donation saved!' });
+    
+    const message = relatedRequestId ? 
+      'Donation saved and request fulfilled!' : 
+      'Donation saved!';
+      
+    res.status(201).json({ message, donationId: donation._id });
   } catch (err) {
+    console.error('Donation error:', err);
     res.status(400).json({ error: err.message });
   }
 });

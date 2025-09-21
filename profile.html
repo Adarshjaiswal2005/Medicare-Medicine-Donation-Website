@@ -220,6 +220,21 @@
     .dark-mode .nav-tabs .nav-link.active {
       color: #dc3545 !important;
     }
+    
+    /* Fulfilled request styles */
+    .request-card.fulfilled {
+      border-left-color: #28a745;
+      background: linear-gradient(135deg, #f8fff8 0%, #ffffff 100%);
+    }
+    
+    .dark-mode .request-card.fulfilled {
+      background: linear-gradient(135deg, #1a2d1a 0%, #1e1e1e 100%);
+    }
+    
+    .status-donated {
+      background-color: #d4edda;
+      color: #155724;
+    }
 
     .dark-mode .modal-content {
       background-color: #1e1e1e !important;
@@ -744,21 +759,40 @@
 
         container.innerHTML = requests.map(request => {
           const createdAt = request.createdAt ? new Date(request.createdAt).toLocaleDateString() : 'Unknown date';
+          const isDonated = request.status === 'donated';
+          const statusClass = isDonated ? 'status-donated' : 'status-pending';
+          const statusText = isDonated ? 'Donated' : 'Requested';
+          
+          const donationInfo = isDonated && request.donatedBy ? `
+            <div class="col-12 mt-3">
+              <div class="alert alert-success mb-0">
+                <i class="bi bi-heart-fill me-2"></i>
+                <strong>Fulfilled by:</strong> ${request.donatedBy.name} (${request.donatedBy.phone})<br>
+                <strong>Quantity:</strong> ${request.donatedQuantity} units | <strong>Date:</strong> ${new Date(request.donatedAt).toLocaleDateString()}
+              </div>
+            </div>
+          ` : '';
+          
+          const deleteButton = isDonated ? '' : `
+            <button class="btn btn-outline-danger btn-sm mt-2" onclick="deleteRequest('${request._id}')">
+              <i class="bi bi-trash me-1"></i>Delete
+            </button>
+          `;
+          
           return `
-            <div class="request-card">
-              <div class="row align-items-center">
+            <div class="request-card ${isDonated ? 'fulfilled' : ''}">
+              <div class="row align-items-start">
                 <div class="col-md-8">
                   <h6 class="mb-1">${request.medicine || 'Unknown medicine'}</h6>
                   <p class="text-muted mb-1">Quantity: ${request.quantity || 'Not specified'}</p>
                   <p class="text-muted mb-0">Reason: ${request.reason || 'Not specified'}</p>
                 </div>
                 <div class="col-md-4 text-md-end">
-                  <span class="status-badge status-pending">Requested</span>
+                  <span class="status-badge ${statusClass}">${statusText}</span>
                   <p class="text-muted small mt-2">${createdAt}</p>
-                  <button class="btn btn-outline-danger btn-sm mt-2" onclick="deleteRequest('${request._id}')">
-                    <i class="bi bi-trash me-1"></i>Delete
-                  </button>
+                  ${deleteButton}
                 </div>
+                ${donationInfo}
               </div>
             </div>
           `;

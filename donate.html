@@ -1133,6 +1133,9 @@
   function autoFillMedicineName() {
     const urlParams = new URLSearchParams(window.location.search);
     const medicineName = urlParams.get('medicine');
+    const requestId = urlParams.get('requestId');
+    const requesterName = urlParams.get('requesterName');
+    const requesterEmail = urlParams.get('requesterEmail');
     
     if (medicineName) {
       const medicineInput = document.getElementById('medicineName');
@@ -1148,6 +1151,18 @@
           medicineInput.style.borderColor = '';
         }, 3000);
         
+        // Store request information for form submission
+        if (requestId) {
+          window.requestInfo = {
+            requestId: requestId,
+            requesterName: decodeURIComponent(requesterName || ''),
+            requesterEmail: decodeURIComponent(requesterEmail || '')
+          };
+          
+          // Show a notice that this donation is for a specific request
+          showRequestNotice(window.requestInfo.requesterName);
+        }
+        
         // Scroll to the form section if hash is present
         if (window.location.hash === '#donate-form-section') {
           setTimeout(() => {
@@ -1156,6 +1171,21 @@
         }
       }
     }
+  }
+  
+  // Show notice that this donation is for a specific request
+  function showRequestNotice(requesterName) {
+    const formSection = document.querySelector('.form-section');
+    const noticeDiv = document.createElement('div');
+    noticeDiv.className = 'alert alert-info mt-3';
+    noticeDiv.innerHTML = `
+      <i class="bi bi-info-circle-fill me-2"></i>
+      <strong>Donating for a Request:</strong> You are donating to fulfill a request by <strong>${requesterName}</strong>
+    `;
+    
+    // Insert the notice before the form
+    const formElement = document.getElementById('donateForm');
+    formElement.parentNode.insertBefore(noticeDiv, formElement);
   }
 
   // Add login check to all form inputs
@@ -1281,7 +1311,9 @@
           quantity: formData.quantity,
           expiry: formData.expiry,
           phone: formData.phone,
-          address: formData.address1 + (formData.address2 ? ', ' + formData.address2 : '')
+          address: formData.address1 + (formData.address2 ? ', ' + formData.address2 : ''),
+          // Include request information if this donation is for a specific request
+          relatedRequestId: window.requestInfo ? window.requestInfo.requestId : null
         })
       });
       

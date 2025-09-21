@@ -7,6 +7,12 @@ const DonationSchema = new mongoose.Schema({
   quantity: { type: Number, required: true },
   expiry: { type: String, required: true },
   address: { type: String, required: true },
+  // Link to the request this donation fulfills (if any)
+  relatedRequestId: { type: mongoose.Schema.Types.ObjectId, ref: 'Request' },
+  requestedBy: {
+    name: String,
+    email: String
+  },
   createdAt: { type: Date, default: Date.now }
 });
 module.exports = mongoose.model('Donation', DonationSchema);
