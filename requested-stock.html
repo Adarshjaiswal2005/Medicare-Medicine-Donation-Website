@@ -620,7 +620,7 @@
         const isDonated = request.status === 'donated';
         const donateButton = isDonated ? 
           '<span class="btn btn-success btn-sm"><i class="bi bi-check-circle me-1"></i>Fulfilled</span>' :
-          `<a href="donate.html?medicine=${encodeURIComponent(request.medicine)}&requestId=${request._id}&requesterName=${encodeURIComponent(request.name)}&requesterEmail=${encodeURIComponent(request.email)}#donate-form-section" class="btn btn-danger btn-sm"><i class="bi bi-capsule me-1"></i>Donate</a>`;
+          `<a href="#" onclick="return handleDonateClick('${request._id}', '${encodeURIComponent(request.medicine)}', '${encodeURIComponent(request.name)}', '${encodeURIComponent(request.email)}')" class="btn btn-danger btn-sm"><i class="bi bi-capsule me-1"></i>Donate</a>`;
         
         const donationInfo = isDonated && request.donatedBy ? `
           <div class="donation-info mt-3">
@@ -708,6 +708,39 @@
       displayRequests();
     }
 
+    // Handle Donate click with self-request protection
+    function handleDonateClick(requestId, encMedicine, encRequesterName, encRequesterEmail) {
+      try {
+        const medicine = decodeURIComponent(encMedicine || '');
+        const requesterName = decodeURIComponent(encRequesterName || '');
+        const requesterEmail = decodeURIComponent(encRequesterEmail || '');
+        const currentUserEmail = (localStorage.getItem('userEmail') || '').toLowerCase();
+        
+        if (currentUserEmail && requesterEmail && currentUserEmail === requesterEmail.toLowerCase()) {
+          // Show stylish modal instead of navigating
+          showSelfDonateModal(medicine);
+          return false; // Prevent default navigation
+        }
+        
+        // Navigate to donate page with context
+        const url = `donate.html?medicine=${encodeURIComponent(medicine)}&requestId=${requestId}&requesterName=${encodeURIComponent(requesterName)}&requesterEmail=${encodeURIComponent(requesterEmail)}#donate-form-section`;
+        window.location.href = url;
+        return false;
+      } catch (e) {
+        console.error('Donate navigation error:', e);
+        return false;
+      }
+    }
+
+    // Stylish modal for blocking self-donation
+    function showSelfDonateModal(medicine) {
+      const modalEl = document.getElementById('selfDonateModal');
+      if (!modalEl) return alert("You can't donate to your own request.");
+      modalEl.querySelector('.self-donate-medicine').textContent = medicine || 'this request';
+      const modal = new bootstrap.Modal(modalEl);
+      modal.show();
+    }
+
     // Event listeners
     document.addEventListener('DOMContentLoaded', function() {
       updateNavbar();
@@ -758,6 +791,41 @@
       }
     }
   </script>
+
+  <!-- Stylish Modal: Prevent Self-Donation -->
+  <div class="modal fade" id="selfDonateModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0" style="overflow:hidden; border-radius: 18px;">
+        <div class="p-4 text-white" style="background: linear-gradient(135deg, #dc3545 0%, #ff6f61 100%);">
+          <div class="d-flex align-items-center gap-3">
+            <div class="rounded-circle bg-white bg-opacity-25 d-flex align-items-center justify-content-center" style="width:56px;height:56px;">
+              <i class="bi bi-shield-exclamation fs-3"></i>
+            </div>
+            <div>
+              <h5 class="mb-0">Action Not Allowed</h5>
+              <small class="opacity-75">Donation restriction</small>
+            </div>
+          </div>
+        </div>
+        <div class="modal-body p-4">
+          <div class="d-flex align-items-start">
+            <i class="bi bi-x-circle-fill text-danger fs-4 me-2"></i>
+            <div>
+              <p class="mb-2">You cannot donate to your own request.</p>
+              <p class="mb-0">Request: <strong class="self-donate-medicine">—</strong></p>
+            </div>
+          </div>
+          <div class="alert alert-info mt-3 mb-0">
+            <i class="bi bi-lightbulb me-2"></i>
+            Tip: Ask a friend or share your request link to get help faster.
+          </div>
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Okay</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

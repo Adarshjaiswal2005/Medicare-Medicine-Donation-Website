@@ -51,6 +51,10 @@ app.post('/api/donate', async (req, res) => {
       // Find the related request
       const relatedRequest = await Request.findById(relatedRequestId);
       if (relatedRequest && ['pending','approved'].includes(relatedRequest.status)) {
+        // Prevent self-donation (user cannot donate to their own request)
+        if (relatedRequest.email && relatedRequest.email.toLowerCase() === donationData.email.toLowerCase()) {
+          return res.status(400).json({ error: 'You cannot donate to your own request.' });
+        }
         // Update request status and donation information
         relatedRequest.status = 'donated';
         relatedRequest.donatedBy = {
